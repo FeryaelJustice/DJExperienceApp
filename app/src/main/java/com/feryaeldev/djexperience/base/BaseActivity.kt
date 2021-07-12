@@ -2,6 +2,7 @@ package com.feryaeldev.djexperience.base
 
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.feryaeldev.djexperience.settings.Settings
 
 abstract class BaseActivity : AppCompatActivity() {
 

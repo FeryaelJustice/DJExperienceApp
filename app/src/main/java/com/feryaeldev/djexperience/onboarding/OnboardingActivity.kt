@@ -1,6 +1,5 @@
 package com.feryaeldev.djexperience.onboarding
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -12,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.activities.MainActivity
 import com.feryaeldev.djexperience.base.BaseActivity
+import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.button.MaterialButton
 
 class OnboardingActivity : BaseActivity() {
@@ -28,12 +28,10 @@ class OnboardingActivity : BaseActivity() {
     }
 
     private fun navigateToApp() {
-        val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
-        if (preferences.getBoolean("firstOpen", true)) {
-            with(preferences.edit()) {
-                putBoolean("firstOpen", false)
-                commit()
-            }
+        //val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
+        val settings = Settings(applicationContext)
+        if (settings.isFirstOpen()) {
+            settings.setFirstOpen(false)
         }
         showMessageLong("Welcome to DJ Experience!")
         val intent = Intent(applicationContext, MainActivity::class.java)
