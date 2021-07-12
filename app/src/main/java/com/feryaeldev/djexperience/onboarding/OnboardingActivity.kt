@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.activities.MainActivity
+import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.android.material.button.MaterialButton
 
-class OnboardingActivity : AppCompatActivity() {
+class OnboardingActivity : BaseActivity() {
 
     private lateinit var onboardingItemsAdapter: OnboardingItemsAdapter
     private lateinit var indicatorsContainer: LinearLayout
@@ -27,6 +27,7 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun navigateToApp() {
+        showMessageLong("Welcome to DJ Experience!")
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra("goToOnboarding", false)
         startActivity(intent)
