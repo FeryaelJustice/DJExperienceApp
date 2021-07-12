@@ -8,11 +8,13 @@ import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 
 class MainActivity : BaseActivity() {
 
-    private var goToOnBoardingActivity = true
+    private var goToOnBoardingActivity: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        goToOnBoardingActivity = intent.getBooleanExtra("goToOnboarding", true)
 
         if (goToOnBoardingActivity) {
             navigateToOnboarding()
