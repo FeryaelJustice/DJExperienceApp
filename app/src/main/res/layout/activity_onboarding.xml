@@ -7,18 +7,69 @@
     android:background="@color/color_primary"
     tools:context=".onboarding.OnboardingActivity">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/onboardingViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/view_pager_background"
+        app:layout_constraintBottom_toTopOf="@id/viewCenterOfNext"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/indicatorsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/viewBorderOfNext"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@drawable/icon_outer_background"
+        app:layout_constraintBottom_toBottomOf="@id/imageNext"
+        app:layout_constraintEnd_toEndOf="@id/imageNext"
+        app:layout_constraintStart_toStartOf="@+id/imageNext"
+        app:layout_constraintTop_toTopOf="@id/imageNext" />
+
+    <View
+        android:id="@+id/viewCenterOfNext"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageNext"
+        app:layout_constraintEnd_toEndOf="@id/imageNext"
+        app:layout_constraintStart_toStartOf="@+id/imageNext"
+        app:layout_constraintTop_toTopOf="@id/imageNext" />
+
+    <ImageView
+        android:id="@+id/imageNext"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/icon_background"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_right"
+        app:layout_constraintBottom_toTopOf="@id/btnOnboardingStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/color_background" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnOnboardingStart"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/color_secondary"
+        android:contentDescription="@string/app_name"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:text="@string/onboarding_start"
         android:textAllCaps="true"
         android:textSize="@dimen/text_onboarding_start"
         android:textStyle="bold"
-        android:backgroundTint="@color/color_secondary"
         app:cornerRadius="@dimen/corner_onboarding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

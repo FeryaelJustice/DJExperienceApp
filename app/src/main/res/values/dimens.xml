@@ -2,4 +2,5 @@
 <resources>
     <dimen name="text_onboarding_start">14sp</dimen>
     <dimen name="corner_onboarding">20dp</dimen>
+    <dimen name="text_onboarding_item">20sp</dimen>
 </resources>
