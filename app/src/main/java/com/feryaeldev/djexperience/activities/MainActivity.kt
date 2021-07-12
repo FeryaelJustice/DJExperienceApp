@@ -1,5 +1,6 @@
 package com.feryaeldev.djexperience.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.feryaeldev.djexperience.R
@@ -8,15 +9,13 @@ import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 
 class MainActivity : BaseActivity() {
 
-    private var goToOnBoardingActivity: Boolean = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        goToOnBoardingActivity = intent.getBooleanExtra("goToOnboarding", true)
+        val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
 
-        if (goToOnBoardingActivity) {
+        if (preferences.getBoolean("firstOpen", true)) {
             navigateToOnboarding()
         }
     }

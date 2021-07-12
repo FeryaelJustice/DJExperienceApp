@@ -1,5 +1,6 @@
 package com.feryaeldev.djexperience.onboarding
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -27,6 +28,13 @@ class OnboardingActivity : BaseActivity() {
     }
 
     private fun navigateToApp() {
+        val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
+        if (preferences.getBoolean("firstOpen", true)) {
+            with(preferences.edit()) {
+                putBoolean("firstOpen", false)
+                commit()
+            }
+        }
         showMessageLong("Welcome to DJ Experience!")
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra("goToOnboarding", false)
