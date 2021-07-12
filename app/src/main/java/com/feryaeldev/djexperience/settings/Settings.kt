@@ -17,4 +17,12 @@ class Settings(context: Context) {
             commit()
         }
     }
+
+    fun getSessionToken(): String? = preferences.getString("sessionToken", "")
+    fun setSessionToken(token: String) {
+        with(preferences.edit()) {
+            putString("sessionToken", token)
+            commit()
+        }
+    }
 }

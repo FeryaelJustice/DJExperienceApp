@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "131500590502",
+    "project_id": "dj-experience",
+    "storage_bucket": "dj-experience.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131500590502:android:3d27505bce061d4b787b67",
+        "android_client_info": {
+          "package_name": "com.feryaeldev.djexperience"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131500590502-i31oo2bfpr8bcsepkccm1kq5hn45a8g7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.feryaeldev.djexperience",
+            "certificate_hash": "dde0a4041bce323a4b45b7952b946aa72b046bbd"
+          }
+        },
+        {
+          "client_id": "131500590502-4b2n6b1ekvk0648ijovt3jbc4aml13sf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm4GjC5VLV4cNednpT4JXsi6dEqputKD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131500590502-4b2n6b1ekvk0648ijovt3jbc4aml13sf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
