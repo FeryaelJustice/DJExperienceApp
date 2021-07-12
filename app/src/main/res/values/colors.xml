@@ -9,10 +9,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- App colors -->
-    <color name="color_primary">#643AE7</color>
+    <color name="color_primary">@color/purple_500</color>
     <color name="color_secondary">#FF8F00</color>
     <color name="color_secondary_light">#FFD299</color>
-    <color name="color_background">#FFFFFF</color>
-    <color name="color_text_primary">#060906</color>
+    <color name="color_background">@color/white</color>
+    <color name="color_text_primary">@color/black</color>
     <color name="color_text_secondary">#464747</color>
 </resources>

@@ -24,13 +24,6 @@ class OnboardingActivity : AppCompatActivity() {
         setOnboardingItems()
         setupIndicators()
         setCurrentIndicator(0)
-        setOnClickListeners()
-    }
-
-    private fun setOnClickListeners() {
-        findViewById<MaterialButton>(R.id.btnOnboardingStart).setOnClickListener {
-            navigateToApp()
-        }
     }
 
     private fun navigateToApp() {
@@ -71,12 +64,22 @@ class OnboardingActivity : AppCompatActivity() {
         })
         (onboardingViewPager.getChildAt(0) as RecyclerView).overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
+
+        // Click listeners
         findViewById<ImageView>(R.id.imageNext).setOnClickListener {
             if (onboardingViewPager.currentItem + 1 < onboardingItemsAdapter.itemCount) {
                 onboardingViewPager.currentItem += 1
             } else {
                 navigateToApp()
             }
+        }
+        findViewById<ImageView>(R.id.imagePrevious).setOnClickListener {
+            if (onboardingViewPager.currentItem > 0) {
+                onboardingViewPager.currentItem -= 1
+            }
+        }
+        findViewById<MaterialButton>(R.id.btnOnboardingStart).setOnClickListener {
+            navigateToApp()
         }
     }
 
