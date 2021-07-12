@@ -13,6 +13,7 @@ import com.feryaeldev.djexperience.activities.MainActivity
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.button.MaterialButton
+import java.util.*
 
 class OnboardingActivity : BaseActivity() {
 
@@ -28,12 +29,12 @@ class OnboardingActivity : BaseActivity() {
     }
 
     private fun navigateToApp() {
-        //val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
         val settings = Settings(applicationContext)
         if (settings.isFirstOpen()) {
             settings.setFirstOpen(false)
         }
-        showMessageLong("Welcome to DJ Experience!")
+        val language = Locale.getDefault().displayLanguage
+        showMessageLong("Welcome to DJ Experience! Language: $language")
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra("goToOnboarding", false)
         startActivity(intent)
