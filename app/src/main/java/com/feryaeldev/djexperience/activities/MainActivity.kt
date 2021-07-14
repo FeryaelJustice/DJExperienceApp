@@ -4,8 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.activity.viewModels
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
+import com.feryaeldev.djexperience.data.enums.ArtistType
+import com.feryaeldev.djexperience.data.models.Artist
+import com.feryaeldev.djexperience.data.models.User
+import com.feryaeldev.djexperience.data.viewmodels.ArtistViewModel
+import com.feryaeldev.djexperience.data.viewmodels.UserViewModel
 import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.gms.ads.*
@@ -13,30 +20,64 @@ import com.google.android.gms.ads.*
 class MainActivity : BaseActivity() {
 
     lateinit var mAdView: AdView
+    private val userViewModel: UserViewModel by viewModels()
+    private val artistViewModel: ArtistViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var a = ""
+        var b = ""
+        // VIEW MODELS
+        userViewModel.getUser().observe(this, {
+            a = it.name
+            findViewById<TextView>(R.id.tv1).text = it.edad.toString()
+        })
+        artistViewModel.getArtist().observe(this, {
+            b = it.name
+            findViewById<TextView>(R.id.tv2).text = it.edad.toString()
+        })
+
+        // SETTINGS
         //val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
         val settings = Settings(applicationContext)
         if (settings.isFirstOpen()) {
             navigateToOnboarding()
         }
 
+        // CRASHLYTICS
         val crashButton = Button(this)
         crashButton.text = "Crash!"
         crashButton.setOnClickListener {
             throw RuntimeException("Test Crash") // Force a crash
         }
+        findViewById<Button>(R.id.id).setOnClickListener {
+            userViewModel.setUser(
+                User(
+                    "Fer",
+                    userViewModel.getUser().value!!.edad+1
+                )
+            )
+        }
+        findViewById<Button>(R.id.id2).setOnClickListener {
+            artistViewModel.setArtist(
+                Artist(
+                    "Fer", ArtistType.DJ,
+                    artistViewModel.getArtist().value!!.edad+1
+                )
+            )
+        }
 
         addContentView(
-            crashButton, ViewGroup.LayoutParams(
+            crashButton,
+            ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            ),
         )
 
+        // ADS
         MobileAds.initialize(this) {}
 
         mAdView = findViewById(R.id.adView)

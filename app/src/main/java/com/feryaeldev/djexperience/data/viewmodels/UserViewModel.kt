@@ -8,6 +8,12 @@ class UserViewModel : ViewModel() {
 
     private val user = MutableLiveData<User>()
 
+    init {
+        user.postValue(User("",0))
+    }
+
+    fun getUser(): MutableLiveData<User> = user
+
     fun setUser(newUser: User) {
         user.postValue(newUser)
     }

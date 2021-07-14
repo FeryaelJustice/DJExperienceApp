@@ -1,3 +1,3 @@
 package com.feryaeldev.djexperience.data.models
 
-data class User(val name: String)
+data class User(var name: String, var edad: Int)
