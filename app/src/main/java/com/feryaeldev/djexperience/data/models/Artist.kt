@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.data.dataclasses
+package com.feryaeldev.djexperience.data.models
 
 import com.feryaeldev.djexperience.data.enums.ArtistType
 
