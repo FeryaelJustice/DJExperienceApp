@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.feryaeldev.djexperience.data.enums.ArtistType
@@ -13,9 +15,6 @@ import com.feryaeldev.djexperience.data.models.Artist
 import com.feryaeldev.djexperience.data.models.User
 import com.feryaeldev.djexperience.data.viewmodels.ArtistViewModel
 import com.feryaeldev.djexperience.data.viewmodels.UserViewModel
-import com.feryaeldev.djexperience.fragments.HomeFragment
-import com.feryaeldev.djexperience.fragments.ProfileFragment
-import com.feryaeldev.djexperience.fragments.SearchFragment
 import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.gms.ads.*
@@ -108,7 +107,14 @@ class MainActivity : BaseActivity() {
         }
 
         // Fragments
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        bottomNavigationView.setupWithNavController(navController)
+        //NavigationUI.setupWithNavController(bottomNavigationView, navController)
+        /*
         bottomNavigationView.selectedItemId = R.id.action_home
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
@@ -127,7 +133,7 @@ class MainActivity : BaseActivity() {
                 else -> false
             }
         }
-
+        */
     }
 
     private fun navigateToOnboarding() {
