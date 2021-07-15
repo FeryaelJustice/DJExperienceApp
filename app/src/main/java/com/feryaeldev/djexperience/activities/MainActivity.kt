@@ -27,15 +27,11 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var a = ""
-        var b = ""
         // VIEW MODELS
         userViewModel.getUser().observe(this, {
-            a = it.name
             findViewById<TextView>(R.id.tv1).text = it.edad.toString()
         })
         artistViewModel.getArtist().observe(this, {
-            b = it.name
             findViewById<TextView>(R.id.tv2).text = it.edad.toString()
         })
 
@@ -56,7 +52,7 @@ class MainActivity : BaseActivity() {
             userViewModel.setUser(
                 User(
                     "Fer",
-                    userViewModel.getUser().value!!.edad+1
+                    userViewModel.getUser().value!!.edad + 1
                 )
             )
         }
@@ -64,7 +60,7 @@ class MainActivity : BaseActivity() {
             artistViewModel.setArtist(
                 Artist(
                     "Fer", ArtistType.DJ,
-                    artistViewModel.getArtist().value!!.edad+1
+                    artistViewModel.getArtist().value!!.edad + 1
                 )
             )
         }
