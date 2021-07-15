@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">DJ Experience</string>
     <string name="onboarding_start">Comenzar</string>
+    <string name="bottom_nav_home">Inicio</string>
+    <string name="bottom_nav_search">Buscar</string>
+    <string name="bottom_nav_profile">Perfil</string>
 </resources>

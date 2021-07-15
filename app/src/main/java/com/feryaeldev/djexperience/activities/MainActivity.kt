@@ -13,9 +13,13 @@ import com.feryaeldev.djexperience.data.models.Artist
 import com.feryaeldev.djexperience.data.models.User
 import com.feryaeldev.djexperience.data.viewmodels.ArtistViewModel
 import com.feryaeldev.djexperience.data.viewmodels.UserViewModel
+import com.feryaeldev.djexperience.fragments.HomeFragment
+import com.feryaeldev.djexperience.fragments.ProfileFragment
+import com.feryaeldev.djexperience.fragments.SearchFragment
 import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.gms.ads.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : BaseActivity() {
 
@@ -102,6 +106,28 @@ class MainActivity : BaseActivity() {
                 // to the app after tapping on an ad.
             }
         }
+
+        // Fragments
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNavigationView.selectedItemId = R.id.action_home
+        bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_home -> {
+                    replaceFragment(HomeFragment.newInstance())
+                    true
+                }
+                R.id.action_search -> {
+                    replaceFragment(SearchFragment.newInstance())
+                    true
+                }
+                R.id.action_profile -> {
+                    replaceFragment(ProfileFragment.newInstance())
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     private fun navigateToOnboarding() {
