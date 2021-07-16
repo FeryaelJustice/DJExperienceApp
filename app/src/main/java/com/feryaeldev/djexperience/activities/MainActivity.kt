@@ -2,13 +2,15 @@ package com.feryaeldev.djexperience.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.SearchView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
-import com.google.android.gms.ads.AdView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : BaseActivity() {
@@ -23,11 +25,14 @@ class MainActivity : BaseActivity() {
 
         // SETTINGS
 
+        // Onboarding and other settings
         //val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
         val settings = Settings(applicationContext)
         if (settings.isFirstOpen()) {
             navigateToOnboarding()
         }
+        // Initialize toolbar
+        setSupportActionBar(findViewById(R.id.my_toolbar))
 
         // FRAGMENTS BOTTOM NAV AND NAVIGATION COMPONENT
 
@@ -36,6 +41,9 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         bottomNavigationView.setupWithNavController(navController)
+        bottomNavigationView.setOnItemReselectedListener {
+            // Avoid reload
+        }
         //NavigationUI.setupWithNavController(bottomNavigationView, navController)
         /*
         bottomNavigationView.selectedItemId = R.id.action_home
@@ -138,5 +146,57 @@ class MainActivity : BaseActivity() {
     private fun navigateToOnboarding() {
         startActivity(Intent(applicationContext, OnboardingActivity::class.java))
         finish()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_settings -> {
+            showMessageShort("You pressed Settings!")
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_settings, menu)
+
+        /*
+        // Define the listener
+        val expandListener = object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                // Do something when action item collapses
+                return true // Return true to collapse action view
+            }
+
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                // Do something when expanded
+                return true // Return true to expand action view
+            }
+        }
+
+        // Get the MenuItem for the action item
+        val actionMenuItem = menu?.findItem(R.id.action_search)
+
+        // Assign the listener to that action item
+        actionMenuItem?.setOnActionExpandListener(expandListener)
+        */
+
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.queryHint = "Search artists"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                // Here code
+                return false
+            }
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 }

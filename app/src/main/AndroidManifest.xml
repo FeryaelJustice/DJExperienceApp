@@ -33,7 +33,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DJExperience.StatusBar" />
     </application>
 
 </manifest>

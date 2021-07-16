@@ -23,4 +23,14 @@
         <item name="itemIconTint">@color/color_secondary_light</item>
         <item name="itemTextColor">@color/color_secondary_light</item>
     </style>
+
+    <!-- Defined a new style with three items of color. -->
+    <style name="Theme.DJExperience.StatusBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary</item>
+
+        <!-- Defining that new color in ColorPrimaryDark -->
+        <item name="colorPrimaryDark">@color/color_primary</item>
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
 </resources>

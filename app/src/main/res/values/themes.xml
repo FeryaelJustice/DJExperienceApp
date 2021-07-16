@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.DJExperience" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -22,5 +22,16 @@
         <item name="android:background">@color/color_navigation_bottom_background</item>
         <item name="itemIconTint">@color/color_secondary_light</item>
         <item name="itemTextColor">@color/color_secondary_light</item>
+    </style>
+
+
+    <!-- Defined a new style with three items of color. -->
+    <style name="Theme.DJExperience.StatusBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary</item>
+
+        <!-- Defining that new color in ColorPrimaryDark -->
+        <item name="colorPrimaryDark">@color/color_primary</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
 </resources>

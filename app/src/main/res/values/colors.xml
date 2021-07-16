@@ -10,6 +10,7 @@
 
     <!-- App colors -->
     <color name="color_primary">@color/purple_500</color>
+    <color name="color_accent">@color/purple_700</color>
     <color name="color_secondary">#FF8F00</color>
     <color name="color_secondary_light">#FFD299</color>
     <color name="color_background">@color/white</color>
