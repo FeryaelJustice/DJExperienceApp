@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.feryaeldev.djexperience.R
@@ -172,27 +171,8 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_settings, menu)
 
+        // For menu search, DO THE SEARCH INSIDE THE ACTIVITIES OR FRAGMENTS, NOT LIKE THIS
         /*
-        // Define the listener
-        val expandListener = object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                // Do something when action item collapses
-                return true // Return true to collapse action view
-            }
-
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                // Do something when expanded
-                return true // Return true to expand action view
-            }
-        }
-
-        // Get the MenuItem for the action item
-        val actionMenuItem = menu?.findItem(R.id.action_search)
-
-        // Assign the listener to that action item
-        actionMenuItem?.setOnActionExpandListener(expandListener)
-        */
-
         val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
         searchView.queryHint = "Search artists"
@@ -207,6 +187,7 @@ class MainActivity : BaseActivity() {
                 return false
             }
         })
+        */
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -214,6 +195,7 @@ class MainActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+        this.finish()
     }
 
     override fun finish() {

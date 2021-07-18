@@ -13,10 +13,13 @@ class InfoActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+        this.finish()
     }
 
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
     }
+
+
 }
