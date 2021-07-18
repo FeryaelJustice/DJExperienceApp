@@ -28,9 +28,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun search(search: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        /*CoroutineScope(Dispatchers.IO).launch {
 
-        }
+        }*/
     }
 
 }

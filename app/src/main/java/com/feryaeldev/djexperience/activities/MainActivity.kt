@@ -12,6 +12,7 @@ import com.feryaeldev.djexperience.base.BaseActivity
 import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : BaseActivity() {
 
@@ -44,27 +45,8 @@ class MainActivity : BaseActivity() {
         bottomNavigationView.setOnItemReselectedListener {
             // Avoid reload
         }
-        //NavigationUI.setupWithNavController(bottomNavigationView, navController)
-        /*
-        bottomNavigationView.selectedItemId = R.id.action_home
-        bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_home -> {
-                    replaceFragment(HomeFragment.newInstance())
-                    true
-                }
-                R.id.action_search -> {
-                    replaceFragment(SearchFragment.newInstance())
-                    true
-                }
-                R.id.action_profile -> {
-                    replaceFragment(ProfileFragment.newInstance())
-                    true
-                }
-                else -> false
-            }
-        }
-        */
+
+        messageFirebaseAnalytics()
 
         // VIEW MODELS
 
@@ -146,6 +128,13 @@ class MainActivity : BaseActivity() {
     private fun navigateToOnboarding() {
         startActivity(Intent(applicationContext, OnboardingActivity::class.java))
         finish()
+    }
+
+    private fun messageFirebaseAnalytics() {
+        val analytics = FirebaseAnalytics.getInstance(applicationContext)
+        val bundle = Bundle()
+        bundle.putString("message", "Integración de Firebase completa")
+        analytics.logEvent("Init", bundle)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
