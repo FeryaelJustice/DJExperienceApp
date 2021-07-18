@@ -7,4 +7,9 @@
     <string name="settings">Settings</string>
     <string name="search">Search</string>
     <string name="action_info">Information</string>
+    <string name="signIn">Sign in</string>
+    <string name="signUp">Sign up</string>
+    <string name="signUpInfo">Still not have an account? Register here.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.feryaeldev.djexperience.R
+import com.feryaeldev.djexperience.base.BaseFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
     companion object {
         fun newInstance(): SearchFragment = SearchFragment()

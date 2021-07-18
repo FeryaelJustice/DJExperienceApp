@@ -7,4 +7,9 @@
     <string name="settings">Ajustes</string>
     <string name="search">Buscar</string>
     <string name="action_info">Información</string>
+    <string name="signIn">Iniciar sesión</string>
+    <string name="signUp">Registrarse</string>
+    <string name="signUpInfo">¿Aún no tienes una cuenta? Regístrate aquí.</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
 </resources>
