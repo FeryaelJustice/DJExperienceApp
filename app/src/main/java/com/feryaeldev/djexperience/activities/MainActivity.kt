@@ -13,6 +13,7 @@ import com.feryaeldev.djexperience.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : BaseActivity() {
 
@@ -150,6 +151,12 @@ class MainActivity : BaseActivity() {
         }
         R.id.action_settings -> {
             showMessageShort("You pressed Settings!")
+            true
+        }
+        R.id.action_signout -> {
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+            finish()
             true
         }
         else -> {

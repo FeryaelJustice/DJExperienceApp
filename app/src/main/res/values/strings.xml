@@ -12,4 +12,7 @@
     <string name="signUpInfo">¿Aún no tienes una cuenta? Regístrate aquí.</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
+    <string name="signInError">Fallo al intentar iniciar sesión</string>
+    <string name="signUpError">Error al registrarse</string>
+    <string name="signOut">Cerrar Sesión</string>
 </resources>
