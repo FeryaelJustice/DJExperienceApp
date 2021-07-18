@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.activities.MainActivity
+import com.feryaeldev.djexperience.activities.LoginActivity
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.button.MaterialButton
@@ -35,7 +35,7 @@ class OnboardingActivity : BaseActivity() {
         }
         val language = Locale.getDefault().displayLanguage
         showMessageLong("Welcome to DJ Experience! Language: $language")
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        val intent = Intent(applicationContext, LoginActivity::class.java)
         intent.putExtra("goToOnboarding", false)
         startActivity(intent)
         finish()

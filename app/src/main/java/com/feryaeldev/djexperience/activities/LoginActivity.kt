@@ -7,12 +7,22 @@ import android.widget.EditText
 import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
+import com.feryaeldev.djexperience.onboarding.OnboardingActivity
+import com.feryaeldev.djexperience.settings.Settings
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // SETTINGS
+
+        // Onboarding and other settings
+        val settings = Settings(applicationContext)
+        if (settings.isFirstOpen()) {
+            navigateToOnboarding()
+        }
 
         if (FirebaseAuth.getInstance().currentUser != null) {
             // User is signed in (getCurrentUser() will be null if not signed in)
@@ -49,6 +59,11 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(applicationContext, RegisterActivity::class.java))
             overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
         }
+    }
+
+    private fun navigateToOnboarding() {
+        startActivity(Intent(applicationContext, OnboardingActivity::class.java))
+        finish()
     }
 
     override fun onBackPressed() {

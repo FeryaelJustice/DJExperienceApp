@@ -25,14 +25,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // SETTINGS
-
-        // Onboarding and other settings
-        //val preferences = getSharedPreferences("Settings", Context.MODE_PRIVATE) ?: return
-        val settings = Settings(applicationContext)
-        if (settings.isFirstOpen()) {
-            navigateToOnboarding()
-        }
         // Initialize toolbar
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
@@ -124,11 +116,6 @@ class MainActivity : BaseActivity() {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ),
         )*/
-    }
-
-    private fun navigateToOnboarding() {
-        startActivity(Intent(applicationContext, OnboardingActivity::class.java))
-        finish()
     }
 
     private fun messageFirebaseAnalytics() {

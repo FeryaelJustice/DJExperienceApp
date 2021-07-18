@@ -2,11 +2,14 @@ package com.feryaeldev.djexperience.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +29,29 @@ class RegisterActivity : BaseActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
+                            val db = Firebase.firestore
+                            val user = hashMapOf(
+                                "email" to emailEditText.text.toString(),
+                                "nickname" to "",
+                                "name" to "",
+                                "surnames" to "",
+                                "age" to 0,
+                                "country" to ""
+                            )
+                            FirebaseAuth.getInstance().currentUser?.let { fUser ->
+                                db.collection("users").document(fUser.uid)
+                                    .set(user)
+                                    .addOnSuccessListener {
+                                        Log.d(
+                                            "UserAddedToDB",
+                                            "DocumentSnapshot added successfully"
+                                        )
+                                        showMessageShort("Error on creating user in DB, auth success.")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.w("UserFailedToAddToDB", "Error adding document", e)
+                                    }
+                            }
                             startActivity(Intent(applicationContext, MainActivity::class.java))
                             overridePendingTransition(
                                 R.anim.slide_down_reverse,
