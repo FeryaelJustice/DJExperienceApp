@@ -17,8 +17,16 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/settings"
-        app:showAsAction="never" />
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/action_info"
+            android:title="@string/action_info"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/settings"
+            app:showAsAction="never" />
+    </group>
 </menu>

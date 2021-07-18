@@ -1,6 +1,7 @@
 package com.feryaeldev.djexperience.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -149,6 +150,16 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_info -> {
+            val intentInfo = Intent(applicationContext, InfoActivity::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(intentInfo)
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
+            } else {
+                startActivity(intentInfo)
+            }
+            true
+        }
         R.id.action_settings -> {
             showMessageShort("You pressed Settings!")
             true
@@ -198,5 +209,15 @@ class MainActivity : BaseActivity() {
         })
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
     }
 }
