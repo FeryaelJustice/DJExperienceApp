@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.onboarding
+package com.feryaeldev.djexperience.activities.onboarding
 
 import android.content.Intent
 import android.os.Bundle

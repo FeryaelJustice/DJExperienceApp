@@ -9,8 +9,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
-import com.feryaeldev.djexperience.onboarding.OnboardingActivity
-import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth

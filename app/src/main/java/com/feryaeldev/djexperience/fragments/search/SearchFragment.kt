@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.fragments
+package com.feryaeldev.djexperience.fragments.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
 import com.feryaeldev.djexperience.data.models.Artist
-import com.feryaeldev.djexperience.fragments.search.SearchRecyclerViewAdapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

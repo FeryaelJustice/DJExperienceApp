@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
-import com.feryaeldev.djexperience.onboarding.OnboardingActivity
+import com.feryaeldev.djexperience.activities.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.firebase.auth.FirebaseAuth
 

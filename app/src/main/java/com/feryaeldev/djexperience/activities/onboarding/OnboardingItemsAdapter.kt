@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.onboarding
+package com.feryaeldev.djexperience.activities.onboarding
 
 import android.view.LayoutInflater
 import android.view.View
