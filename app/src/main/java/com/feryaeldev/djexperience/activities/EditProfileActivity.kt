@@ -1,34 +1,23 @@
-package com.feryaeldev.djexperience.fragments
+package com.feryaeldev.djexperience.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.activities.EditProfileActivity
-import com.feryaeldev.djexperience.base.BaseFragment
+import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
-class ProfileFragment : BaseFragment() {
+class EditProfileActivity : BaseActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_profile)
 
-    companion object {
-        fun newInstance(): ProfileFragment = ProfileFragment()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
         val db = Firebase.firestore
         val userId = Firebase.auth.currentUser?.uid
         val docRef = userId?.let { db.collection("users").document(it) }
@@ -36,17 +25,17 @@ class ProfileFragment : BaseFragment() {
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
                 Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
-                val nickname: TextView = view.findViewById(R.id.profile_nickname)
-                val category: TextView = view.findViewById(R.id.profile_category)
-                val country: TextView = view.findViewById(R.id.profile_country)
+                val nickname: TextView = findViewById(R.id.editprofile_nickname)
+                val category: TextView = findViewById(R.id.editprofile_category)
+                val country: TextView = findViewById(R.id.editprofile_country)
                 nickname.text = document.data?.get("nickname").toString()
                 category.text = document.data?.get("category").toString()
                 country.text = document.data?.get("country").toString()
                 val profileRef =
                     Firebase.storage.reference.child("users/${Firebase.auth.currentUser?.uid}/profilepicture.jpg")
                 profileRef.downloadUrl.addOnSuccessListener {
-                    val image: ImageView = view.findViewById(R.id.profile_photo)
-                    Glide.with(view.context).load(it).fitCenter()
+                    val image: ImageView = findViewById(R.id.editprofile_photo)
+                    Glide.with(applicationContext).load(it).fitCenter()
                         .dontAnimate()
                         .into(image)
                 }
@@ -56,9 +45,20 @@ class ProfileFragment : BaseFragment() {
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
         }
-        view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
-            startActivity(Intent(view.context, EditProfileActivity::class.java))
+
+        findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
+            onBackPressed()
         }
-        return view
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+        this.finish()
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
     }
 }

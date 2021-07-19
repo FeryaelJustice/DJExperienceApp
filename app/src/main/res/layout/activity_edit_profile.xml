@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_primary"
+    tools:context=".fragments.ProfileFragment">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/editprofile_photo"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_baseline_person_24"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp" />
+
+        <EditText
+            android:id="@+id/editprofile_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Nickname"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/editprofile_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/editprofile_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Country"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/editprofile_saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="Save" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>

@@ -34,7 +34,6 @@
             android:name=".activities.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.RegisterActivity"
             android:configChanges="orientation"
@@ -53,6 +52,11 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DJExperience.StatusBar" />
+
+        <activity
+            android:name=".activities.EditProfileActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
