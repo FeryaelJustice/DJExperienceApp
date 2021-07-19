@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,21 +29,8 @@ class SearchFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+        var initRecyclerView = false
         // Code here
-        val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
-        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                showMessageLong("Has buscado:${query}")
-                search("a")
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                showMessageShort("Estás buscando:${newText}")
-                search("b")
-                return false
-            }
-        })
 
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -67,6 +55,37 @@ class SearchFragment : BaseFragment() {
         }
         mAdapter = SearchRecyclerViewAdapter(artistsList)
         mRecyclerView.adapter = mAdapter
+
+        val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                showMessageLong("Has buscado:${query}")
+                search("a")
+                if (!initRecyclerView) {
+                    initRecyclerView = true
+                    mRecyclerView.let {
+                        mRecyclerView.visibility = View.VISIBLE
+                    }
+                    view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+                        View.GONE
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                showMessageShort("Estás buscando:${newText}")
+                search("b")
+                if (!initRecyclerView) {
+                    initRecyclerView = true
+                    mRecyclerView.let {
+                        mRecyclerView.visibility = View.VISIBLE
+                    }
+                    view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+                        View.GONE
+                }
+                return false
+            }
+        })
 
         // Inflate the layout for this fragment
         return view
