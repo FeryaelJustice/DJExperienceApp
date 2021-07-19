@@ -9,6 +9,7 @@
         android:id="@+id/searchitem_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_baseline_person_24"
         app:civ_border_color="@color/black"
         app:civ_border_width="2dp" />

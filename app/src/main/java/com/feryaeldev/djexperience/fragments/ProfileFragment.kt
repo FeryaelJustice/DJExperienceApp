@@ -1,6 +1,7 @@
 package com.feryaeldev.djexperience.fragments
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,8 +16,9 @@ import com.feryaeldev.djexperience.base.BaseFragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import java.io.File
 
 class ProfileFragment : BaseFragment() {
 
@@ -48,12 +50,24 @@ class ProfileFragment : BaseFragment() {
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
         }
-        val profileRef =
-            Firebase.storage.reference.child("users/${userId}/profilepicture.png")
-        profileRef.downloadUrl.addOnSuccessListener {
-            val image: ImageView = view.findViewById(R.id.profile_photo)
-            Picasso.get().load(it).placeholder(R.drawable.ic_baseline_person_24).error(R.drawable.ic_baseline_person_24).into(image)
+        val profilePicRef =
+            FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
+
+        val image: ImageView = view.findViewById(R.id.profile_photo)
+        val tempFile = File.createTempFile("tempImage","jpg")
+        profilePicRef.getFile(tempFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
+            image.setImageBitmap(bitmap)
         }
+        tempFile.delete()
+        /*
+        profilePicRef.downloadUrl.addOnSuccessListener {
+            val image: ImageView = view.findViewById(R.id.profile_photo)
+            Picasso.get().load(it)
+                .error(R.drawable.ic_baseline_person_24).into(image)
+        }
+        */
+
         view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
             startActivity(Intent(view.context, EditProfileActivity::class.java))
         }

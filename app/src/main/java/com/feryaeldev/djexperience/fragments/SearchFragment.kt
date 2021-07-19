@@ -29,6 +29,21 @@ class SearchFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         // Code here
+        val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                showMessageLong("Has buscado:${query}")
+                search("a")
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                showMessageShort("Estás buscando:${newText}")
+                search("b")
+                return false
+            }
+        })
+
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
         val db = Firebase.firestore
@@ -52,21 +67,6 @@ class SearchFragment : BaseFragment() {
         }
         mAdapter = SearchRecyclerViewAdapter(artistsList)
         mRecyclerView.adapter = mAdapter
-
-        val search: SearchView = view.findViewById<SearchView>(R.id.fragment_search_searchView)
-        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                showMessageLong("Has buscado:${query}")
-                search("")
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                showMessageShort("Estás buscando:${newText}")
-                search("")
-                return false
-            }
-        })
 
         // Inflate the layout for this fragment
         return view

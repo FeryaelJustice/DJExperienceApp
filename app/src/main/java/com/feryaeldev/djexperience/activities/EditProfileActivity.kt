@@ -1,5 +1,6 @@
 package com.feryaeldev.djexperience.activities
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,8 +11,8 @@ import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import com.squareup.picasso.Picasso
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class EditProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,13 +37,17 @@ class EditProfileActivity : BaseActivity() {
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
         }
-        val profileRef =
-            Firebase.storage.reference.child("users/${userId}/profilepicture.png")
-        profileRef.downloadUrl.addOnSuccessListener {
-            val image: ImageView = findViewById(R.id.editprofile_photo)
-            Picasso.get().load(it).placeholder(R.drawable.ic_baseline_person_24)
-                .error(R.drawable.ic_baseline_person_24).into(image)
+        val profilePicRef =
+            FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
+
+        val image: ImageView = findViewById(R.id.editprofile_photo)
+        val tempFile = File.createTempFile("tempImage", "jpg")
+        profilePicRef.getFile(tempFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
+            image.setImageBitmap(bitmap)
         }
+        tempFile.delete()
+
         findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
             onBackPressed()
         }
