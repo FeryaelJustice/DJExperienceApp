@@ -1,13 +1,18 @@
 package com.feryaeldev.djexperience.fragments.search
 
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
+import com.feryaeldev.djexperience.activities.MainActivity
 import com.feryaeldev.djexperience.data.models.Artist
+import com.feryaeldev.djexperience.fragments.artistdetails.ArtistDetailsFragment
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
@@ -28,6 +33,8 @@ class SearchRecyclerViewAdapter(private val artists: MutableList<Artist>) :
     override fun getItemCount(): Int = artists.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val context: Context = view.context
+        private val layout: LinearLayout = view.findViewById(R.id.search_item)
         private val artistNickname: TextView = view.findViewById(R.id.searchitem_nickname)
         private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
@@ -42,6 +49,13 @@ class SearchRecyclerViewAdapter(private val artists: MutableList<Artist>) :
                 artistImage.setImageBitmap(bitmap)
             }
             tempFile.delete()
+            layout.setOnClickListener {
+                val fragment = ArtistDetailsFragment()
+                val bundle = Bundle()
+                bundle.putString("id", userId)
+                fragment.arguments = bundle
+                (context as MainActivity).replaceFragment(fragment)
+            }
         }
     }
 }
