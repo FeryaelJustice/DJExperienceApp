@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
@@ -17,7 +18,9 @@ class ArtistDetailsFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
         val arguments = arguments
-        view.findViewById<FrameLayout>(R.id.dr)
+        view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
         view.findViewById<TextView>(R.id.fragment_artist_details_text).text =
             arguments?.getString("id")
         return view
