@@ -5,13 +5,13 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
 
 class EditProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,6 @@ class EditProfileActivity : BaseActivity() {
         val db = Firebase.firestore
         val userId = Firebase.auth.currentUser?.uid
         val docRef = userId?.let { db.collection("users").document(it) }
-
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
                 Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
@@ -31,21 +30,19 @@ class EditProfileActivity : BaseActivity() {
                 nickname.text = document.data?.get("nickname").toString()
                 category.text = document.data?.get("category").toString()
                 country.text = document.data?.get("country").toString()
-                val profileRef =
-                    Firebase.storage.reference.child("users/${Firebase.auth.currentUser?.uid}/profilepicture.jpg")
-                profileRef.downloadUrl.addOnSuccessListener {
-                    val image: ImageView = findViewById(R.id.editprofile_photo)
-                    Glide.with(applicationContext).load(it).fitCenter()
-                        .dontAnimate()
-                        .into(image)
-                }
             } else {
                 Log.d("nodata", "No such document")
             }
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
         }
-
+        val profileRef =
+            Firebase.storage.reference.child("users/${userId}/profilepicture.png")
+        profileRef.downloadUrl.addOnSuccessListener {
+            val image: ImageView = findViewById(R.id.editprofile_photo)
+            Picasso.get().load(it).placeholder(R.drawable.ic_baseline_person_24)
+                .error(R.drawable.ic_baseline_person_24).into(image)
+        }
         findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
             onBackPressed()
         }
