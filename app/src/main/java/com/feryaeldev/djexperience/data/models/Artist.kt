@@ -1,5 +1,12 @@
 package com.feryaeldev.djexperience.data.models
 
-import com.feryaeldev.djexperience.data.enums.ArtistType
-
-data class Artist(var name: String, var type: ArtistType, var edad: Int)
+data class Artist(
+    var id: String,
+    var name: String,
+    var surnames: String,
+    var nickname: String,
+    var email: String,
+    var country: String,
+    var category: String,
+    var age: Int
+)
