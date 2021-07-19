@@ -10,6 +10,6 @@
         android:top="100dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/fer" />
+            android:src="@drawable/headphones" />
     </item>
 </layer-list>
