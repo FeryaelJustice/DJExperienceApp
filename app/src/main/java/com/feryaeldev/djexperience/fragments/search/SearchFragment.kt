@@ -1,5 +1,6 @@
 package com.feryaeldev.djexperience.fragments.search
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,10 @@ class SearchFragment : BaseFragment() {
     }
 
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: ArtistsRecyclerViewAdapter
+
+    // All the original artists to return to the initial list without querying firebase
+    private var artistsListOriginal: MutableList<Artist> = arrayListOf()
+    private var artistsListTemp: MutableList<Artist> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +39,9 @@ class SearchFragment : BaseFragment() {
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
         val db = Firebase.firestore
-        val artistsList: MutableList<Artist> = arrayListOf()
         db.collection("artists").get().addOnSuccessListener {
             for (document in it.documents) {
-                artistsList.add(
-                    artistsList.size,
+                artistsListTemp.add(
                     Artist(
                         document["id"].toString(),
                         document["name"].toString(),
@@ -54,7 +56,9 @@ class SearchFragment : BaseFragment() {
                 )
             }
         }
-        mAdapter = ArtistsRecyclerViewAdapter(artistsList)
+        //lateinit var mAdapter: ArtistsRecyclerViewAdapter
+        artistsListOriginal.addAll(artistsListTemp)
+        val mAdapter = ArtistsRecyclerViewAdapter(artistsListTemp)
         mRecyclerView.adapter = mAdapter
 
         val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
@@ -68,6 +72,7 @@ class SearchFragment : BaseFragment() {
                     view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
                         View.GONE
                 }
+                search(query)
                 return false
             }
 
@@ -88,10 +93,23 @@ class SearchFragment : BaseFragment() {
         return view
     }
 
-    private fun search(search: String) {
-        /*CoroutineScope(Dispatchers.IO).launch {
-
-        }*/
+    private fun search(search: String?) {
+        val searchText = search?.lowercase()
+        artistsListTemp.clear()
+        if (searchText?.length!! > 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //
+            }
+            artistsListOriginal.forEach {
+                if (it.id.contains(searchText)) {
+                    artistsListTemp.add(it)
+                }
+            }
+            mRecyclerView.adapter?.notifyDataSetChanged()
+        } else {
+            artistsListTemp.addAll(artistsListOriginal)
+            mRecyclerView.adapter?.notifyDataSetChanged()
+        }
     }
 
 }
