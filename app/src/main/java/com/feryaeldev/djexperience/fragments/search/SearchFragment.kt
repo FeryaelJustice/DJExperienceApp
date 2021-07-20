@@ -47,7 +47,8 @@ class SearchFragment : BaseFragment() {
                         document["email"].toString(),
                         document["country"].toString(),
                         document["category"].toString(),
-                        document["age"].toString().toInt()
+                        document["age"].toString().toInt(),
+                        document["website"].toString()
                     )
                 )
             }
@@ -58,8 +59,6 @@ class SearchFragment : BaseFragment() {
         val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                showMessageLong("Has buscado:${query}")
-                search("a")
                 if (!initRecyclerView) {
                     initRecyclerView = true
                     mRecyclerView.let {
@@ -72,8 +71,6 @@ class SearchFragment : BaseFragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                showMessageShort("Estás buscando:${newText}")
-                search("b")
                 if (!initRecyclerView) {
                     initRecyclerView = true
                     mRecyclerView.let {

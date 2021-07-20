@@ -8,5 +8,6 @@ data class User(
     var email: String,
     var country: String,
     var category: String,
-    var age: Int
+    var age: Int,
+    var website: String
 )

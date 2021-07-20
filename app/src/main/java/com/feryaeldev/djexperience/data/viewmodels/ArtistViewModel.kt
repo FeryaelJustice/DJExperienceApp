@@ -9,7 +9,7 @@ class ArtistViewModel : ViewModel() {
     private val artist = MutableLiveData<Artist>()
 
     init {
-        artist.postValue(Artist("", "DJ and Producer", "", "", "", "", "", 0))
+        artist.postValue(Artist("", "DJ and Producer", "", "", "", "", "", 0, ""))
     }
 
     fun getArtist(): MutableLiveData<Artist> = artist
