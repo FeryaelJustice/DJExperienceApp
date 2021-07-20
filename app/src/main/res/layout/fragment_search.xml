@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     tools:context=".fragments.search.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
@@ -24,7 +25,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="30sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:visibility="visible"
         android:text="Make a search!"/>

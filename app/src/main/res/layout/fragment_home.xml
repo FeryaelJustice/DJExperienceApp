@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@color/black"
     tools:context=".fragments.home.HomeFragment">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/headphones" />
+        android:src="@drawable/headphoneswhite" />
 
     <TextView
         android:layout_width="wrap_content"
