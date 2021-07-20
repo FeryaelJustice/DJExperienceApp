@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.fragments.search
+package com.feryaeldev.djexperience.common
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -17,8 +17,8 @@ import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
 
-class SearchRecyclerViewAdapter(private val artists: MutableList<Artist>) :
-    RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder>() {
+class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
+    RecyclerView.Adapter<ArtistsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

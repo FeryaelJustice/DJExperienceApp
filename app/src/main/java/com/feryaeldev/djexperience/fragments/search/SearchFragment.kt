@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
+import com.feryaeldev.djexperience.common.ArtistsRecyclerViewAdapter
 import com.feryaeldev.djexperience.data.models.Artist
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,7 +22,7 @@ class SearchFragment : BaseFragment() {
     }
 
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: SearchRecyclerViewAdapter
+    lateinit var mAdapter: ArtistsRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +54,7 @@ class SearchFragment : BaseFragment() {
                 )
             }
         }
-        mAdapter = SearchRecyclerViewAdapter(artistsList)
+        mAdapter = ArtistsRecyclerViewAdapter(artistsList)
         mRecyclerView.adapter = mAdapter
 
         val search: SearchView = view.findViewById(R.id.fragment_search_searchView)

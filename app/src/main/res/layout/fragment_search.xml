@@ -28,6 +28,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:visibility="visible"
-        android:text="Make a search!"/>
+        android:text="@string/search_hint"/>
 
 </LinearLayout>
