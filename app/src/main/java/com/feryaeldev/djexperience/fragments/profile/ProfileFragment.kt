@@ -10,9 +10,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.activities.EditProfileActivity
 import com.feryaeldev.djexperience.base.BaseFragment
+import com.feryaeldev.djexperience.common.ArtistsRecyclerViewAdapter
+import com.feryaeldev.djexperience.data.models.Artist
+import com.feryaeldev.djexperience.data.models.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -25,24 +30,43 @@ class ProfileFragment : BaseFragment() {
         fun newInstance(): ProfileFragment = ProfileFragment()
     }
 
+    lateinit var mRecyclerView: RecyclerView
+    lateinit var mAdapter: ArtistsRecyclerViewAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        var followingArtistsIds: ArrayList<String> = arrayListOf()
+
         val db = Firebase.firestore
         val userId = Firebase.auth.currentUser?.uid
         val docRef = userId?.let { db.collection("users").document(it) }
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
-                Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
                 val nickname: TextView = view.findViewById(R.id.profile_nickname)
                 val category: TextView = view.findViewById(R.id.profile_category)
                 val country: TextView = view.findViewById(R.id.profile_country)
-                nickname.text = document.data?.get("nickname").toString()
-                category.text = document.data?.get("category").toString()
-                country.text = document.data?.get("country").toString()
+                val user: User? = document.toObject(User::class.java)
+                nickname.text = user?.nickname
+                category.text = user?.category
+                country.text = user?.country
+                followingArtistsIds = user?.following ?: arrayListOf()
+
+                mRecyclerView = view.findViewById(R.id.fragment_profile_recyclerView)
+                mRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
+
+                val artistsList: MutableList<Artist> = arrayListOf()
+
+                for (id: String in followingArtistsIds) {
+                    artistsList.add(Artist(id, "", "", "", "", "", "", 0, ""))
+                }
+
+                mAdapter = ArtistsRecyclerViewAdapter(artistsList)
+                mRecyclerView.adapter = mAdapter
+                //mAdapter.notifyDataSetChanged()
             } else {
                 Log.d("nodata", "No such document")
             }
@@ -53,7 +77,7 @@ class ProfileFragment : BaseFragment() {
             FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
 
         val image: ImageView = view.findViewById(R.id.profile_photo)
-        val tempFile = File.createTempFile("tempImage","jpg")
+        val tempFile = File.createTempFile("tempImage", "jpg")
         profilePicRef.getFile(tempFile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
             image.setImageBitmap(bitmap)
@@ -70,6 +94,7 @@ class ProfileFragment : BaseFragment() {
         view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
             startActivity(Intent(view.context, EditProfileActivity::class.java))
         }
+
 
         return view
     }

@@ -11,4 +11,7 @@ data class User(
     var age: Int,
     var website: String,
     var following: ArrayList<String>
-)
+) {
+    // NEEDED FOR TOOBJECT FROM FIREBASE DESERIALIZE
+    constructor() : this("", "", "", "", "", "", "", 0, "", arrayListOf())
+}

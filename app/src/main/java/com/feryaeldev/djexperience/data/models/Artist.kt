@@ -10,4 +10,7 @@ data class Artist(
     var category: String,
     var age: Int,
     var website: String
-)
+) {
+    // NEEDED FOR TOOBJECT FROM FIREBASE DESERIALIZE
+    constructor() : this("", "", "", "", "", "", "", 0, "")
+}
