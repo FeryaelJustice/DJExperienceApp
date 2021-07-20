@@ -36,7 +36,11 @@ class RegisterActivity : BaseActivity() {
                                 "name" to "",
                                 "surnames" to "",
                                 "age" to 0,
-                                "country" to ""
+                                "country" to "",
+                                "category" to "",
+                                "age" to 0,
+                                "following" to arrayListOf<String>(),
+                                "website" to ""
                             )
                             FirebaseAuth.getInstance().currentUser?.let { fUser ->
                                 db.collection("users").document(fUser.uid)

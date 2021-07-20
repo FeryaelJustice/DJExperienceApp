@@ -12,11 +12,11 @@ import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
 import com.feryaeldev.djexperience.data.models.Artist
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
-import java.lang.Exception
 
 class ArtistDetailsFragment : BaseFragment() {
 
@@ -30,6 +30,9 @@ class ArtistDetailsFragment : BaseFragment() {
             parentFragmentManager.popBackStack()
         }
         val userId = arguments?.getString("id")
+
+        val addRemoveToProfile: FloatingActionButton =
+            view.findViewById(R.id.fragment_artist_details_addRemoveToProfile)
 
         val image: ImageView = view.findViewById(R.id.fragment_artist_details_photo)
         val nickname: TextView = view.findViewById(R.id.fragment_artist_details_nickname)
@@ -74,13 +77,23 @@ class ArtistDetailsFragment : BaseFragment() {
 
         image.setOnClickListener {
             if (websiteUrl != "") {
-                try{
+                try {
                     val intentURL = Intent(Intent.ACTION_VIEW)
                     intentURL.data = Uri.parse("http://$websiteUrl")
                     startActivity(intentURL)
-                } catch (e: Exception){
+                } catch (e: Exception) {
                     showMessageShort("Error trying to open website of the artist: $e")
                 }
+            }
+        }
+
+        addRemoveToProfile.setOnClickListener {
+            if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
+                addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+            } else {
+                addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
             }
         }
 
