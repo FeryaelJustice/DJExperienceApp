@@ -12,7 +12,9 @@ import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
 import com.feryaeldev.djexperience.data.models.Artist
+import com.feryaeldev.djexperience.data.models.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -25,14 +27,19 @@ class ArtistDetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
-        val arguments = arguments
         view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-        val userId = arguments?.getString("id")
+
+        // VITAL VARIABLES
+        val arguments = arguments
+        val userId = Firebase.auth.currentUser?.uid
+        val artistId = arguments?.getString("id")
 
         val addRemoveToProfile: FloatingActionButton =
             view.findViewById(R.id.fragment_artist_details_addRemoveToProfile)
+        val addRemoveToProfileText: TextView =
+            view.findViewById(R.id.fragment_artist_details_addRemoveToProfileText)
 
         val image: ImageView = view.findViewById(R.id.fragment_artist_details_photo)
         val nickname: TextView = view.findViewById(R.id.fragment_artist_details_nickname)
@@ -44,7 +51,8 @@ class ArtistDetailsFragment : BaseFragment() {
         var websiteUrl = ""
 
         val db = Firebase.firestore
-        userId?.let { id ->
+        // Get artist data
+        artistId?.let { id ->
             db.collection("artists").document(id).get().addOnSuccessListener { documentSnap ->
                 val artist = Artist(
                     documentSnap["id"].toString(),
@@ -75,6 +83,30 @@ class ArtistDetailsFragment : BaseFragment() {
             tempFile.delete()
         }
 
+        val docRef = userId?.let { db.collection("users").document(it) }
+        // Update button if following artist
+        docRef?.get()?.addOnSuccessListener { document ->
+            if (document != null) {
+                val user: User? = document.toObject(User::class.java)
+                var found = false
+                user?.following?.forEach {
+                    if (it == artistId) {
+                        found = true
+                    }
+                }
+                if (found) {
+                    addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                    addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+                    addRemoveToProfileText.text = view.resources.getString(R.string.substract)
+                } else {
+                    addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                    addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+                    addRemoveToProfileText.text = view.resources.getString(R.string.add)
+                }
+            }
+        }
+
+        // Image go to website
         image.setOnClickListener {
             if (websiteUrl != "") {
                 try {
@@ -87,13 +119,38 @@ class ArtistDetailsFragment : BaseFragment() {
             }
         }
 
+        // Add or remove artist from following on user logic
         addRemoveToProfile.setOnClickListener {
-            if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
-                addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
-                addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-            } else {
-                addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
-                addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+            docRef?.get()?.addOnSuccessListener { document ->
+                if (document != null) {
+                    val user: User? = document.toObject(User::class.java)
+                    // Push or substract artist
+                    if (artistId != null) {
+                        if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
+                            user?.following?.add(artistId)
+                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                            addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+                            addRemoveToProfileText.text =
+                                view.resources.getString(R.string.substract)
+                        } else {
+                            val tempList = arrayListOf<String>()
+                            user?.following?.let { it1 -> tempList.addAll(it1) }
+                            user?.following?.forEach {
+                                if (it == artistId) {
+                                    tempList.remove(it)
+                                }
+                            }
+                            user?.following = tempList
+                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                            addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+                            addRemoveToProfileText.text = view.resources.getString(R.string.add)
+                        }
+                    }
+                    // Update
+                    if (user != null) {
+                        db.collection("users").document(userId).set(user)
+                    }
+                }
             }
         }
 
