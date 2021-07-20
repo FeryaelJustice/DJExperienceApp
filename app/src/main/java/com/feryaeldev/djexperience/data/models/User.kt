@@ -9,5 +9,6 @@ data class User(
     var country: String,
     var category: String,
     var age: Int,
-    var website: String
+    var website: String,
+    var following: ArrayList<String>
 )
