@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
 import com.feryaeldev.djexperience.data.models.Artist
@@ -29,11 +30,11 @@ class ArtistDetailsFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
         view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
-            parentFragmentManager.popBackStack()
+            //parentFragmentManager.popBackStack()
             /*val navHostFragment =
                 parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             navHostFragment.navController.popBackStack()*/
-            //findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
         // VITAL VARIABLES
