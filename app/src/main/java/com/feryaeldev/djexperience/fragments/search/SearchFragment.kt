@@ -1,6 +1,5 @@
 package com.feryaeldev.djexperience.fragments.search
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +34,9 @@ class SearchFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         var initRecyclerView = false
         // Code here
+
+        artistsListOriginal.clear()
+        artistsListTemp.clear()
 
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -97,9 +99,11 @@ class SearchFragment : BaseFragment() {
         val searchText = search?.lowercase()
         artistsListTemp.clear()
         if (searchText?.length!! > 0) {
+            /*
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                //
+
             }
+            */
             artistsListOriginal.forEach {
                 if (it.id.contains(searchText)) {
                     artistsListTemp.add(it)

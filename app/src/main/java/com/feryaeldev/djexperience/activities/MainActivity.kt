@@ -178,9 +178,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        /*super.onBackPressed()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
-        this.finish()
+        this.finish()*/
     }
 
     override fun finish() {
