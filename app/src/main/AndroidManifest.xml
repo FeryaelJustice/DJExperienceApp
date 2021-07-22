@@ -39,6 +39,10 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activities.RecoverAccountActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.onboarding.OnboardingActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
@@ -52,7 +56,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DJExperience.StatusBar" />
-
         <activity
             android:name=".activities.EditProfileActivity"
             android:configChanges="orientation"

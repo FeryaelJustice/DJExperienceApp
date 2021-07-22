@@ -59,6 +59,10 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(applicationContext, RegisterActivity::class.java))
             overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
         }
+        findViewById<TextView>(R.id.forgot_password).setOnClickListener {
+            startActivity(Intent(applicationContext, RecoverAccountActivity::class.java))
+            overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+        }
     }
 
     private fun navigateToOnboarding() {
