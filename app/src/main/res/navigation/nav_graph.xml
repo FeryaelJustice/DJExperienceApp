@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_artistDetailsFragment"
+            app:destination="@id/artistDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_searchFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_artistDetailsFragment"
+            app:destination="@id/artistDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -40,5 +46,23 @@
         <action
             android:id="@+id/action_profileFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_artistDetailsFragment"
+            app:destination="@id/artistDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistDetailsFragment"
+        android:name="com.feryaeldev.djexperience.fragments.artistdetails.ArtistDetailsFragment"
+        android:label="fragment_artist_details"
+        tools:layout="@layout/fragment_artist_details" >
+        <action
+            android:id="@+id/action_artistDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_artistDetailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_artistDetailsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

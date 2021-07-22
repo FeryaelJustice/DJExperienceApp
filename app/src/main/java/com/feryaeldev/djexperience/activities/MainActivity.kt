@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.feryaeldev.djexperience.R
@@ -18,6 +19,9 @@ class MainActivity : BaseActivity() {
     //lateinit var mAdView: AdView
     //private val userViewModel: UserViewModel by viewModels()
     //private val artistViewModel: ArtistViewModel by viewModels()
+    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var navHostFragment: NavHostFragment
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +32,10 @@ class MainActivity : BaseActivity() {
 
         // FRAGMENTS BOTTOM NAV AND NAVIGATION COMPONENT
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
-        val navHostFragment =
+        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         bottomNavigationView.setupWithNavController(navController)
         bottomNavigationView.setOnItemReselectedListener {
             // Avoid reload

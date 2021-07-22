@@ -1,18 +1,15 @@
 package com.feryaeldev.djexperience.common
 
-import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.activities.MainActivity
 import com.feryaeldev.djexperience.data.models.Artist
-import com.feryaeldev.djexperience.fragments.artistdetails.ArtistDetailsFragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -30,13 +27,23 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = artists[position]
         holder.render(item)
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("id", item.id)
+            val navController = Navigation.findNavController(it)
+            if (navController.currentDestination?.id == R.id.profileFragment) {
+                navController.navigate(R.id.action_profileFragment_to_artistDetailsFragment, bundle)
+            } else if (navController.currentDestination?.id == R.id.searchFragment) {
+                navController.navigate(R.id.action_searchFragment_to_artistDetailsFragment, bundle)
+            }
+        }
     }
 
     override fun getItemCount(): Int = artists.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val context: Context = view.context
-        private val layout: LinearLayout = view.findViewById(R.id.search_item)
+        //private val context: Context = view.context
+        //private val layout: LinearLayout = view.findViewById(R.id.search_item)
         private val artistNickname: TextView = view.findViewById(R.id.searchitem_nickname)
         private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
@@ -67,6 +74,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
                     )
                     artistNickname.text = artist.nickname
                 }
+            /*
             layout.setOnClickListener {
                 val fragment = ArtistDetailsFragment()
                 val bundle = Bundle()
@@ -74,6 +82,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
                 fragment.arguments = bundle
                 (context as MainActivity).replaceFragment(fragment)
             }
+            */
         }
     }
 }
