@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.activities.LoginActivity
 import com.feryaeldev.djexperience.base.BaseActivity
+import com.feryaeldev.djexperience.data.models.OnboardingItem
 import com.feryaeldev.djexperience.settings.Settings
 import com.google.android.material.button.MaterialButton
 import java.util.*

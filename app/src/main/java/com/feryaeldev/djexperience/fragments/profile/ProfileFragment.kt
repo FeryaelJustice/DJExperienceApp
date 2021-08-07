@@ -21,14 +21,10 @@ import com.feryaeldev.djexperience.data.models.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class ProfileFragment : BaseFragment() {
-
-    companion object {
-        fun newInstance(): ProfileFragment = ProfileFragment()
-    }
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mAdapter: ArtistsRecyclerViewAdapter
@@ -39,7 +35,7 @@ class ProfileFragment : BaseFragment() {
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        var followingArtistsIds: ArrayList<String> = arrayListOf()
+        var followingArtistsIds: ArrayList<String>
 
         val db = Firebase.firestore
         val userId = Firebase.auth.currentUser?.uid
@@ -74,7 +70,7 @@ class ProfileFragment : BaseFragment() {
             Log.d("error", "get failed with ", exception)
         }
         val profilePicRef =
-            FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
+            Firebase.storage.reference.child("profile_images/${userId}.jpg")
 
         val image: ImageView = view.findViewById(R.id.profile_photo)
         val tempFile = File.createTempFile("tempImage", "jpg")
@@ -83,6 +79,7 @@ class ProfileFragment : BaseFragment() {
             image.setImageBitmap(bitmap)
         }
         tempFile.delete()
+
         /*
         profilePicRef.downloadUrl.addOnSuccessListener {
             val image: ImageView = view.findViewById(R.id.profile_photo)

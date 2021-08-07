@@ -15,7 +15,7 @@
     <string name="signInError">Fallo al intentar iniciar sesión</string>
     <string name="signUpError">Error al registrarse</string>
     <string name="signOut">Cerrar Sesión</string>
-    <string name="edad">"Edad: %1$s"</string>
+    <string name="age">"Edad: %1$s"</string>
     <string name="information">¡Hola! Soy FeryaelDev, creador de DJ Experience.\n\nEsta app se ha desarrollado para proporcionarte toda la información que necesitabas sobre tus DJs favoritos.\nSi quieres puedes seguirme en mis redes principales para cualquier duda o sugerencia.\n\n¡Muchas gracias!</string>
     <string name="search_hint">¡Realiza una búsqueda\npara encontrar a tus\nartistas favoritos!</string>
     <string name="add">Añadir</string>

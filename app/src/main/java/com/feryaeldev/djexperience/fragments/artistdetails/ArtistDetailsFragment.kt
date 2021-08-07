@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
@@ -19,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class ArtistDetailsFragment : BaseFragment() {
@@ -30,10 +29,14 @@ class ArtistDetailsFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
         view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
+
             //parentFragmentManager.popBackStack()
-            /*val navHostFragment =
+            /*
+            val navHostFragment =
                 parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            navHostFragment.navController.popBackStack()*/
+            navHostFragment.navController.popBackStack()
+            */
+
             findNavController().popBackStack()
         }
 
@@ -57,6 +60,7 @@ class ArtistDetailsFragment : BaseFragment() {
         var websiteUrl = ""
 
         val db = Firebase.firestore
+
         // Get artist data
         artistId?.let { id ->
             db.collection("artists").document(id).get().addOnSuccessListener { documentSnap ->
@@ -76,11 +80,11 @@ class ArtistDetailsFragment : BaseFragment() {
                 surnames.text = artist.surnames
                 country.text = artist.country
                 category.text = artist.category
-                age.text = resources.getString(R.string.edad, artist.age.toString())
-                websiteUrl = artist.website
+                age.text = resources.getString(R.string.age, artist.age.toString())
+                websiteUrl = artist.website.toString()
             }
             val profilePicRef =
-                FirebaseStorage.getInstance().reference.child("profile_images/${id}.jpg")
+                Firebase.storage.reference.child("profile_images/${id}.jpg")
             val tempFile = File.createTempFile("tempImage", "jpg")
             profilePicRef.getFile(tempFile).addOnSuccessListener {
                 val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
@@ -90,6 +94,7 @@ class ArtistDetailsFragment : BaseFragment() {
         }
 
         val docRef = userId?.let { db.collection("users").document(it) }
+
         // Update button if following artist
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
@@ -159,7 +164,6 @@ class ArtistDetailsFragment : BaseFragment() {
                 }
             }
         }
-
         return view
     }
 

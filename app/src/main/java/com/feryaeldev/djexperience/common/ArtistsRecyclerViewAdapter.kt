@@ -12,7 +12,7 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.models.Artist
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
 
@@ -51,29 +51,33 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
             //artistNickname.text = item.nickname
             val id = item.id
             val profilePicRef =
-                FirebaseStorage.getInstance().reference.child("profile_images/${id}.jpg")
+                Firebase.storage.reference.child("profile_images/${id}.jpg")
             val tempFile = File.createTempFile("tempImage", "jpg")
             profilePicRef.getFile(tempFile).addOnSuccessListener {
                 val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
                 artistImage.setImageBitmap(bitmap)
             }
             tempFile.delete()
+
             // Por si solo viene el artist con el ID y no rellenado.
-            Firebase.firestore.collection("artists").document(id).get()
-                .addOnSuccessListener { documentSnap ->
-                    val artist = Artist(
-                        documentSnap["id"].toString(),
-                        documentSnap["name"].toString(),
-                        documentSnap["surnames"].toString(),
-                        documentSnap["nickname"].toString(),
-                        documentSnap["email"].toString(),
-                        documentSnap["country"].toString(),
-                        documentSnap["category"].toString(),
-                        documentSnap["age"].toString().toInt(),
-                        documentSnap["website"].toString()
-                    )
-                    artistNickname.text = artist.nickname
-                }
+            id?.let {
+                Firebase.firestore.collection("artists").document(id).get()
+                    .addOnSuccessListener { documentSnap ->
+                        val artist = Artist(
+                            documentSnap["id"].toString(),
+                            documentSnap["name"].toString(),
+                            documentSnap["surnames"].toString(),
+                            documentSnap["nickname"].toString(),
+                            documentSnap["email"].toString(),
+                            documentSnap["country"].toString(),
+                            documentSnap["category"].toString(),
+                            documentSnap["age"].toString().toInt(),
+                            documentSnap["website"].toString()
+                        )
+                        artistNickname.text = artist.nickname
+                    }
+            }
+
             /*
             layout.setOnClickListener {
                 val fragment = ArtistDetailsFragment()

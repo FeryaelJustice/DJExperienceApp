@@ -1,7 +1,6 @@
 package com.feryaeldev.djexperience.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,14 +10,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : BaseActivity() {
 
     //lateinit var mAdView: AdView
-    //private val userViewModel: UserViewModel by viewModels()
-    //private val artistViewModel: ArtistViewModel by viewModels()
+
     lateinit var bottomNavigationView: BottomNavigationView
     lateinit var navHostFragment: NavHostFragment
     lateinit var navController: NavController
@@ -31,7 +30,6 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         // FRAGMENTS BOTTOM NAV AND NAVIGATION COMPONENT
-
         bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -43,35 +41,7 @@ class MainActivity : BaseActivity() {
 
         messageFirebaseAnalytics()
 
-        // VIEW MODELS
-
-        /*
-        userViewModel.getUser().observe(this, {
-            findViewById<TextView>(R.id.tv1).text = it.edad.toString()
-        })
-        artistViewModel.getArtist().observe(this, {
-            findViewById<TextView>(R.id.tv2).text = it.edad.toString()
-        })
-        findViewById<Button>(R.id.id).setOnClickListener {
-            userViewModel.setUser(
-                User(
-                    "Fer",
-                    userViewModel.getUser().value!!.edad + 1
-                )
-            )
-        }
-        findViewById<Button>(R.id.id2).setOnClickListener {
-            artistViewModel.setArtist(
-                Artist(
-                    "Fer", ArtistType.DJ,
-                    artistViewModel.getArtist().value!!.edad + 1
-                )
-            )
-        }
-        */
-
         // ADS
-
         /*
         MobileAds.initialize(this) {}
 
@@ -104,8 +74,8 @@ class MainActivity : BaseActivity() {
         */
 
         // CRASHLYTICS
-
-        /*val crashButton = Button(this)
+        /*
+        val crashButton = Button(this)
         crashButton.text = "Crash!"
         crashButton.setOnClickListener {
             throw RuntimeException("Test Crash") // Force a crash
@@ -117,11 +87,12 @@ class MainActivity : BaseActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ),
-        )*/
+        )
+        */
     }
 
     private fun messageFirebaseAnalytics() {
-        val analytics = FirebaseAnalytics.getInstance(applicationContext)
+        val analytics = Firebase.analytics
         val bundle = Bundle()
         bundle.putString("message", "Integración de Firebase completa")
         analytics.logEvent("Init", bundle)
@@ -130,12 +101,8 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_info -> {
             val intentInfo = Intent(applicationContext, InfoActivity::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                startActivity(intentInfo)
-                overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
-            } else {
-                startActivity(intentInfo)
-            }
+            startActivity(intentInfo)
+            overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
             true
         }
         R.id.action_settings -> {
@@ -143,7 +110,7 @@ class MainActivity : BaseActivity() {
             true
         }
         R.id.action_signout -> {
-            FirebaseAuth.getInstance().signOut()
+            Firebase.auth.signOut()
             startActivity(Intent(applicationContext, LoginActivity::class.java))
             finish()
             true

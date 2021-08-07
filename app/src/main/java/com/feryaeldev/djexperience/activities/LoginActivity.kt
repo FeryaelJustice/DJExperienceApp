@@ -9,26 +9,28 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 import com.feryaeldev.djexperience.activities.onboarding.OnboardingActivity
 import com.feryaeldev.djexperience.settings.Settings
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         // SETTINGS
 
-        // Onboarding and other settings
+        // OnBoarding and other settings
         val settings = Settings(applicationContext)
         if (settings.isFirstOpen()) {
             navigateToOnboarding()
         }
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        if (Firebase.auth.currentUser != null) {
             // User is signed in (getCurrentUser() will be null if not signed in)
-            val intent = Intent(this, MainActivity::class.java);
-            startActivity(intent);
-            finish();
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         findViewById<Button>(R.id.login_btn).setOnClickListener {
@@ -36,7 +38,7 @@ class LoginActivity : BaseActivity() {
             val passwordEditText = findViewById<EditText>(R.id.login_password)
 
             if (!emailEditText.text.isNullOrBlank() && !passwordEditText.text.isNullOrBlank()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                Firebase.auth.signInWithEmailAndPassword(
                     emailEditText.text.toString(),
                     passwordEditText.text.toString()
                 ).addOnCompleteListener {

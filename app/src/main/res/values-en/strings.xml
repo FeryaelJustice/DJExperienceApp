@@ -15,7 +15,7 @@
     <string name="signInError">Error on trying to sign in</string>
     <string name="signUpError">Error on register</string>
     <string name="signOut">Sign out</string>
-    <string name="edad">"Age: %1$s "</string>
+    <string name="age">"Age: %1$s "</string>
     <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!</string>
     <string name="search_hint">¡Make a search to find your favourite artists!</string>
     <string name="add">Add</string>

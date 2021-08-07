@@ -5,9 +5,11 @@ import android.widget.EditText
 import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class RecoverAccountActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recover_account)
@@ -15,7 +17,7 @@ class RecoverAccountActivity : BaseActivity() {
         findViewById<TextView>(R.id.recover_btn).setOnClickListener {
             val email = findViewById<EditText>(R.id.recover_email).text.toString()
             if (email.isNotBlank()) {
-                FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener {
+                Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showMessageLong("Check your email!")
                         onBackPressed()

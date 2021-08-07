@@ -17,10 +17,6 @@ import com.google.firebase.ktx.Firebase
 
 class SearchFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance(): SearchFragment = SearchFragment()
-    }
-
     lateinit var mRecyclerView: RecyclerView
 
     // All the original artists to return to the initial list without querying firebase
@@ -33,8 +29,8 @@ class SearchFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         var initRecyclerView = false
-        // Code here
 
+        // Code here
         artistsListOriginal.clear()
         artistsListTemp.clear()
 
@@ -90,8 +86,6 @@ class SearchFragment : BaseFragment() {
                 return false
             }
         })
-
-        // Inflate the layout for this fragment
         return view
     }
 
@@ -99,19 +93,16 @@ class SearchFragment : BaseFragment() {
         val searchText = search?.lowercase()
         artistsListTemp.clear()
         if (searchText?.length!! > 0) {
-            /*
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-            }
-            */
             artistsListOriginal.forEach {
-                if (it.id.contains(searchText)) {
+                if (it.id?.contains(searchText) == true) {
                     artistsListTemp.add(it)
                 }
             }
+            //mRecyclerView.adapter?.notifyItemChanged()
             mRecyclerView.adapter?.notifyDataSetChanged()
         } else {
             artistsListTemp.addAll(artistsListOriginal)
+            //mRecyclerView.adapter?.notifyItemChanged()
             mRecyclerView.adapter?.notifyDataSetChanged()
         }
     }

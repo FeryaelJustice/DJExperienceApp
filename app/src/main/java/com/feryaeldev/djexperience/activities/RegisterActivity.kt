@@ -7,15 +7,15 @@ import android.widget.Button
 import android.widget.EditText
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
 
         findViewById<Button>(R.id.signup_btn).setOnClickListener {
             val emailEditText = findViewById<EditText>(R.id.signup_email)
@@ -24,7 +24,7 @@ class RegisterActivity : BaseActivity() {
 
             if (!emailEditText.text.isNullOrBlank() && !passwordEditText.text.isNullOrBlank() && !repeatPasswordEditText.text.isNullOrBlank()) {
                 if (passwordEditText.text.toString() == repeatPasswordEditText.text.toString()) {
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                    Firebase.auth.createUserWithEmailAndPassword(
                         emailEditText.text.toString(),
                         passwordEditText.text.toString()
                     ).addOnCompleteListener {
@@ -42,7 +42,7 @@ class RegisterActivity : BaseActivity() {
                                 "following" to arrayListOf<String>(),
                                 "website" to ""
                             )
-                            FirebaseAuth.getInstance().currentUser?.let { fUser ->
+                            Firebase.auth.currentUser?.let { fUser ->
                                 db.collection("users").document(fUser.uid)
                                     .set(user)
                                     .addOnSuccessListener {

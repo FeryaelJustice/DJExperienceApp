@@ -1,9 +1,12 @@
 package com.feryaeldev.djexperience.base
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.feryaeldev.djexperience.R
+import com.google.firebase.FirebaseApp
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -13,15 +16,5 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected fun showMessageLong(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-    }
-
-    // Fragments
-
-    public fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 }

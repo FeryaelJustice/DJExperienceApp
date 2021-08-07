@@ -11,10 +11,11 @@ import com.feryaeldev.djexperience.base.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class EditProfileActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
@@ -38,7 +39,7 @@ class EditProfileActivity : BaseActivity() {
             Log.d("error", "get failed with ", exception)
         }
         val profilePicRef =
-            FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
+            Firebase.storage.reference.child("profile_images/${userId}.jpg")
 
         val image: ImageView = findViewById(R.id.editprofile_photo)
         val tempFile = File.createTempFile("tempImage", "jpg")
