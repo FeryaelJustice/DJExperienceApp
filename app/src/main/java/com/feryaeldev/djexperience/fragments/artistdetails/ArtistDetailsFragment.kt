@@ -35,17 +35,6 @@ class ArtistDetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
-        view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
-
-            //parentFragmentManager.popBackStack()
-            /*
-            val navHostFragment =
-                parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            navHostFragment.navController.popBackStack()
-            */
-
-            findNavController().popBackStack()
-        }
 
         // VITAL VARIABLES
         val arguments = arguments
@@ -173,9 +162,42 @@ class ArtistDetailsFragment : BaseFragment() {
         }
 
         // Media demo track
+
+        // Instances
+        // For remote get song: val mediaPlayer = MediaPlayer()
         val mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
         val seekBar = view.findViewById<SeekBar>(R.id.seekbarDemoTrack)
         val playPauseBtn = view.findViewById<ImageView>(R.id.media_play_btn_demoTrack)
+
+        // Get track
+        val demoSongRef = Firebase.storage.reference.child("songs/demo/${id}.mp3")
+
+        /*
+        val tempFile = File.createTempFile("tempAudio", "mp3")
+        demoSongRef.getFile(tempFile).addOnSuccessListener {
+            Log.d("complete", "COMPLETE DOWNLOAD DEMO AUDIO")
+        }
+        demoSongRef.metadata.addOnSuccessListener {
+            view.findViewById<TextView>(R.id.media_demoTrack_title).text = it.name
+        }
+        mediaPlayer.setDataSource(this,tempFile)
+        tempFile.delete()
+        */
+
+        /* GOOD WAY
+        demoSongRef.downloadUrl.addOnSuccessListener {
+            mediaPlayer.setDataSource(it.toString())
+
+            // Initialize
+            seekBar.progress = 0
+            mediaPlayer.seekTo(0)
+            mediaPlayer.setOnPreparedListener { player ->
+                player.start()
+            }
+            mediaPlayer.prepareAsync()
+            seekBar.max = mediaPlayer.duration
+        }
+        */
 
         // Initialize
         seekBar.progress = 0
@@ -225,7 +247,38 @@ class ArtistDetailsFragment : BaseFragment() {
             mediaPlayer.seekTo(0)
         }
 
+        // Autoplay on load
+        mediaPlayer.setOnPreparedListener { player ->
+            player.start()
+            playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24)
+        }
+
+        // CLOSE BUTTON
+        view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
+
+            //parentFragmentManager.popBackStack()
+            /*
+            val navHostFragment =
+                parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            navHostFragment.navController.popBackStack()
+            */
+
+            mediaPlayer.stop()
+            seekBar.progress = 0
+            playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            findNavController().popBackStack()
+        }
+
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id != R.id.artistDetailsFragment) {
+                mediaPlayer.stop()
+                seekBar.progress = 0
+                playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            }
+        }
+
         return view
     }
+
 
 }
