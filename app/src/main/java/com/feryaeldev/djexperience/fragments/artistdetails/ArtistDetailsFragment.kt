@@ -2,12 +2,16 @@ package com.feryaeldev.djexperience.fragments.artistdetails
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
@@ -22,6 +26,9 @@ import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class ArtistDetailsFragment : BaseFragment() {
+
+    // Media
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -164,6 +171,60 @@ class ArtistDetailsFragment : BaseFragment() {
                 }
             }
         }
+
+        // Media demo track
+        val mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
+        val seekBar = view.findViewById<SeekBar>(R.id.seekbarDemoTrack)
+        val playPauseBtn = view.findViewById<ImageView>(R.id.media_play_btn_demoTrack)
+
+        // Initialize
+        seekBar.progress = 0
+        mediaPlayer.seekTo(0)
+        seekBar.max = mediaPlayer.duration
+
+        // Play pause button
+        playPauseBtn.setOnClickListener {
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.pause()
+                playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            } else {
+                mediaPlayer.start()
+                playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24)
+            }
+        }
+
+        // Jump into user selection
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekbar: SeekBar?, position: Int, changed: Boolean) {
+                if (changed) {
+                    mediaPlayer.seekTo(position)
+                }
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+        })
+
+        // Update seekbar to media position
+        activity?.runOnUiThread(object : Runnable {
+            override fun run() {
+                if (mediaPlayer != null) {
+                    seekBar.progress = mediaPlayer.currentPosition
+                }
+                handler.postDelayed(this, 1000)
+            }
+        })
+
+        // When music finishes, seekbar position to 0 and button image change
+        mediaPlayer.setOnCompletionListener {
+            playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            seekBar.progress = 0
+            mediaPlayer.seekTo(0)
+        }
+
         return view
     }
 

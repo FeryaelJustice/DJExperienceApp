@@ -86,6 +86,50 @@
             android:text="Artist Age" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07999998">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Demo track:" />
+
+        <ImageButton
+            android:id="@+id/media_play_btn_demoTrack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/media_btn_background"
+            android:src="@drawable/ic_baseline_play_arrow_24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Headhunterz - Orange Heart" />
+
+            <SeekBar
+                android:id="@+id/seekbarDemoTrack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="50" />
+        </LinearLayout>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/fragment_artist_details_addRemoveToProfileText"
         android:layout_width="wrap_content"
@@ -97,7 +141,7 @@
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"/>
+        app:layout_constraintVertical_bias="0.95" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_artist_details_addRemoveToProfile"
