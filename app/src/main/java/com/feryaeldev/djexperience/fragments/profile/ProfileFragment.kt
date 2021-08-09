@@ -1,6 +1,5 @@
 package com.feryaeldev.djexperience.fragments.profile
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.activities.EditProfileActivity
 import com.feryaeldev.djexperience.base.BaseFragment
 import com.feryaeldev.djexperience.common.ArtistsRecyclerViewAdapter
 import com.feryaeldev.djexperience.data.models.Artist
@@ -33,7 +32,7 @@ class ProfileFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         var followingArtistsIds: ArrayList<String>
 
@@ -89,7 +88,11 @@ class ProfileFragment : BaseFragment() {
         */
 
         view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
-            startActivity(Intent(view.context, EditProfileActivity::class.java))
+            //startActivity(Intent(view.context, EditProfileFragment::class.java))
+            findNavController().navigate(
+                R.id.action_profileFragment_to_editProfileFragment,
+                arguments
+            )
         }
 
 
