@@ -29,6 +29,9 @@ class ArtistDetailsFragment : BaseFragment() {
 
     // Media
     private val handler = Handler(Looper.getMainLooper())
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var seekBar: SeekBar
+    private lateinit var playPauseBtn: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -165,9 +168,9 @@ class ArtistDetailsFragment : BaseFragment() {
 
         // Instances
         // For remote get song: val mediaPlayer = MediaPlayer()
-        val mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
-        val seekBar = view.findViewById<SeekBar>(R.id.seekbarDemoTrack)
-        val playPauseBtn = view.findViewById<ImageView>(R.id.media_play_btn_demoTrack)
+        mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
+        seekBar = view.findViewById<SeekBar>(R.id.seekbarDemoTrack)
+        playPauseBtn = view.findViewById<ImageView>(R.id.media_play_btn_demoTrack)
 
         // Get track
         val demoSongRef = Firebase.storage.reference.child("songs/demo/${id}.mp3")
@@ -262,23 +265,27 @@ class ArtistDetailsFragment : BaseFragment() {
                 parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             navHostFragment.navController.popBackStack()
             */
-
-            mediaPlayer.stop()
-            seekBar.progress = 0
-            playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            resetMediaPlayer()
             findNavController().popBackStack()
         }
 
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id != R.id.artistDetailsFragment) {
-                mediaPlayer.stop()
-                seekBar.progress = 0
-                playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                resetMediaPlayer()
             }
         }
 
         return view
     }
 
+    private fun resetMediaPlayer() {
+        mediaPlayer.stop()
+        seekBar.progress = 0
+        playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        resetMediaPlayer()
+    }
 }
