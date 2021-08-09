@@ -39,6 +39,7 @@ class EditProfileFragment : BaseFragment() {
         val db = Firebase.firestore
         val userId = Firebase.auth.currentUser?.uid
         val docRef = userId?.let { db.collection("users").document(it) }
+
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
                 Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
@@ -46,29 +47,17 @@ class EditProfileFragment : BaseFragment() {
                 category.text = document.data?.get("category").toString()
                 country.text = document.data?.get("country").toString()
 
+                // Get current user to edit
                 user = document.data?.let { mapToObject(it, User::class) }!!
-                /*
-                user.id = document.data?.get("id").toString()
-                user.name = document.data?.get("name").toString()
-                user.surnames = document.data?.get("surnames").toString()
-                user.nickname = document.data?.get("nickname").toString()
-                user.email = document.data?.get("email").toString()
-                user.country = document.data?.get("country").toString()
-                user.category = document.data?.get("category").toString()
-                user.age = document.data?.get("age").toString().toInt()
-                user.website = document.data?.get("website").toString()
-                user.following = arrayListOf()
-                Until i discover how to get array from firestore
-                 */
             } else {
                 Log.d("nodata", "No such document")
             }
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
         }
+
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/${userId}.jpg")
-
         val image: ImageView = view.findViewById(R.id.editprofile_photo)
         val tempFile = File.createTempFile("tempImage", "jpg")
         profilePicRef.getFile(tempFile).addOnSuccessListener {
@@ -77,40 +66,39 @@ class EditProfileFragment : BaseFragment() {
         }
         tempFile.delete()
 
+        // Save
         view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
             //onBackPressed()
-            findNavController().popBackStack()
+            user.nickname = nickname.text.toString()
+            user.category = category.text.toString()
+            user.country = country.text.toString()
+            docRef?.set(user.asMap())
+                ?.addOnSuccessListener {
+                    showMessageLong("Updated!")
+                    findNavController().popBackStack()
+                }?.addOnFailureListener {
+                    showMessageShort("Failed!")
+                }
         }
 
+        // Back
         view.findViewById<ImageView>(R.id.fragment_editprofile_close).setOnClickListener {
-            val db = Firebase.firestore
-            userId?.let { id ->
-                user.nickname = nickname.text.toString()
-                user.category = category.text.toString()
-                user.country = country.text.toString()
-                db.collection("users").document(id).set(user.asMap())
-                    .addOnSuccessListener {
-                        showMessageLong("Updated!")
-                    }.addOnFailureListener {
-                        showMessageShort("Failed!")
-                    }
-            }
             findNavController().popBackStack()
         }
 
-        //  overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+        // overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
 
         return view
     }
 
     // Object to Map
-    inline fun <reified T : Any> T.asMap() : Map<String, Any?> {
+    inline fun <reified T : Any> T.asMap(): Map<String, Any?> {
         val props = T::class.memberProperties.associateBy { it.name }
         return props.keys.associateWith { props[it]?.get(this) }
     }
 
     // Map to Object
-    private inline fun <T : Any> mapToObject(map: Map<String, Any>, clazz: KClass<T>): T {
+    private fun <T : Any> mapToObject(map: Map<String, Any>, clazz: KClass<T>): T {
         //Get default constructor
         val constructor = clazz.constructors.first()
 
