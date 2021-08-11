@@ -69,8 +69,17 @@ class SearchFragment : BaseFragment() {
                     }
                     view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
                         View.GONE
+                } else {
+                    search(query)
+                    if (query.isNullOrBlank()) {
+                        initRecyclerView = false
+                        mRecyclerView.let {
+                            mRecyclerView.visibility = View.GONE
+                        }
+                        view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+                            View.VISIBLE
+                    }
                 }
-                search(query)
                 return false
             }
 
@@ -82,6 +91,15 @@ class SearchFragment : BaseFragment() {
                     }
                     view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
                         View.GONE
+                } else {
+                    if (newText.isNullOrBlank()) {
+                        initRecyclerView = false
+                        mRecyclerView.let {
+                            mRecyclerView.visibility = View.GONE
+                        }
+                        view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+                            View.VISIBLE
+                    }
                 }
                 return false
             }
