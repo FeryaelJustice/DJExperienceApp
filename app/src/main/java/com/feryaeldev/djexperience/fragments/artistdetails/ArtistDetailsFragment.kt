@@ -210,11 +210,9 @@ class ArtistDetailsFragment : BaseFragment() {
         // Play pause button
         playPauseBtn.setOnClickListener {
             if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                pauseMediaPlayer()
             } else {
-                mediaPlayer.start()
-                playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24)
+                startMediaPlayer()
             }
         }
 
@@ -236,9 +234,7 @@ class ArtistDetailsFragment : BaseFragment() {
         // Update seekbar to media position
         activity?.runOnUiThread(object : Runnable {
             override fun run() {
-                if (mediaPlayer != null) {
-                    seekBar.progress = mediaPlayer.currentPosition
-                }
+                seekBar.progress = mediaPlayer.currentPosition
                 handler.postDelayed(this, 1000)
             }
         })
@@ -252,19 +248,11 @@ class ArtistDetailsFragment : BaseFragment() {
 
         // Autoplay on load
         mediaPlayer.setOnPreparedListener { player ->
-            player.start()
-            playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24)
+            startMediaPlayer()
         }
 
         // CLOSE BUTTON
         view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
-
-            //parentFragmentManager.popBackStack()
-            /*
-            val navHostFragment =
-                parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            navHostFragment.navController.popBackStack()
-            */
             resetMediaPlayer()
             findNavController().popBackStack()
         }
@@ -278,10 +266,40 @@ class ArtistDetailsFragment : BaseFragment() {
         return view
     }
 
+    private fun startMediaPlayer() {
+        mediaPlayer.start()
+        playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24)
+    }
+
+    private fun pauseMediaPlayer() {
+        mediaPlayer.pause()
+        playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+    }
+
     private fun resetMediaPlayer() {
         mediaPlayer.stop()
         seekBar.progress = 0
         playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startMediaPlayer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startMediaPlayer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pauseMediaPlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        pauseMediaPlayer()
     }
 
     override fun onDestroy() {
