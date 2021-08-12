@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.File
+import java.io.FileInputStream
 
 class ArtistDetailsFragment : BaseFragment() {
 
@@ -167,45 +169,68 @@ class ArtistDetailsFragment : BaseFragment() {
         // Media demo track
 
         // Instances
-        // For remote get song: val mediaPlayer = MediaPlayer()
-        mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
-        seekBar = view.findViewById<SeekBar>(R.id.seekbarDemoTrack)
-        playPauseBtn = view.findViewById<ImageView>(R.id.media_play_btn_demoTrack)
 
-        // Get track
-        val demoSongRef = Firebase.storage.reference.child("songs/demo/${id}.mp3")
+        seekBar = view.findViewById(R.id.seekbarDemoTrack)
+        playPauseBtn = view.findViewById(R.id.media_play_btn_demoTrack)
+        val mediaTitle = view.findViewById<TextView>(R.id.media_demoTrack_title)
 
-        /*
-        val tempFile = File.createTempFile("tempAudio", "mp3")
-        demoSongRef.getFile(tempFile).addOnSuccessListener {
-            Log.d("complete", "COMPLETE DOWNLOAD DEMO AUDIO")
-        }
-        demoSongRef.metadata.addOnSuccessListener {
-            view.findViewById<TextView>(R.id.media_demoTrack_title).text = it.name
-        }
-        mediaPlayer.setDataSource(this,tempFile)
-        tempFile.delete()
-        */
-
-        /* GOOD WAY
-        demoSongRef.downloadUrl.addOnSuccessListener {
-            mediaPlayer.setDataSource(it.toString())
-
-            // Initialize
-            seekBar.progress = 0
-            mediaPlayer.seekTo(0)
-            mediaPlayer.setOnPreparedListener { player ->
-                player.start()
-            }
-            mediaPlayer.prepareAsync()
-            seekBar.max = mediaPlayer.duration
-        }
-        */
-
+        // LOCAL
+        // Get song:
+        // mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
         // Initialize
+        /*
         seekBar.progress = 0
         mediaPlayer.seekTo(0)
         seekBar.max = mediaPlayer.duration
+        */
+
+        // REMOTE
+        // Init mediaplayer:
+        mediaPlayer = MediaPlayer()
+        mediaPlayer.reset()
+        // Get track reference
+        val demoSongRef = Firebase.storage.reference.child("songs/demo/${artistId}.mp3")
+        // Temp file
+        val tempFile = File.createTempFile("temp_$artistId", ".mp3")
+        tempFile.deleteOnExit()
+        // Download track
+        demoSongRef.getFile(tempFile).addOnSuccessListener {
+            Log.d("download", "success")
+
+            // Configure media player
+            try {
+                val fis = FileInputStream(tempFile)
+                mediaPlayer.setDataSource(fis.fd)
+                mediaPlayer.prepareAsync()
+
+                // On load
+                mediaPlayer.setOnPreparedListener {
+
+                    // Initialize
+                    seekBar.progress = 0
+                    mediaPlayer.seekTo(0)
+                    seekBar.max = mediaPlayer.duration
+
+                    // When music finishes, seekbar position to 0 and button image change
+                    mediaPlayer.setOnCompletionListener {
+                        playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                        seekBar.progress = 0
+                        mediaPlayer.seekTo(0)
+                    }
+
+                    // Change displayed song name
+                    artistId?.let { id ->
+                        val idUppercaseFirstLetter = id.replaceFirstChar { it.uppercase() }
+                        mediaTitle.text = "$idUppercaseFirstLetter Demo:"
+                    }
+
+                    // Autoplay
+                    startMediaPlayer()
+                }
+            } catch (e: Error) {
+                showMessageShort("Error: $e")
+            }
+        }
 
         // Play pause button
         playPauseBtn.setOnClickListener {
@@ -238,18 +263,6 @@ class ArtistDetailsFragment : BaseFragment() {
                 handler.postDelayed(this, 1000)
             }
         })
-
-        // When music finishes, seekbar position to 0 and button image change
-        mediaPlayer.setOnCompletionListener {
-            playPauseBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24)
-            seekBar.progress = 0
-            mediaPlayer.seekTo(0)
-        }
-
-        // Autoplay on load
-        mediaPlayer.setOnPreparedListener { player ->
-            startMediaPlayer()
-        }
 
         // CLOSE BUTTON
         view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
