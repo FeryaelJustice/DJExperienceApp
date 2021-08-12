@@ -1,6 +1,7 @@
 package com.feryaeldev.djexperience.fragments.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,86 +20,52 @@ class SearchFragment : BaseFragment() {
 
     lateinit var mRecyclerView: RecyclerView
 
-    // All the original artists to return to the initial list without querying firebase
-    private var artistsListOriginal: MutableList<Artist> = arrayListOf()
-    private var artistsListTemp: MutableList<Artist> = arrayListOf()
+    private var artistsList: MutableList<Artist> = arrayListOf()
+    private var initRecyclerView = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
-        var initRecyclerView = false
 
         // Code here
-        artistsListOriginal.clear()
-        artistsListTemp.clear()
 
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        val db = Firebase.firestore
-        db.collection("artists").get().addOnSuccessListener {
-            for (document in it.documents) {
-                artistsListTemp.add(
-                    Artist(
-                        document["id"].toString(),
-                        document["name"].toString(),
-                        document["surnames"].toString(),
-                        document["nickname"].toString(),
-                        document["email"].toString(),
-                        document["country"].toString(),
-                        document["category"].toString(),
-                        document["age"].toString().toInt(),
-                        document["website"].toString()
-                    )
-                )
-            }
+
+        search("", false) {
+            val mAdapter = ArtistsRecyclerViewAdapter(artistsList)
+            mRecyclerView.adapter = mAdapter
+            Log.d("search", "searched")
         }
-        //lateinit var mAdapter: ArtistsRecyclerViewAdapter
-        artistsListOriginal.addAll(artistsListTemp)
-        val mAdapter = ArtistsRecyclerViewAdapter(artistsListTemp)
-        mRecyclerView.adapter = mAdapter
 
         val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (!initRecyclerView) {
-                    initRecyclerView = true
-                    mRecyclerView.let {
-                        mRecyclerView.visibility = View.VISIBLE
-                    }
-                    view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
-                        View.GONE
-                } else {
-                    search(query)
-                    if (query.isNullOrBlank()) {
-                        initRecyclerView = false
-                        mRecyclerView.let {
-                            mRecyclerView.visibility = View.GONE
+                if (!query.isNullOrBlank()) {
+                    // Search and show rv if not blank and not rv init
+                    search(query, true) {
+                        Log.d("search", "searched")
+                        if (!initRecyclerView) {
+                            showRecyclerView(view, true)
                         }
-                        view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
-                            View.VISIBLE
                     }
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (!initRecyclerView) {
-                    initRecyclerView = true
-                    mRecyclerView.let {
-                        mRecyclerView.visibility = View.VISIBLE
+                if (!newText.isNullOrBlank()) {
+                    // Show rv if not blank and not rv init
+                    if (!initRecyclerView) {
+                        showRecyclerView(view, true)
                     }
-                    view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
-                        View.GONE
                 } else {
-                    if (newText.isNullOrBlank()) {
-                        initRecyclerView = false
-                        mRecyclerView.let {
-                            mRecyclerView.visibility = View.GONE
-                        }
-                        view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
-                            View.VISIBLE
+                    // Reset
+                    search(newText, false) {
+                        Log.d("search", "searched")
+                        showRecyclerView(view, false)
                     }
                 }
                 return false
@@ -107,21 +74,81 @@ class SearchFragment : BaseFragment() {
         return view
     }
 
-    private fun search(search: String?) {
-        val searchText = search?.lowercase()
-        artistsListTemp.clear()
-        if (searchText?.length!! > 0) {
-            artistsListOriginal.forEach {
-                if (it.id?.contains(searchText) == true) {
-                    artistsListTemp.add(it)
+    private fun showRecyclerView(view: View, show: Boolean) {
+        if (show) {
+            initRecyclerView = true
+            mRecyclerView.let {
+                mRecyclerView.visibility = View.VISIBLE
+            }
+            view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+                View.GONE
+        } else {
+            initRecyclerView = false
+            mRecyclerView.let {
+                mRecyclerView.visibility = View.GONE
+            }
+            view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+                View.VISIBLE
+        }
+    }
+
+    private fun search(search: String?, filter: Boolean, completion: () -> Unit) {
+        try {
+            artistsList.clear()
+            val db = Firebase.firestore
+            if (filter) {
+                db.collection("artists").whereEqualTo("nickname", search).get()
+                    .addOnSuccessListener {
+                        if (it.documents.size == 1) {
+                            artistsList.add(
+                                Artist(
+                                    it.documents[0]["id"].toString(),
+                                    it.documents[0]["name"].toString(),
+                                    it.documents[0]["surnames"].toString(),
+                                    it.documents[0]["nickname"].toString(),
+                                    it.documents[0]["email"].toString(),
+                                    it.documents[0]["country"].toString(),
+                                    it.documents[0]["category"].toString(),
+                                    it.documents[0]["age"].toString().toInt(),
+                                    it.documents[0]["website"].toString()
+                                )
+                            )
+                            mRecyclerView.adapter?.notifyItemChanged(0)
+                        } else {
+                            showMessageShort("More than one or empty result in DB.")
+                        }
+                        completion()
+                    }.addOnFailureListener {
+                        Log.d("error", "Query failed")
+                        completion()
+                    }
+            } else {
+                db.collection("artists").get().addOnSuccessListener {
+                    it.documents.forEachIndexed { index, document ->
+                        artistsList.add(
+                            Artist(
+                                document["id"].toString(),
+                                document["name"].toString(),
+                                document["surnames"].toString(),
+                                document["nickname"].toString(),
+                                document["email"].toString(),
+                                document["country"].toString(),
+                                document["category"].toString(),
+                                document["age"].toString().toInt(),
+                                document["website"].toString()
+                            )
+                        )
+                        mRecyclerView.adapter?.notifyItemChanged(index)
+                    }
+                    completion()
+                }.addOnFailureListener {
+                    Log.d("error", "Query failed")
+                    completion()
                 }
             }
-            //mRecyclerView.adapter?.notifyItemChanged()
-            mRecyclerView.adapter?.notifyDataSetChanged()
-        } else {
-            artistsListTemp.addAll(artistsListOriginal)
-            //mRecyclerView.adapter?.notifyItemChanged()
-            mRecyclerView.adapter?.notifyDataSetChanged()
+        } catch (e: Error) {
+            completion()
+            Log.d("error", e.toString())
         }
     }
 
