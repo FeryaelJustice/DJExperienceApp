@@ -5,6 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
+import com.feryaeldev.djexperience.BuildConfig
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
 
@@ -32,6 +34,8 @@ class InfoActivity : BaseActivity() {
                 Uri.parse("https://feryaeljustice.notion.site/DJ-Experience-d4d4928723af4250a258ac638d7f09a0")
             startActivity(intentURL)
         }
+        findViewById<TextView>(R.id.info_bottomInfo_version).text =
+            getString(R.string.version, BuildConfig.VERSION_NAME)
     }
 
     override fun onBackPressed() {

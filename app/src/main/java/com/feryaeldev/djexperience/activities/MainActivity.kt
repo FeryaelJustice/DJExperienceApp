@@ -106,7 +106,7 @@ class MainActivity : BaseActivity() {
             true
         }
         R.id.action_settings -> {
-            showMessageShort("You pressed Settings!")
+            showMessageShort(getString(R.string.settings))
             true
         }
         R.id.action_signout -> {

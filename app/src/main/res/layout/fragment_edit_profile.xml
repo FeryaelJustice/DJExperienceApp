@@ -14,6 +14,8 @@
         android:layout_gravity="start|top"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:contentDescription=""
+        app:tint="@color/white"
         android:src="@drawable/ic_baseline_close_24" />
 
 
@@ -36,21 +38,27 @@
             android:id="@+id/editprofile_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nickname"
+            android:inputType="text"
+            android:autofillHints=""
+            android:hint="@string/nickname"
             android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/editprofile_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Category"
+            android:inputType="text"
+            android:autofillHints=""
+            android:hint="@string/category"
             android:textColor="@color/white" />
 
         <EditText
             android:id="@+id/editprofile_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Country"
+            android:inputType="text"
+            android:autofillHints=""
+            android:hint="@string/country"
             android:textColor="@color/white" />
 
         <Button
@@ -58,7 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black"
-            android:text="Save" />
+            android:textColor="@color/white"
+            android:text="@string/save" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </FrameLayout>

@@ -10,13 +10,26 @@
         <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/color_primary_night</item>
+        <!-- <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item> -->
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions">true</item>
+        <!-- Popup Menu actionbar -->
+        <item name="actionOverflowMenuStyle">@style/AppBarTheme.Menu</item>
     </style>
 
     <style name="SplashTeme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <style name="AppBarTheme.Menu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/white</item>
     </style>
 
     <style name="BottomNavigationTheme">
@@ -25,14 +38,23 @@
         <item name="itemTextColor">@color/color_navigation_text</item>
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@color/color_primary</item>
+        <item name="queryHint">@string/searchSV_hint</item>
+        <item name="android:inputType">textNoSuggestions</item>
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
 
     <!-- Defined a new style with three items of color. -->
     <style name="Theme.DJExperience.StatusBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_primary</item>
-
         <!-- Defining that new color in ColorPrimaryDark -->
         <item name="colorPrimaryDark">@color/color_primary</item>
         <item name="colorAccent">@color/color_accent</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/color_accent</item>
     </style>
 </resources>

@@ -109,7 +109,7 @@ class ArtistDetailsFragment : BaseFragment() {
                 if (found) {
                     addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
                     addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-                    addRemoveToProfileText.text = view.resources.getString(R.string.substract)
+                    addRemoveToProfileText.text = view.resources.getString(R.string.sustract)
                 } else {
                     addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
                     addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
@@ -143,7 +143,7 @@ class ArtistDetailsFragment : BaseFragment() {
                             addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
                             addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
                             addRemoveToProfileText.text =
-                                view.resources.getString(R.string.substract)
+                                view.resources.getString(R.string.sustract)
                         } else {
                             val tempList = arrayListOf<String>()
                             user?.following?.let { it1 -> tempList.addAll(it1) }
@@ -221,7 +221,7 @@ class ArtistDetailsFragment : BaseFragment() {
                     // Change displayed song name
                     artistId?.let { id ->
                         val idUppercaseFirstLetter = id.replaceFirstChar { it.uppercase() }
-                        mediaTitle.text = "$idUppercaseFirstLetter Demo:"
+                        mediaTitle.text = getString(R.string.artist_demo, idUppercaseFirstLetter)
                     }
 
                     // Autoplay

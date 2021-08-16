@@ -56,21 +56,20 @@ class ProfileFragment : BaseFragment() {
                 val artistsList: MutableList<Artist> = arrayListOf()
 
                 for (id: String in followingArtistsIds) {
-                    artistsList.add(Artist(id, "", "", "", "", "", "", 0, ""))
+                    artistsList.add(Artist(id))
                 }
 
                 mAdapter = ArtistsRecyclerViewAdapter(artistsList)
                 mRecyclerView.adapter = mAdapter
-                //mAdapter.notifyDataSetChanged()
             } else {
                 Log.d("nodata", "No such document")
             }
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
         }
+
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/${userId}.jpg")
-
         val image: ImageView = view.findViewById(R.id.profile_photo)
         val tempFile = File.createTempFile("tempImage", "jpg")
         profilePicRef.getFile(tempFile).addOnSuccessListener {
@@ -79,22 +78,12 @@ class ProfileFragment : BaseFragment() {
         }
         tempFile.delete()
 
-        /*
-        profilePicRef.downloadUrl.addOnSuccessListener {
-            val image: ImageView = view.findViewById(R.id.profile_photo)
-            Picasso.get().load(it)
-                .error(R.drawable.ic_baseline_person_24).into(image)
-        }
-        */
-
         view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
-            //startActivity(Intent(view.context, EditProfileFragment::class.java))
             findNavController().navigate(
                 R.id.action_profileFragment_to_editProfileFragment,
                 arguments
             )
         }
-
 
         return view
     }

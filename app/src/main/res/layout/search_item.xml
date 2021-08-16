@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         android:gravity="center_vertical"
-        android:text="Nickname"/>
+        android:text="@string/nickname"
+        android:textColor="@color/color_primary_night"/>
 
 </LinearLayout>

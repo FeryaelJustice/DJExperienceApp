@@ -19,5 +19,17 @@
     <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!</string>
     <string name="search_hint">¡Make a search to find your favourite artists!</string>
     <string name="add">Add</string>
-    <string name="substract">Restar</string>
+    <string name="sustract">Subtract</string>
+    <string name="info_bottom">Visit DJExperience website to know all the official information.</string>
+    <string name="version">DJ Experience - Version %1$s.</string>
+    <string name="nickname">Nickname</string>
+    <string name="searchSV_hint">Put the EXACT name!</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="save">Save</string>
+    <string name="send_email">Send email</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="following">Following:</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="artist_demo">%1$s demo:</string>
 </resources>

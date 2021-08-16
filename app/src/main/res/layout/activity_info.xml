@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:contentDescription=""
         android:src="@drawable/headphoneswhite" />
 
     <TextView
@@ -43,6 +44,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
+            android:contentDescription=""
             android:src="@drawable/youtube" />
 
         <ImageView
@@ -51,6 +53,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginEnd="10dp"
+            android:contentDescription=""
             android:src="@drawable/instagram" />
     </LinearLayout>
 
@@ -73,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
+                android:contentDescription=""
                 android:src="@drawable/ic_right"
                 app:tint="@color/white" />
 
@@ -81,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@id/info_right1"
-                android:text="Visit DJExperience website to know all the official information."
+                android:text="@string/info_bottom"
                 android:textColor="@color/white" />
         </RelativeLayout>
 
@@ -90,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="DJ Experience - Version 1.0."
+            android:text="@string/version"
             android:textColor="@color/white" />
 
     </LinearLayout>

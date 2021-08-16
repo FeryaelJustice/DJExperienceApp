@@ -19,5 +19,17 @@
     <string name="information">¡Hola! Soy FeryaelDev, creador de DJ Experience.\n\nEsta app se ha desarrollado para proporcionarte toda la información que necesitabas sobre tus DJs favoritos.\nSi quieres puedes seguirme en mis redes principales para cualquier duda o sugerencia.\n\n¡Muchas gracias!</string>
     <string name="search_hint">¡Realiza una búsqueda\npara encontrar a tus\nartistas favoritos!</string>
     <string name="add">Añadir</string>
-    <string name="substract">Restar</string>
+    <string name="sustract">Restar</string>
+    <string name="info_bottom">Visita la web de DJExperience para saber toda la información oficial.</string>
+    <string name="version">DJ Experience - Versión %1$s.</string>
+    <string name="nickname">Nombre de usuario</string>
+    <string name="searchSV_hint">¡Pon el nombre EXACTO!</string>
+    <string name="category">Categoría</string>
+    <string name="country">País</string>
+    <string name="save">Guardar</string>
+    <string name="send_email">Enviar correo</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="following">Siguiendo:</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="artist_demo">%1$s demo:</string>
 </resources>
