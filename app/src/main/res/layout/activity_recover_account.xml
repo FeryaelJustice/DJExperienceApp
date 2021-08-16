@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        android:textColor="@color/color_secondary"
+        android:textColor="@color/color_primary"
         android:autofillHints=""
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
