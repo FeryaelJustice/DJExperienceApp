@@ -36,7 +36,7 @@
 
         <EditText
             android:id="@+id/editprofile_nickname"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:autofillHints=""
@@ -45,7 +45,7 @@
 
         <EditText
             android:id="@+id/editprofile_category"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:autofillHints=""
@@ -54,7 +54,7 @@
 
         <EditText
             android:id="@+id/editprofile_country"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:autofillHints=""
