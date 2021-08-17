@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
@@ -22,6 +23,7 @@ class SearchFragment : BaseFragment() {
 
     private var artistsList: MutableList<Artist> = arrayListOf()
     private var initRecyclerView = false
+    private lateinit var progressCircle: FragmentContainerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +32,7 @@ class SearchFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
 
         // Code here
+        progressCircle = view.findViewById(R.id.search_fragmentProgressBar)
 
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -44,12 +47,14 @@ class SearchFragment : BaseFragment() {
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
+                    progressCircle.visibility = View.VISIBLE
                     // Search and show rv if not blank and not rv init
                     search(query, true) {
                         Log.d("search", "searched")
                         if (!initRecyclerView) {
                             showRecyclerView(view, true)
                         }
+                        progressCircle.visibility = View.GONE
                     }
                 }
                 return false
@@ -57,10 +62,12 @@ class SearchFragment : BaseFragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (!newText.isNullOrBlank()) {
+                    progressCircle.visibility = View.VISIBLE
                     // Show rv if not blank and not rv init
                     if (!initRecyclerView) {
                         showRecyclerView(view, true)
                     }
+                    progressCircle.visibility = View.GONE
                 } else {
                     // Reset
                     search(newText, false) {

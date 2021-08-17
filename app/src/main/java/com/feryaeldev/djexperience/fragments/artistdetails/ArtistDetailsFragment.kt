@@ -12,8 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
@@ -29,6 +31,8 @@ import java.io.FileInputStream
 
 class ArtistDetailsFragment : BaseFragment() {
 
+    private lateinit var progressCircle: FragmentContainerView
+
     // Media
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var mediaPlayer: MediaPlayer
@@ -40,6 +44,11 @@ class ArtistDetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
+
+        val progressCircle = view.findViewById<FragmentContainerView>(R.id.artistdetails_fragmentProgressBar)
+        progressCircle.visibility = View.VISIBLE
+        val artistData = view.findViewById<LinearLayout>(R.id.artistdetails_data)
+        artistData.visibility = View.GONE
 
         // VITAL VARIABLES
         val arguments = arguments
@@ -92,6 +101,9 @@ class ArtistDetailsFragment : BaseFragment() {
                 image.setImageBitmap(bitmap)
             }
             tempFile.delete()
+
+            progressCircle.visibility = View.GONE
+            artistData.visibility = View.VISIBLE
         }
 
         val docRef = userId?.let { db.collection("users").document(it) }

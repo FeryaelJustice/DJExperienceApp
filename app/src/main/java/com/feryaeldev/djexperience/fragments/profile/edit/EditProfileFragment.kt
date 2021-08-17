@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
@@ -24,6 +26,7 @@ import kotlin.reflect.full.memberProperties
 class EditProfileFragment : BaseFragment() {
 
     private lateinit var user: User
+    private lateinit var progressCircle: FragmentContainerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +34,12 @@ class EditProfileFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_edit_profile, container, false)
+
+        val profileDataLayout = view.findViewById<LinearLayoutCompat>(R.id.editprofile_data)
+        profileDataLayout.visibility = View.GONE
+
+        progressCircle = view.findViewById(R.id.editprofile_fragmentProgressBar)
+        progressCircle.visibility = View.VISIBLE
 
         val nickname: TextView = view.findViewById(R.id.editprofile_nickname)
         val category: TextView = view.findViewById(R.id.editprofile_category)
@@ -49,6 +58,9 @@ class EditProfileFragment : BaseFragment() {
 
                 // Get current user to edit
                 user = document.data?.let { mapToObject(it, User::class) }!!
+
+                progressCircle.visibility = View.GONE
+                profileDataLayout.visibility = View.VISIBLE
             } else {
                 Log.d("nodata", "No such document")
             }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,11 +29,16 @@ class ProfileFragment : BaseFragment() {
     lateinit var mRecyclerView: RecyclerView
     lateinit var mAdapter: ArtistsRecyclerViewAdapter
 
+    private lateinit var progressCircle: FragmentContainerView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        progressCircle = view.findViewById(R.id.profile_fragmentProgressBar)
+        progressCircle.visibility = View.VISIBLE
 
         var followingArtistsIds: ArrayList<String>
 
@@ -51,6 +57,7 @@ class ProfileFragment : BaseFragment() {
                 followingArtistsIds = user?.following ?: arrayListOf()
 
                 mRecyclerView = view.findViewById(R.id.fragment_profile_recyclerView)
+                mRecyclerView.visibility = View.GONE
                 mRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
 
                 val artistsList: MutableList<Artist> = arrayListOf()
@@ -61,6 +68,9 @@ class ProfileFragment : BaseFragment() {
 
                 mAdapter = ArtistsRecyclerViewAdapter(artistsList)
                 mRecyclerView.adapter = mAdapter
+
+                progressCircle.visibility = View.GONE
+                mRecyclerView.visibility = View.VISIBLE
             } else {
                 Log.d("nodata", "No such document")
             }

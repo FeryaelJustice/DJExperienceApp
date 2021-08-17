@@ -17,6 +17,7 @@ class HomeFragment : BaseFragment() {
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mAdapter: NewsRecyclerViewAdapter
+    private lateinit var progressCircle: FragmentContainerView
 
     private val newsList: MutableList<New> = arrayListOf()
 
@@ -27,9 +28,11 @@ class HomeFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val progressCircle = view.findViewById<FragmentContainerView>(R.id.fragmentProgressBar)
+        progressCircle = view.findViewById(R.id.home_fragmentProgressBar)
+        progressCircle.visibility = View.VISIBLE
 
         mRecyclerView = view.findViewById(R.id.news_rv)
+        mRecyclerView.visibility = View.GONE
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
 
         mAdapter = NewsRecyclerViewAdapter(newsList)

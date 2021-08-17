@@ -18,8 +18,17 @@
         app:tint="@color/white"
         android:src="@drawable/ic_baseline_close_24" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/editprofile_fragmentProgressBar"
+        android:name="com.feryaeldev.djexperience.common.loading.LoadingFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:layout="@layout/fragment_loading" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/editprofile_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
