@@ -32,4 +32,5 @@
     <string name="following">Siguiendo:</string>
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="artist_demo">%1$s demo:</string>
+    <string name="news">Noticias</string>
 </resources>
