@@ -92,6 +92,9 @@ class ArtistDetailsFragment : BaseFragment() {
                 category.text = artist.category
                 age.text = resources.getString(R.string.age, artist.age.toString())
                 websiteUrl = artist.website.toString()
+
+                progressCircle.visibility = View.GONE
+                artistData.visibility = View.VISIBLE
             }
             val profilePicRef =
                 Firebase.storage.reference.child("profile_images/${id}.jpg")
@@ -101,9 +104,6 @@ class ArtistDetailsFragment : BaseFragment() {
                 image.setImageBitmap(bitmap)
             }
             tempFile.delete()
-
-            progressCircle.visibility = View.GONE
-            artistData.visibility = View.VISIBLE
         }
 
         val docRef = userId?.let { db.collection("users").document(it) }
