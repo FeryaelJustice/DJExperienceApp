@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.settings
+package com.feryaeldev.djexperience.common
 
 import android.content.Context
 import android.content.SharedPreferences

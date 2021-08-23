@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_secondary"
-    tools:context=".activities.RecoverAccountActivity">
+    tools:context=".view.activities.RecoverAccountActivity">
 
     <EditText
         android:id="@+id/recover_email"

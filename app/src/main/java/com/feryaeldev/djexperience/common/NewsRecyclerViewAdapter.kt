@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.data.models.New
+import com.feryaeldev.djexperience.model.domain.New
 
 class NewsRecyclerViewAdapter(private val news: MutableList<New>): RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder>() {
 

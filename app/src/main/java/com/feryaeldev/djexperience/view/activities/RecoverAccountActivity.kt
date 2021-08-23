@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.activities
+package com.feryaeldev.djexperience.view.activities
 
 import android.os.Bundle
 import android.widget.EditText

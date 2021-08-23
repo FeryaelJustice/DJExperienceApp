@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.fragments.profile.edit
+package com.feryaeldev.djexperience.view.fragments.profile.edit
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
-import com.feryaeldev.djexperience.data.models.User
+import com.feryaeldev.djexperience.model.domain.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

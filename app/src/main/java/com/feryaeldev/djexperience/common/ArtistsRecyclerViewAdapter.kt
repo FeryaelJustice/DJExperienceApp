@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.data.models.Artist
+import com.feryaeldev.djexperience.model.domain.Artist
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage

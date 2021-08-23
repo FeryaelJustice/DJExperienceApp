@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.activities
+package com.feryaeldev.djexperience.view.activities
 
 import android.content.Intent
 import android.os.Bundle

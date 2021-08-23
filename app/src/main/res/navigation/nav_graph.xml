@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.feryaeldev.djexperience.fragments.home.HomeFragment"
+        android:name="com.feryaeldev.djexperience.view.fragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.feryaeldev.djexperience.fragments.search.SearchFragment"
+        android:name="com.feryaeldev.djexperience.view.fragments.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.feryaeldev.djexperience.fragments.profile.ProfileFragment"
+        android:name="com.feryaeldev.djexperience.view.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/artistDetailsFragment"
-        android:name="com.feryaeldev.djexperience.fragments.artistdetails.ArtistDetailsFragment"
+        android:name="com.feryaeldev.djexperience.view.fragments.artistdetails.ArtistDetailsFragment"
         android:label="fragment_artist_details"
         tools:layout="@layout/fragment_artist_details" >
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.feryaeldev.djexperience.fragments.profile.edit.EditProfileFragment"
+        android:name="com.feryaeldev.djexperience.view.fragments.profile.edit.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <action

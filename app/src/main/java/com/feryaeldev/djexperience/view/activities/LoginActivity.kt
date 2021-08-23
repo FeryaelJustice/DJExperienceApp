@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.activities
+package com.feryaeldev.djexperience.view.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseActivity
-import com.feryaeldev.djexperience.activities.onboarding.OnboardingActivity
-import com.feryaeldev.djexperience.settings.Settings
+import com.feryaeldev.djexperience.common.Settings
+import com.feryaeldev.djexperience.view.activities.onboarding.OnboardingActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 

@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.fragments.artistdetails
+package com.feryaeldev.djexperience.view.fragments.artistdetails
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -19,8 +19,8 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
-import com.feryaeldev.djexperience.data.models.Artist
-import com.feryaeldev.djexperience.data.models.User
+import com.feryaeldev.djexperience.model.domain.Artist
+import com.feryaeldev.djexperience.model.domain.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore

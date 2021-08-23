@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.activities.onboarding
+package com.feryaeldev.djexperience.view.activities.onboarding
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.data.models.OnboardingItem
+import com.feryaeldev.djexperience.model.domain.OnboardingItem
 
 class OnboardingItemsAdapter(private val onboardingItems: List<OnboardingItem>) :
     RecyclerView.Adapter<OnboardingItemsAdapter.OnboardingItemViewHolder>() {

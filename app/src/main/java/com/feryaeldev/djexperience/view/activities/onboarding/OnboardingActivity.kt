@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.activities.onboarding
+package com.feryaeldev.djexperience.view.activities.onboarding
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.activities.LoginActivity
+import com.feryaeldev.djexperience.view.activities.LoginActivity
 import com.feryaeldev.djexperience.base.BaseActivity
-import com.feryaeldev.djexperience.data.models.OnboardingItem
-import com.feryaeldev.djexperience.settings.Settings
+import com.feryaeldev.djexperience.model.domain.OnboardingItem
+import com.feryaeldev.djexperience.common.Settings
 import com.google.android.material.button.MaterialButton
 import java.util.*
 

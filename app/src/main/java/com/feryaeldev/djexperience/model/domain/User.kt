@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.data.models
+package com.feryaeldev.djexperience.model.domain
 
 // = "" by default NEEDED FOR TO OBJECT FROM FIREBASE DESERIALIZE
 data class User(

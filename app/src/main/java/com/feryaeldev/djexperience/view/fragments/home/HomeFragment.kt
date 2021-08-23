@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.fragments.home
+package com.feryaeldev.djexperience.view.fragments.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.base.BaseFragment
 import com.feryaeldev.djexperience.common.NewsRecyclerViewAdapter
-import com.feryaeldev.djexperience.data.models.New
+import com.feryaeldev.djexperience.model.domain.New
 import kotlinx.coroutines.*
 
 class HomeFragment : BaseFragment() {
