@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/color_primary"
-    tools:context=".view.fragments.search.SearchFragment">
+    tools:context=".ui.view.fragments.search.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/fragment_search_searchView"
@@ -22,7 +22,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/search_fragmentProgressBar"
-        android:name="com.feryaeldev.djexperience.common.loading.LoadingFragment"
+        android:name="com.feryaeldev.djexperience.ui.common.loading.LoadingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

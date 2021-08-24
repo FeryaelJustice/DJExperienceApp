@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_primary"
-    tools:context=".view.fragments.profile.ProfileFragment">
+    tools:context=".ui.view.fragments.profile.ProfileFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -114,7 +114,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/profile_fragmentProgressBar"
-            android:name="com.feryaeldev.djexperience.common.loading.LoadingFragment"
+            android:name="com.feryaeldev.djexperience.ui.common.loading.LoadingFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
