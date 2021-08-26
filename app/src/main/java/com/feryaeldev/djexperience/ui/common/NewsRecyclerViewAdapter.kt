@@ -29,9 +29,9 @@ class NewsRecyclerViewAdapter(private val news: MutableList<New>): RecyclerView.
         private val descriptionTv: TextView = view.findViewById(R.id.searchNewItem_description)
 
         fun render(item: New) {
-            authorTv.text = item.author
-            titleTv.text = item.title
-            descriptionTv.text = item.title
+            authorTv.text = itemView.context.getString(R.string.author,item.author)
+            titleTv.text = itemView.context.getString(R.string.title,item.title)
+            descriptionTv.text = itemView.context.getString(R.string.description,item.description)
         }
     }
 }

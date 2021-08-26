@@ -25,7 +25,7 @@ class HomeFragment : BaseFragment() {
     lateinit var mAdapter: NewsRecyclerViewAdapter
     private lateinit var progressCircle: FragmentContainerView
 
-    private val newsList: MutableList<New> = arrayListOf()
+    private var newsList: MutableList<New> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,22 +56,27 @@ class HomeFragment : BaseFragment() {
             try {
                 val service = getRetrofit(ServiceType.NEWSAPI).create(NewsApiService::class.java)
                 val call = service.get("bitcoin", NewsApi.API_KEY)
-                    if (call.isSuccessful) {
-                        val news: List<New> = call.body()?.articles ?: arrayListOf()
+                if (call.body()?.status == "ok") {
+                    val news = call.body()?.articles ?: arrayListOf()
+                    activity?.runOnUiThread {
+                        //showMessageLong(news.toString())
                         newsList.clear()
                         newsList.addAll(news)
                         mAdapter.notifyDataSetChanged()
-                    } else {
-                        activity?.runOnUiThread {
-                            showMessageShort("Error on http call not successful.")
-                        }
+                        progressCircle.visibility = View.GONE
+                        mRecyclerView.visibility = View.VISIBLE
                     }
-                    //progressCircle.visibility = View.GONE
-                    //mRecyclerView.visibility = View.VISIBLE
+                } else {
+                    activity?.runOnUiThread {
+                        showMessageShort("Error on http call not successful: $call")
+                    }
+                }
             } catch (e: Error) {
                 activity?.runOnUiThread {
                     showMessageShort("Error on http call:${e.message}")
                 }
+            } finally {
+
             }
         }
     }

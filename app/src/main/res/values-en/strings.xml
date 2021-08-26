@@ -33,4 +33,7 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="artist_demo">%1$s demo:</string>
     <string name="news">news</string>
+    <string name="author"><b>Author:</b> %1$s</string>
+    <string name="title"><b>Title:</b> %1$s</string>
+    <string name="description"><b>Description:</b> %1$s</string>
 </resources>
