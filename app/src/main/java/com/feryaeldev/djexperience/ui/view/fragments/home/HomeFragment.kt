@@ -63,6 +63,31 @@ class HomeFragment : BaseFragment() {
                         //showMessageLong(news.toString())
                         newsList.clear()
                         news.forEachIndexed { index, element ->
+                            /*val translator = TranslateOptions.getDefaultInstance().service
+                            val translatedNew = New(
+                                element.sourceId,
+                                translator.translate(
+                                    element.sourceName,
+                                    Translate.TranslateOption.targetLanguage("es")
+                                ).translatedText,
+                                element.author,
+                                translator.translate(
+                                    element.title,
+                                    Translate.TranslateOption.targetLanguage("es")
+                                ).translatedText,
+                                translator.translate(
+                                    element.description,
+                                    Translate.TranslateOption.targetLanguage("es")
+                                ).translatedText,
+                                element.url,
+                                element.urlToImage,
+                                element.publishedAt,
+                                translator.translate(
+                                    element.content,
+                                    Translate.TranslateOption.targetLanguage("es")
+                                ).translatedText
+                            )*/
+                            //newsList.add(index, translatedNew)
                             newsList.add(index, element)
                             mAdapter.notifyItemChanged(index)
                         }
