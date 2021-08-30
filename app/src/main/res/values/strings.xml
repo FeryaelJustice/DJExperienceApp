@@ -1,39 +1,51 @@
 <resources>
+    <!-- App Name -->
     <string name="app_name" translatable="false">DJ Experience</string>
-    <string name="onboarding_start">Comenzar</string>
+
+    <!-- App Global -->
+    <string name="settings">Ajustes</string>
+    <string name="signIn">Iniciar sesión</string>
+    <string name="signOut">Cerrar Sesión</string>
+    <string name="signUp">Registrarse</string>
+    <string name="signUpInfo">¿Aún no tienes una cuenta? Regístrate aquí.</string>
+    <string name="signInError">Fallo al intentar iniciar sesión</string>
+    <string name="signUpError">Error al registrarse</string>
+    <string name="email">Correo electrónico</string>
+    <string name="send_email">Enviar correo</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="nickname">Nombre de usuario</string>
+    <string name="category">Categoría</string>
+    <string name="country">País</string>
+    <string name="age">"Edad: %1$s"</string>
+    <string name="action_info">Información</string>
+    <string name="information">¡Hola! Soy FeryaelDev, creador de DJ Experience.\n\nEsta app se ha desarrollado para proporcionarte toda la información que necesitabas sobre tus DJs favoritos.\nSi quieres puedes seguirme en mis redes principales para cualquier duda o sugerencia.\n\n¡Muchas gracias!</string>
+    <string name="info_bottom">Visita la web de DJExperience para saber toda la información oficial.</string>
+    <string name="add">Añadir</string>
+    <string name="sustract">Restar</string>
+    <string name="save">Guardar</string>
+    <string name="version">DJ Experience - Versión %1$s.</string>
+
+    <!-- App Nav -->
     <string name="bottom_nav_home">Inicio</string>
     <string name="bottom_nav_search">Buscar</string>
     <string name="bottom_nav_profile">Perfil</string>
-    <string name="settings">Ajustes</string>
-    <string name="search">Buscar</string>
-    <string name="action_info">Información</string>
-    <string name="signIn">Iniciar sesión</string>
-    <string name="signUp">Registrarse</string>
-    <string name="signUpInfo">¿Aún no tienes una cuenta? Regístrate aquí.</string>
-    <string name="email">Correo electrónico</string>
-    <string name="password">Contraseña</string>
-    <string name="signInError">Fallo al intentar iniciar sesión</string>
-    <string name="signUpError">Error al registrarse</string>
-    <string name="signOut">Cerrar Sesión</string>
-    <string name="age">"Edad: %1$s"</string>
-    <string name="information">¡Hola! Soy FeryaelDev, creador de DJ Experience.\n\nEsta app se ha desarrollado para proporcionarte toda la información que necesitabas sobre tus DJs favoritos.\nSi quieres puedes seguirme en mis redes principales para cualquier duda o sugerencia.\n\n¡Muchas gracias!</string>
-    <string name="search_hint">¡Realiza una búsqueda\npara encontrar a tus\nartistas favoritos!</string>
-    <string name="add">Añadir</string>
-    <string name="sustract">Restar</string>
-    <string name="info_bottom">Visita la web de DJExperience para saber toda la información oficial.</string>
-    <string name="version">DJ Experience - Versión %1$s.</string>
-    <string name="nickname">Nombre de usuario</string>
-    <string name="searchSV_hint">¡Pon el nombre EXACTO!</string>
-    <string name="category">Categoría</string>
-    <string name="country">País</string>
-    <string name="save">Guardar</string>
-    <string name="send_email">Enviar correo</string>
+
+    <!-- Activity -->
+    <!-- Onboarding -->
+    <string name="onboarding_start">Comenzar</string>
+    <!-- Profile -->
     <string name="edit_profile">Editar perfil</string>
     <string name="following">Siguiendo:</string>
-    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
-    <string name="artist_demo">%1$s demo:</string>
+    <!-- Search -->
+    <string name="search">Buscar</string>
+    <string name="search_hint">¡Realiza una búsqueda\npara encontrar a tus\nartistas favoritos!</string>
+    <string name="searchSV_hint">¡Pon el nombre EXACTO!</string>
+    <!-- Home -->
     <string name="news">Noticias</string>
     <string name="author"><b>Autor:</b> %1$s</string>
     <string name="title"><b>Título:</b> %1$s</string>
     <string name="description"><b>Descripción:</b> %1$s</string>
+    <!-- Profile details -->
+    <string name="artist_demo">%1$s demo:</string>
 </resources>

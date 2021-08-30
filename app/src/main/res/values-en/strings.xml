@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="onboarding_start">Start</string>
+    <!-- App Global -->
+    <string name="settings">Settings</string>
+    <string name="signIn">Sign in</string>
+    <string name="signOut">Sign out</string>
+    <string name="signUp">Sign up</string>
+    <string name="signUpInfo">Still not have an account? Register here.</string>
+    <string name="signInError">Error on trying to sign in</string>
+    <string name="signUpError">Error on register</string>
+    <string name="email">Email</string>
+    <string name="send_email">Send email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="nickname">Nickname</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="age">"Age: %1$s "</string>
+    <string name="action_info">Information</string>
+    <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!</string>
+    <string name="info_bottom">Visit DJExperience website to know all the official information.</string>
+    <string name="add">Add</string>
+    <string name="sustract">Subtract</string>
+    <string name="save">Save</string>
+    <string name="version">DJ Experience - Version %1$s.</string>
+
+    <!-- App Nav -->
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_search">Search</string>
     <string name="bottom_nav_profile">Profile</string>
-    <string name="settings">Settings</string>
-    <string name="search">Search</string>
-    <string name="action_info">Information</string>
-    <string name="signIn">Sign in</string>
-    <string name="signUp">Sign up</string>
-    <string name="signUpInfo">Still not have an account? Register here.</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="signInError">Error on trying to sign in</string>
-    <string name="signUpError">Error on register</string>
-    <string name="signOut">Sign out</string>
-    <string name="age">"Age: %1$s "</string>
-    <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!</string>
-    <string name="search_hint">¡Make a search to find your favourite artists!</string>
-    <string name="add">Add</string>
-    <string name="sustract">Subtract</string>
-    <string name="info_bottom">Visit DJExperience website to know all the official information.</string>
-    <string name="version">DJ Experience - Version %1$s.</string>
-    <string name="nickname">Nickname</string>
-    <string name="searchSV_hint">Put the EXACT name!</string>
-    <string name="category">Category</string>
-    <string name="country">Country</string>
-    <string name="save">Save</string>
-    <string name="send_email">Send email</string>
+
+    <!-- Activity -->
+    <!-- Onboarding -->
+    <string name="onboarding_start">Start</string>
+    <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="following">Following:</string>
-    <string name="forgot_password">Forgot your password?</string>
-    <string name="artist_demo">%1$s demo:</string>
+    <!-- Search -->
+    <string name="search">Search</string>
+    <string name="search_hint">¡Make a search to find your favourite artists!</string>
+    <string name="searchSV_hint">Put the EXACT name!</string>
+    <!-- Home -->
     <string name="news">news</string>
     <string name="author"><b>Author:</b> %1$s</string>
     <string name="title"><b>Title:</b> %1$s</string>
     <string name="description"><b>Description:</b> %1$s</string>
+    <!-- Profile details -->
+    <string name="artist_demo">%1$s demo:</string>
 </resources>
