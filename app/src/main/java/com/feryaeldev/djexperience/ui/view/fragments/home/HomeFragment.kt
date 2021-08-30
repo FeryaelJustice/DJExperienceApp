@@ -62,8 +62,14 @@ class HomeFragment : BaseFragment() {
                     activity?.runOnUiThread {
                         //showMessageLong(news.toString())
                         newsList.clear()
+                        news.forEachIndexed { index, element ->
+                            newsList.add(index, element)
+                            mAdapter.notifyItemChanged(index)
+                        }
+                        /*
                         newsList.addAll(news)
                         mAdapter.notifyDataSetChanged()
+                         */
                         progressCircle.visibility = View.GONE
                         mRecyclerView.visibility = View.VISIBLE
                     }
