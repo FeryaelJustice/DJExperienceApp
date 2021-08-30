@@ -15,6 +15,7 @@ import com.feryaeldev.djexperience.data.provider.services.newsapi.NewsApi
 import com.feryaeldev.djexperience.data.provider.services.newsapi.NewsApiService
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.NewsRecyclerViewAdapter
+import com.feryaeldev.djexperience.util.HttpResponseStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,8 +56,8 @@ class HomeFragment : BaseFragment() {
             //delay(2000)
             try {
                 val service = getRetrofit(ServiceType.NEWSAPI).create(NewsApiService::class.java)
-                val call = service.get("bitcoin", NewsApi.API_KEY)
-                if (call.body()?.status == "ok") {
+                val call = service.get("djs", NewsApi.API_KEY)
+                if (call.code() == HttpResponseStatus.SUCCESS.code) {
                     val news = call.body()?.articles ?: arrayListOf()
                     activity?.runOnUiThread {
                         //showMessageLong(news.toString())
@@ -68,9 +69,10 @@ class HomeFragment : BaseFragment() {
                     }
                 } else {
                     activity?.runOnUiThread {
-                        showMessageShort("Error on http call not successful: $call")
+                        showMessageShort("Error on http call (code) not successful: $call")
                     }
                 }
+
             } catch (e: Error) {
                 activity?.runOnUiThread {
                     showMessageShort("Error on http call:${e.message}")
