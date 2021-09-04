@@ -68,6 +68,24 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DJExperience.StatusBar"
             tools:ignore="LockedOrientationActivity" />
+
+        <service
+            android:name=".service.AppService"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:isolatedProcess="false"
+            android:label="AppService"
+            tools:targetApi="n" />
+        <service
+            android:name=".service.MediaService"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:isolatedProcess="false"
+            android:label="MediaService"
+            tools:targetApi="n" />
+
     </application>
 
 </manifest>
