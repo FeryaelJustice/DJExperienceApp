@@ -73,7 +73,7 @@
             android:name=".service.AppService"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:isolatedProcess="false"
             android:label="AppService"
             tools:targetApi="n" />
@@ -81,10 +81,17 @@
             android:name=".service.MediaService"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:isolatedProcess="false"
             android:label="MediaService"
             tools:targetApi="n" />
+        <service
+            android:name=".service.FirebaseMessaggingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

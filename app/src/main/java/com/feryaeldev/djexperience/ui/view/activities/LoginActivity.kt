@@ -11,6 +11,7 @@ import com.feryaeldev.djexperience.data.provider.settings.Settings
 import com.feryaeldev.djexperience.ui.view.activities.onboarding.OnboardingActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class LoginActivity : BaseActivity() {
 
@@ -81,5 +82,10 @@ class LoginActivity : BaseActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+    }
+
+    override fun onDestroy() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("DJExperience")
+        super.onDestroy()
     }
 }

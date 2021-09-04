@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.feryaeldev.djexperience.BuildConfig
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
+import com.google.firebase.messaging.FirebaseMessaging
 
 class InfoActivity : BaseActivity() {
 
@@ -49,5 +50,9 @@ class InfoActivity : BaseActivity() {
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
     }
 
+    override fun onDestroy() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("DJExperience")
+        super.onDestroy()
+    }
 
 }

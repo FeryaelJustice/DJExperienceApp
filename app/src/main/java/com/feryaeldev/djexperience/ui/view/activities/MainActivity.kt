@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : BaseActivity() {
 
@@ -153,5 +154,10 @@ class MainActivity : BaseActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+    }
+
+    override fun onDestroy() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("DJExperience")
+        super.onDestroy()
     }
 }

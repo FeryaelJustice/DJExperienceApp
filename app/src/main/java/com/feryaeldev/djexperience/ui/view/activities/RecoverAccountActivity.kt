@@ -7,6 +7,7 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class RecoverAccountActivity : BaseActivity() {
 
@@ -29,5 +30,10 @@ class RecoverAccountActivity : BaseActivity() {
                 showMessageLong("You must enter a valid email.")
             }
         }
+    }
+
+    override fun onDestroy() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("DJExperience")
+        super.onDestroy()
     }
 }

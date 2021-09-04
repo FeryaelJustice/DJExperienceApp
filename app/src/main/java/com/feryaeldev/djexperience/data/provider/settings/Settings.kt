@@ -17,4 +17,13 @@ class Settings(context: Context) {
             commit()
         }
     }
+
+    // Notificacion Firebase Service token
+    fun getFirebaseToken(): String? = preferences.getString("firebaseNotificationToken","")
+    fun setFirebaseToken(token: String) {
+        with(preferences.edit()) {
+            putString("firebaseNotificationToken", token)
+            commit()
+        }
+    }
 }
