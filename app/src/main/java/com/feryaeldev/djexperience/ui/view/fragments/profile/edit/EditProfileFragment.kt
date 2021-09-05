@@ -31,6 +31,7 @@ class EditProfileFragment : BaseFragment() {
     private lateinit var profileDataLayout: LinearLayoutCompat
     private var selectedCategory = ""
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,7 +98,7 @@ class EditProfileFragment : BaseFragment() {
                         document.data?.get("category").toString(),
                         document.data?.get("age").toString().toLongOrNull(),
                         document.data?.get("website").toString(),
-                        arrayListOf()
+                        document.data?.get("following") as ArrayList<String>?
                     )
 
                     name.setText(user.name)
@@ -130,7 +131,7 @@ class EditProfileFragment : BaseFragment() {
                                 documentArtist.data?.get("category").toString(),
                                 documentArtist.data?.get("age").toString().toLongOrNull(),
                                 documentArtist.data?.get("website").toString(),
-                                arrayListOf()
+                                documentArtist.data?.get("following") as ArrayList<String>?
                             )
 
                             name.setText(user.name)
@@ -170,7 +171,7 @@ class EditProfileFragment : BaseFragment() {
                             documentArtist.data?.get("category").toString(),
                             documentArtist.data?.get("age").toString().toLongOrNull(),
                             documentArtist.data?.get("website").toString(),
-                            arrayListOf()
+                            documentArtist.data?.get("following") as ArrayList<String>?
                         )
 
                         name.setText(user.name)
@@ -210,7 +211,7 @@ class EditProfileFragment : BaseFragment() {
                         documentArtist.data?.get("category").toString(),
                         documentArtist.data?.get("age").toString().toLongOrNull(),
                         documentArtist.data?.get("website").toString(),
-                        arrayListOf()
+                        documentArtist.data?.get("following") as ArrayList<String>?
                     )
 
                     name.setText(user.name)
@@ -312,7 +313,7 @@ class EditProfileFragment : BaseFragment() {
                     view.context,
                     "At least one of the fields is empty!",
                     Toast.LENGTH_LONG
-                ).show();
+                ).show()
             }
         }
 
