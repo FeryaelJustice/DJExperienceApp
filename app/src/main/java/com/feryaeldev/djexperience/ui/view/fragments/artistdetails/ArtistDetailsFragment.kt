@@ -38,6 +38,7 @@ class ArtistDetailsFragment : BaseFragment() {
     private lateinit var artistData: LinearLayout
 
     // Media
+    private lateinit var mediaLayout: LinearLayout
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var seekBar: SeekBar
@@ -68,6 +69,7 @@ class ArtistDetailsFragment : BaseFragment() {
         val addRemoveToProfileText: TextView =
             view.findViewById(R.id.fragment_artist_details_addRemoveToProfileText)
 
+        mediaLayout = view.findViewById(R.id.media_layout)
         val image: ImageView = view.findViewById(R.id.fragment_artist_details_photo)
         val username: TextView = view.findViewById(R.id.fragment_artist_details_username)
         val name: TextView = view.findViewById(R.id.fragment_artist_details_name)
@@ -221,6 +223,7 @@ class ArtistDetailsFragment : BaseFragment() {
         // Download track
         demoSongRef.getFile(tempFile).addOnSuccessListener {
             Log.d("download", "success")
+            mediaLayout.visibility = View.VISIBLE
 
             // Configure media player
             try {
@@ -255,6 +258,8 @@ class ArtistDetailsFragment : BaseFragment() {
             } catch (e: Error) {
                 showMessageShort("Error: $e")
             }
+        }.addOnFailureListener{
+            mediaLayout.visibility = View.GONE
         }
 
         // Play pause button
