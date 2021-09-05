@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.FragmentContainerView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
@@ -42,6 +44,14 @@ class HomeFragment : BaseFragment() {
         mAdapter = NewsRecyclerViewAdapter(newsList)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
         mRecyclerView.adapter = mAdapter
+
+        // Button create artist
+        view.findViewById<Button>(R.id.home_createArtist).setOnClickListener {
+            findNavController().navigate(
+                R.id.action_homeFragment_to_createArtistFragment,
+                arguments
+            )
+        }
 
         // Http
         progressCircle.visibility = View.VISIBLE

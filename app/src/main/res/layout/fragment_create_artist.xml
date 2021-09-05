@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_primary">
+
+    <ImageView
+        android:id="@+id/fragment_createArtist_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|top"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription=""
+        android:src="@drawable/ic_baseline_close_24"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/fragment_createArtist_titleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_baseline_close_24"
+        android:text="@string/createArtist"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/editprofile_fragmentProgressBar"
+        android:name="com.feryaeldev.djexperience.ui.common.loading.LoadingFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:layout="@layout/fragment_loading" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/createArtist_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/createArtist_photo"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_person_24"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp" />
+
+        <EditText
+            android:id="@+id/createArtist_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/createArtist_name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/name"
+            android:inputType="text"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/createArtist_surnames"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/surnames"
+            android:inputType="text"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/createArtist_country"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/country"
+            android:inputType="text"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/createArtist_age"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/age"
+            android:inputType="number"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/createArtist_website"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/website"
+            android:inputType="textWebEditText"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/createArtist_category_sp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:foregroundTint="@color/white" />
+
+        <Button
+            android:id="@+id/createArtist_saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/black"
+            android:text="@string/save"
+            android:textColor="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>
