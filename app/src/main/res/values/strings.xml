@@ -53,6 +53,7 @@
     <string name="author"><b>Propietario:</b> %1$s</string>
     <string name="title"><b>Título:</b> %1$s</string>
     <string name="description"><b>Descripción:</b> %1$s</string>
+    <string name="createArtist">Crear artista</string>
     <!-- Profile details -->
     <string name="artist_demo">%1$s demo:</string>
     <string name="clearCache">Eliminar la caché</string>
