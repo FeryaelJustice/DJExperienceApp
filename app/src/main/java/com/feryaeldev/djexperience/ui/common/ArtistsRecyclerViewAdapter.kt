@@ -44,11 +44,10 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //private val context: Context = view.context
         //private val layout: LinearLayout = view.findViewById(R.id.search_item)
-        private val artistNickname: TextView = view.findViewById(R.id.searchitem_nickname)
+        private val artistUsername: TextView = view.findViewById(R.id.searchitem_username)
         private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
         fun render(item: Artist) {
-            //artistNickname.text = item.nickname
             val id = item.id
             val profilePicRef =
                 Firebase.storage.reference.child("profile_images/${id}.jpg")
@@ -67,14 +66,14 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
                             documentSnap["id"].toString(),
                             documentSnap["name"].toString(),
                             documentSnap["surnames"].toString(),
-                            documentSnap["nickname"].toString(),
+                            documentSnap["username"].toString(),
                             documentSnap["email"].toString(),
                             documentSnap["country"].toString(),
                             documentSnap["category"].toString(),
                             documentSnap["age"].toString().toInt(),
                             documentSnap["website"].toString()
                         )
-                        artistNickname.text = artist.nickname
+                        artistUsername.text = artist.username
                     }
             }
 

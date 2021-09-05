@@ -33,7 +33,7 @@ class RegisterActivity : BaseActivity() {
                             val db = Firebase.firestore
                             val user = hashMapOf(
                                 "email" to emailEditText.text.toString(),
-                                "nickname" to "",
+                                "username" to "",
                                 "name" to "",
                                 "surnames" to "",
                                 "age" to 0,

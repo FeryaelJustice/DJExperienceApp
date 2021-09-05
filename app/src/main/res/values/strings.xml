@@ -33,7 +33,7 @@
     <!-- Profile -->
     <string name="edit_profile">Editar perfil</string>
     <string name="following">Siguiendo:</string>
-    <string name="nickname">Nombre de usuario</string>
+    <string name="username">Nombre de usuario</string>
     <string name="category">Categoría</string>
     <string name="country">País</string>
     <string name="age">"Edad: %1$s"</string>

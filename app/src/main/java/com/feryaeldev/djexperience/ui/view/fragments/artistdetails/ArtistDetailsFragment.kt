@@ -61,7 +61,7 @@ class ArtistDetailsFragment : BaseFragment() {
             view.findViewById(R.id.fragment_artist_details_addRemoveToProfileText)
 
         val image: ImageView = view.findViewById(R.id.fragment_artist_details_photo)
-        val nickname: TextView = view.findViewById(R.id.fragment_artist_details_nickname)
+        val username: TextView = view.findViewById(R.id.fragment_artist_details_username)
         val name: TextView = view.findViewById(R.id.fragment_artist_details_name)
         val surnames: TextView = view.findViewById(R.id.fragment_artist_details_surnames)
         val country: TextView = view.findViewById(R.id.fragment_artist_details_country)
@@ -78,14 +78,14 @@ class ArtistDetailsFragment : BaseFragment() {
                     documentSnap["id"].toString(),
                     documentSnap["name"].toString(),
                     documentSnap["surnames"].toString(),
-                    documentSnap["nickname"].toString(),
+                    documentSnap["username"].toString(),
                     documentSnap["email"].toString(),
                     documentSnap["country"].toString(),
                     documentSnap["category"].toString(),
                     documentSnap["age"].toString().toInt(),
                     documentSnap["website"].toString()
                 )
-                nickname.text = artist.nickname
+                username.text = artist.username
                 name.text = artist.name
                 surnames.text = artist.surnames
                 country.text = artist.country

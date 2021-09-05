@@ -5,7 +5,7 @@ data class User(
     var id: String? = "",
     var name: String? = "",
     var surnames: String? = "",
-    var nickname: String? = "",
+    var username: String? = "",
     var email: String? = "",
     var country: String? = "",
     var category: String? = "",

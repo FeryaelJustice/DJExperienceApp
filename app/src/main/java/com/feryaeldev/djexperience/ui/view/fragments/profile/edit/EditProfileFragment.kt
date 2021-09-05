@@ -45,7 +45,7 @@ class EditProfileFragment : BaseFragment() {
         progressCircle = view.findViewById(R.id.editprofile_fragmentProgressBar)
         progressCircle.visibility = View.VISIBLE
 
-        val nickname: TextView = view.findViewById(R.id.editprofile_nickname)
+        val username: TextView = view.findViewById(R.id.editprofile_username)
         //val category: TextView = view.findViewById(R.id.editprofile_category)
         val categorySpinner : Spinner = view.findViewById(R.id.editprofile_category_sp)
 
@@ -71,7 +71,7 @@ class EditProfileFragment : BaseFragment() {
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
                 Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
-                nickname.text = document.data?.get("nickname").toString()
+                username.text = document.data?.get("username").toString()
                 //category.text = document.data?.get("category").toString()
                 if(document.data?.get("category").toString() == "User"){
                     categorySpinner.setSelection(0)
@@ -126,7 +126,7 @@ class EditProfileFragment : BaseFragment() {
         // Save
         view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
             //onBackPressed()
-            user.nickname = nickname.text.toString()
+            user.username = username.text.toString()
             //user.category = category.text.toString()
             user.country = country.text.toString()
             docRef?.set(user.asMap())

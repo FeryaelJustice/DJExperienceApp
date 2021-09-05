@@ -47,11 +47,11 @@ class ProfileFragment : BaseFragment() {
         val docRef = userId?.let { db.collection("users").document(it) }
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
-                val nickname: TextView = view.findViewById(R.id.profile_nickname)
+                val username: TextView = view.findViewById(R.id.profile_username)
                 val category: TextView = view.findViewById(R.id.profile_category)
                 val country: TextView = view.findViewById(R.id.profile_country)
                 val user: User? = document.toObject(User::class.java)
-                nickname.text = user?.nickname
+                username.text = user?.username
                 category.text = user?.category
                 country.text = user?.country
                 followingArtistsIds = user?.following ?: arrayListOf()

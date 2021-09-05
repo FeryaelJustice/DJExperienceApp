@@ -104,7 +104,7 @@ class SearchFragment : BaseFragment() {
             artistsList.clear()
             val db = Firebase.firestore
             if (filter) {
-                db.collection("artists").whereEqualTo("nickname", search).get()
+                db.collection("artists").whereEqualTo("username", search).get()
                     .addOnSuccessListener {
                         if (it.documents.size == 1) {
                             artistsList.add(
@@ -112,7 +112,7 @@ class SearchFragment : BaseFragment() {
                                     it.documents[0]["id"].toString(),
                                     it.documents[0]["name"].toString(),
                                     it.documents[0]["surnames"].toString(),
-                                    it.documents[0]["nickname"].toString(),
+                                    it.documents[0]["username"].toString(),
                                     it.documents[0]["email"].toString(),
                                     it.documents[0]["country"].toString(),
                                     it.documents[0]["category"].toString(),
@@ -137,7 +137,7 @@ class SearchFragment : BaseFragment() {
                                 document["id"].toString(),
                                 document["name"].toString(),
                                 document["surnames"].toString(),
-                                document["nickname"].toString(),
+                                document["username"].toString(),
                                 document["email"].toString(),
                                 document["country"].toString(),
                                 document["category"].toString(),

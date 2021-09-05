@@ -16,12 +16,12 @@
         app:civ_border_width="2dp" />
 
     <TextView
-        android:id="@+id/searchitem_nickname"
+        android:id="@+id/searchitem_username"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         android:gravity="center_vertical"
-        android:text="@string/nickname"
+        android:text="@string/username"
         android:textColor="@color/color_primary_night"/>
 
 </LinearLayout>

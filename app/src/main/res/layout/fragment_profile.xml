@@ -34,11 +34,11 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/profile_nickname"
+                    android:id="@+id/profile_username"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/nickname"
+                    android:text="@string/username"
                     android:textColor="@color/white" />
             </LinearLayout>
 

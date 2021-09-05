@@ -31,7 +31,7 @@
     <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="following">Following:</string>
-    <string name="nickname">Nickname</string>
+    <string name="username">Username</string>
     <string name="category">Category</string>
     <string name="country">Country</string>
     <string name="age">"Age: %1$s "</string>
