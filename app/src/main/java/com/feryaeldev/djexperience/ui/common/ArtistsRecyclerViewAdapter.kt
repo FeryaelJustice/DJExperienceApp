@@ -70,7 +70,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
                             documentSnap["email"].toString(),
                             documentSnap["country"].toString(),
                             documentSnap["category"].toString(),
-                            documentSnap["age"].toString().toInt(),
+                            documentSnap["age"].toString().toLong(),
                             documentSnap["website"].toString()
                         )
                         artistUsername.text = artist.username

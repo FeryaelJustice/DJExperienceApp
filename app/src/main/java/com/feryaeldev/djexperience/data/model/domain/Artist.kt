@@ -9,6 +9,6 @@ data class Artist(
     var email: String? = "",
     var country: String? = "",
     var category: String? = "",
-    var age: Int? = 0,
+    var age: Long? = 0,
     var website: String? = ""
 )

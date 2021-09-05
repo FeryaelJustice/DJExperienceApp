@@ -31,10 +31,13 @@
     <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="following">Following:</string>
+    <string name="name">Name</string>
+    <string name="surnames">Surnames</string>
     <string name="username">Username</string>
     <string name="category">Category</string>
     <string name="country">Country</string>
     <string name="age">"Age: %1$s "</string>
+    <string name="website">Website</string>
     <string-array name="user_categories">
         <item>User</item>
         <item>Artist</item>

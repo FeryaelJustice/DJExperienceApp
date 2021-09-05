@@ -116,7 +116,7 @@ class SearchFragment : BaseFragment() {
                                     it.documents[0]["email"].toString(),
                                     it.documents[0]["country"].toString(),
                                     it.documents[0]["category"].toString(),
-                                    it.documents[0]["age"].toString().toInt(),
+                                    it.documents[0]["age"].toString().toLong(),
                                     it.documents[0]["website"].toString()
                                 )
                             )
@@ -141,7 +141,7 @@ class SearchFragment : BaseFragment() {
                                 document["email"].toString(),
                                 document["country"].toString(),
                                 document["category"].toString(),
-                                document["age"].toString().toInt(),
+                                document["age"].toString().toLong(),
                                 document["website"].toString()
                             )
                         )

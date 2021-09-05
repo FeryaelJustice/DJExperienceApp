@@ -33,10 +33,13 @@
     <!-- Profile -->
     <string name="edit_profile">Editar perfil</string>
     <string name="following">Siguiendo:</string>
+    <string name="name">Nombre</string>
+    <string name="surnames">Apellidos</string>
     <string name="username">Nombre de usuario</string>
     <string name="category">Categoría</string>
     <string name="country">País</string>
     <string name="age">"Edad: %1$s"</string>
+    <string name="website">Web</string>
     <string-array name="user_categories">
         <item>User</item>
         <item>Artist</item>

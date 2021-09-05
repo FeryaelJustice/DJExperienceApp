@@ -14,8 +14,8 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.data.model.domain.User
+import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -29,6 +29,7 @@ class EditProfileFragment : BaseFragment() {
 
     private lateinit var user: User
     private lateinit var progressCircle: FragmentContainerView
+    private lateinit var profileDataLayout: LinearLayoutCompat
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,32 +38,40 @@ class EditProfileFragment : BaseFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_edit_profile, container, false)
 
-        user = User()
-
-        val profileDataLayout = view.findViewById<LinearLayoutCompat>(R.id.editprofile_data)
-        profileDataLayout.visibility = View.GONE
-
+        profileDataLayout = view.findViewById(R.id.editprofile_data)
         progressCircle = view.findViewById(R.id.editprofile_fragmentProgressBar)
+
+        profileDataLayout.visibility = View.GONE
         progressCircle.visibility = View.VISIBLE
 
-        val username: TextView = view.findViewById(R.id.editprofile_username)
-        //val category: TextView = view.findViewById(R.id.editprofile_category)
-        val categorySpinner : Spinner = view.findViewById(R.id.editprofile_category_sp)
+        user = User()
+
+        val image: ImageView = view.findViewById(R.id.editprofile_photo)
+        val name: EditText = view.findViewById(R.id.editprofile_name)
+        val surnames: EditText = view.findViewById(R.id.editprofile_surnames)
+        val country: EditText = view.findViewById(R.id.editprofile_country)
+        val age: EditText = view.findViewById(R.id.editprofile_age)
+        val website: EditText = view.findViewById(R.id.editprofile_website)
+        val categorySpinner: Spinner = view.findViewById(R.id.editprofile_category_sp)
 
         val userListTypes = resources.getStringArray(R.array.user_categories)
-        val adapter = ArrayAdapter(view.context,android.R.layout.simple_spinner_item,userListTypes)
+        val adapter =
+            ArrayAdapter(view.context, android.R.layout.simple_spinner_item, userListTypes)
         categorySpinner.adapter = adapter
-        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 user.category = userListTypes[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                Log.d("todo",p0.toString())
+                Log.d("todo", p0.toString())
             }
         }
-
-        val country: TextView = view.findViewById(R.id.editprofile_country)
 
         val db = Firebase.firestore
         val userId = Firebase.auth.currentUser?.uid
@@ -70,15 +79,16 @@ class EditProfileFragment : BaseFragment() {
 
         docRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
-                Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
-                username.text = document.data?.get("username").toString()
-                //category.text = document.data?.get("category").toString()
-                if(document.data?.get("category").toString() == "User"){
+                name.setText(document.data?.get("name").toString())
+                surnames.setText(document.data?.get("surnames").toString())
+                country.setText(document.data?.get("country").toString())
+                age.setText(document.data?.get("age").toString())
+                website.setText(document.data?.get("website").toString())
+                if (document.data?.get("category").toString() == "User") {
                     categorySpinner.setSelection(0)
-                }else{
+                } else {
                     categorySpinner.setSelection(1)
                 }
-                country.text = document.data?.get("country").toString()
 
                 // Get current user to edit
                 user = document.data?.let { mapToObject(it, User::class) }!!
@@ -86,7 +96,7 @@ class EditProfileFragment : BaseFragment() {
                 progressCircle.visibility = View.GONE
                 profileDataLayout.visibility = View.VISIBLE
             } else {
-                Log.d("nodata", "No such document")
+                Log.d("error", "No such document")
             }
         }?.addOnFailureListener { exception ->
             Log.d("error", "get failed with ", exception)
@@ -94,7 +104,6 @@ class EditProfileFragment : BaseFragment() {
 
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/${userId}.jpg")
-        val image: ImageView = view.findViewById(R.id.editprofile_photo)
         val tempFile = File.createTempFile("tempImage", "jpg")
         profilePicRef.getFile(tempFile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
@@ -102,21 +111,23 @@ class EditProfileFragment : BaseFragment() {
         }
         tempFile.delete()
 
-        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if(result.resultCode == Activity.RESULT_OK){
-                val uri = result.data?.data
-                uri?.let { url ->
-                    profilePicRef.putFile(url).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            Picasso.get().load(url).into(image)
-                            showMessageLong("Image uploaded successfully!")
-                        }else{
-                            showMessageLong("Error on uploading image...")
+        // Dont put resultlauncher registerforactivityresult inside listeners cause fragment is not created (throws error)
+        val resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val uri = result.data?.data
+                    uri?.let { url ->
+                        profilePicRef.putFile(url).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Picasso.get().load(url).into(image)
+                                showMessageLong("Image uploaded successfully!")
+                            } else {
+                                showMessageLong("Error on uploading image...")
+                            }
                         }
                     }
                 }
             }
-        }
         image.setOnClickListener {
             val intentPick = Intent(Intent.ACTION_PICK)
             intentPick.type = "image/*"
@@ -125,10 +136,11 @@ class EditProfileFragment : BaseFragment() {
 
         // Save
         view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
-            //onBackPressed()
-            user.username = username.text.toString()
-            //user.category = category.text.toString()
+            user.name = name.text.toString()
+            user.surnames = surnames.text.toString()
             user.country = country.text.toString()
+            user.age = age.text.toString().toLong()
+            user.website = website.text.toString()
             docRef?.set(user.asMap())
                 ?.addOnSuccessListener {
                     showMessageLong("Updated!")
@@ -143,13 +155,13 @@ class EditProfileFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
-        // overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
-
         return view
     }
 
+    // UTILS
+
     // Object to Map
-    inline fun <reified T : Any> T.asMap(): Map<String, Any?> {
+    private inline fun <reified T : Any> T.asMap(): Map<String, Any?> {
         val props = T::class.memberProperties.associateBy { it.name }
         return props.keys.associateWith { props[it]?.get(this) }
     }

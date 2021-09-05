@@ -32,6 +32,7 @@ import java.io.FileInputStream
 class ArtistDetailsFragment : BaseFragment() {
 
     private lateinit var progressCircle: FragmentContainerView
+    private lateinit var artistData: LinearLayout
 
     // Media
     private val handler = Handler(Looper.getMainLooper())
@@ -45,9 +46,10 @@ class ArtistDetailsFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
 
-        val progressCircle = view.findViewById<FragmentContainerView>(R.id.artistdetails_fragmentProgressBar)
+        progressCircle = view.findViewById(R.id.artistdetails_fragmentProgressBar)
+        artistData = view.findViewById(R.id.artistdetails_data)
+
         progressCircle.visibility = View.VISIBLE
-        val artistData = view.findViewById<LinearLayout>(R.id.artistdetails_data)
         artistData.visibility = View.GONE
 
         // VITAL VARIABLES
@@ -82,7 +84,7 @@ class ArtistDetailsFragment : BaseFragment() {
                     documentSnap["email"].toString(),
                     documentSnap["country"].toString(),
                     documentSnap["category"].toString(),
-                    documentSnap["age"].toString().toInt(),
+                    documentSnap["age"].toString().toLong(),
                     documentSnap["website"].toString()
                 )
                 username.text = artist.username
@@ -135,7 +137,11 @@ class ArtistDetailsFragment : BaseFragment() {
             if (websiteUrl != "") {
                 try {
                     val intentURL = Intent(Intent.ACTION_VIEW)
-                    intentURL.data = Uri.parse("http://$websiteUrl")
+                    if(!websiteUrl.contains("http")){
+                        intentURL.data = Uri.parse("http://$websiteUrl")
+                    }else{
+                        intentURL.data = Uri.parse(websiteUrl)
+                    }
                     startActivity(intentURL)
                 } catch (e: Exception) {
                     showMessageShort("Error trying to open website of the artist: $e")
@@ -186,18 +192,8 @@ class ArtistDetailsFragment : BaseFragment() {
         playPauseBtn = view.findViewById(R.id.media_play_btn_demoTrack)
         val mediaTitle = view.findViewById<TextView>(R.id.media_demoTrack_title)
 
-        // LOCAL
-        // Get song:
-        // mediaPlayer = MediaPlayer.create(view.context, R.raw.headhunterzorangeheartextended)
-        // Initialize
-        /*
-        seekBar.progress = 0
-        mediaPlayer.seekTo(0)
-        seekBar.max = mediaPlayer.duration
-        */
-
         // REMOTE
-        // Init mediaplayer:
+        // Init media player:
         mediaPlayer = MediaPlayer()
         mediaPlayer.reset()
         // Get track reference
