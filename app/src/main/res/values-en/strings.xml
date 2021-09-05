@@ -44,13 +44,14 @@
     </string-array>
     <!-- Search -->
     <string name="search">Search</string>
-    <string name="search_hint">¡Make a search to find your favourite artists!</string>
+    <string name="search_hint">¡Make a search to find your favourite artists!\n(Click on search icon)</string>
     <string name="searchSV_hint">Put the EXACT name!</string>
     <!-- Home -->
-    <string name="news">news</string>
+    <string name="news">News</string>
     <string name="author"><b>Author:</b> %1$s</string>
     <string name="title"><b>Title:</b> %1$s</string>
     <string name="description"><b>Description:</b> %1$s</string>
     <!-- Profile details -->
     <string name="artist_demo">%1$s demo:</string>
+    <string name="clearCache">Delete cache</string>
 </resources>

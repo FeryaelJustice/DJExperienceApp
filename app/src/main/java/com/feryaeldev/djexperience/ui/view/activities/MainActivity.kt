@@ -107,7 +107,9 @@ class MainActivity : BaseActivity() {
             true
         }
         R.id.action_settings -> {
-            showMessageShort(getString(R.string.settings))
+            val intentSettings = Intent(applicationContext, SettingsActivity::class.java)
+            startActivity(intentSettings)
+            overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
             true
         }
         R.id.action_signout -> {
