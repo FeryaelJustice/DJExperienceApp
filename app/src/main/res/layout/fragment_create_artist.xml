@@ -64,6 +64,16 @@
             android:textColor="@color/white" />
 
         <EditText
+            android:id="@+id/createArtist_username"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXYZ"
+            android:hint="@string/username"
+            android:inputType="text"
+            android:textColor="@color/white" />
+
+        <EditText
             android:id="@+id/createArtist_name"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -107,13 +117,6 @@
             android:hint="@string/website"
             android:inputType="textWebEditText"
             android:textColor="@color/white" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/createArtist_category_sp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:foregroundTint="@color/white" />
 
         <Button
             android:id="@+id/createArtist_saveBtn"
