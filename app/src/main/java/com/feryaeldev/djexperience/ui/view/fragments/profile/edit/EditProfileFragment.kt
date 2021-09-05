@@ -1,5 +1,7 @@
 package com.feryaeldev.djexperience.ui.view.fragments.profile.edit
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
@@ -17,6 +20,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
 import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
@@ -98,6 +102,27 @@ class EditProfileFragment : BaseFragment() {
         }
         tempFile.delete()
 
+        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                val uri = result.data?.data
+                uri?.let { url ->
+                    profilePicRef.putFile(url).addOnCompleteListener {
+                        if(it.isSuccessful){
+                            Picasso.get().load(url).into(image)
+                            showMessageLong("Image uploaded successfully!")
+                        }else{
+                            showMessageLong("Error on uploading image...")
+                        }
+                    }
+                }
+            }
+        }
+        image.setOnClickListener {
+            val intentPick = Intent(Intent.ACTION_PICK)
+            intentPick.type = "image/*"
+            resultLauncher.launch(intentPick)
+        }
+
         // Save
         view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
             //onBackPressed()
@@ -143,5 +168,4 @@ class EditProfileFragment : BaseFragment() {
         //return object from constructor call
         return constructor.callBy(args)
     }
-
 }
