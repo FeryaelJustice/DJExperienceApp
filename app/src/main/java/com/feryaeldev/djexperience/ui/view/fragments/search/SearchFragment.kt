@@ -5,8 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,12 +21,12 @@ import com.google.firebase.ktx.Firebase
 class SearchFragment : BaseFragment() {
 
     private lateinit var mainView: View
-    lateinit var search: SearchView
-    lateinit var mRecyclerView: RecyclerView
-
+    private lateinit var search: SearchView
+    private lateinit var mRecyclerView: RecyclerView
     private var artistsList: MutableList<User> = arrayListOf()
     private var initRecyclerView = false
     private lateinit var progressCircle: FragmentContainerView
+    private var categoryFilterText = "Artist"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +41,27 @@ class SearchFragment : BaseFragment() {
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        search("", false) {
+        val categoryFilter: Spinner = view.findViewById(R.id.fragment_search_spinnerSearch)
+        val userListTypes = resources.getStringArray(R.array.user_categories)
+        val adapter =
+            ArrayAdapter(view.context, android.R.layout.simple_spinner_item, userListTypes)
+        categoryFilter.adapter = adapter
+        categoryFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                categoryFilterText = userListTypes[position]
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Log.d("todo", p0.toString())
+            }
+        }
+
+        search("", false, categoryFilterText) {
             val mAdapter = ArtistsRecyclerViewAdapter(artistsList)
             mRecyclerView.adapter = mAdapter
             Log.d("search", "searched")
@@ -54,7 +73,7 @@ class SearchFragment : BaseFragment() {
                 if (!query.isNullOrBlank()) {
                     progressCircle.visibility = View.VISIBLE
                     // Search and show rv if not blank and not rv init
-                    search(query, true) {
+                    search(query, true, categoryFilterText) {
                         Log.d("search", "searched")
                         if (!initRecyclerView) {
                             showRecyclerView(view, true)
@@ -102,28 +121,53 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    private fun search(search: String?, filter: Boolean, completion: () -> Unit) {
+    private fun search(
+        search: String?,
+        filter: Boolean,
+        filterCategory: String,
+        completion: () -> Unit
+    ) {
         try {
             artistsList.clear()
             val db = Firebase.firestore
             if (filter) {
-                db.collection("artists").whereEqualTo("username", search).get()
-                    .addOnSuccessListener {
-                        if (it.documents.size == 1) {
-                            if (it.documents[0]["id"].toString() != Firebase.auth.currentUser?.uid) {
-                                artistsList.add(
-                                    User(it.documents[0]["id"].toString())
-                                )
-                                mRecyclerView.adapter?.notifyItemChanged(0)
+                if (filterCategory == "Artist") {
+                    db.collection("artists").whereEqualTo("username", search).get()
+                        .addOnSuccessListener {
+                            if (it.documents.size == 1) {
+                                if (it.documents[0]["id"].toString() != Firebase.auth.currentUser?.uid) {
+                                    artistsList.add(
+                                        User(it.documents[0]["id"].toString())
+                                    )
+                                    mRecyclerView.adapter?.notifyItemChanged(0)
+                                }
+                            } else {
+                                showMessageShort("More than one or empty result in DB.")
                             }
-                        } else {
-                            showMessageShort("More than one or empty result in DB.")
+                            completion()
+                        }.addOnFailureListener {
+                            Log.d("error", "Query failed")
+                            completion()
                         }
-                        completion()
-                    }.addOnFailureListener {
-                        Log.d("error", "Query failed")
-                        completion()
-                    }
+                } else {
+                    db.collection("users").whereEqualTo("username", search).get()
+                        .addOnSuccessListener {
+                            if (it.documents.size == 1) {
+                                if (it.documents[0]["id"].toString() != Firebase.auth.currentUser?.uid) {
+                                    artistsList.add(
+                                        User(it.documents[0]["id"].toString())
+                                    )
+                                    mRecyclerView.adapter?.notifyItemChanged(0)
+                                }
+                            } else {
+                                showMessageShort("More than one or empty result in DB.")
+                            }
+                            completion()
+                        }.addOnFailureListener {
+                            Log.d("error", "Query failed")
+                            completion()
+                        }
+                }
             } else {
                 db.collection("artists").get().addOnSuccessListener {
                     it.documents.forEachIndexed { index, document ->
