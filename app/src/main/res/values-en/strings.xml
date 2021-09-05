@@ -12,10 +12,6 @@
     <string name="send_email">Send email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
-    <string name="nickname">Nickname</string>
-    <string name="category">Category</string>
-    <string name="country">Country</string>
-    <string name="age">"Age: %1$s "</string>
     <string name="action_info">Information</string>
     <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!</string>
     <string name="info_bottom">Visit DJExperience website to know all the official information.</string>
@@ -35,6 +31,14 @@
     <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="following">Following:</string>
+    <string name="nickname">Nickname</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="age">"Age: %1$s "</string>
+    <string-array name="user_categories">
+        <item>User</item>
+        <item>Artist</item>
+    </string-array>
     <!-- Search -->
     <string name="search">Search</string>
     <string name="search_hint">¡Make a search to find your favourite artists!</string>

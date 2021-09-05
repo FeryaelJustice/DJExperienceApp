@@ -6,9 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
@@ -35,6 +33,8 @@ class EditProfileFragment : BaseFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_edit_profile, container, false)
 
+        user = User()
+
         val profileDataLayout = view.findViewById<LinearLayoutCompat>(R.id.editprofile_data)
         profileDataLayout.visibility = View.GONE
 
@@ -42,7 +42,22 @@ class EditProfileFragment : BaseFragment() {
         progressCircle.visibility = View.VISIBLE
 
         val nickname: TextView = view.findViewById(R.id.editprofile_nickname)
-        val category: TextView = view.findViewById(R.id.editprofile_category)
+        //val category: TextView = view.findViewById(R.id.editprofile_category)
+        val categorySpinner : Spinner = view.findViewById(R.id.editprofile_category_sp)
+
+        val userListTypes = resources.getStringArray(R.array.user_categories)
+        val adapter = ArrayAdapter(view.context,android.R.layout.simple_spinner_item,userListTypes)
+        categorySpinner.adapter = adapter
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                user.category = userListTypes[position]
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Log.d("todo",p0.toString())
+            }
+        }
+
         val country: TextView = view.findViewById(R.id.editprofile_country)
 
         val db = Firebase.firestore
@@ -53,7 +68,12 @@ class EditProfileFragment : BaseFragment() {
             if (document != null) {
                 Log.d("datasuccess", "DocumentSnapshot data: ${document.data}")
                 nickname.text = document.data?.get("nickname").toString()
-                category.text = document.data?.get("category").toString()
+                //category.text = document.data?.get("category").toString()
+                if(document.data?.get("category").toString() == "User"){
+                    categorySpinner.setSelection(0)
+                }else{
+                    categorySpinner.setSelection(1)
+                }
                 country.text = document.data?.get("country").toString()
 
                 // Get current user to edit
@@ -82,7 +102,7 @@ class EditProfileFragment : BaseFragment() {
         view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
             //onBackPressed()
             user.nickname = nickname.text.toString()
-            user.category = category.text.toString()
+            //user.category = category.text.toString()
             user.country = country.text.toString()
             docRef?.set(user.asMap())
                 ?.addOnSuccessListener {
