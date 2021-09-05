@@ -18,6 +18,8 @@ import com.feryaeldev.djexperience.data.provider.services.newsapi.NewsApiService
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.NewsRecyclerViewAdapter
 import com.feryaeldev.djexperience.util.HttpResponseStatus
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,6 +54,8 @@ class HomeFragment : BaseFragment() {
                 arguments
             )
         }
+
+        //Firebase.firestore.collection("users").document("01mkPXmpSoa77t7Yh4iPxOupXJ72").delete()
 
         // Http
         progressCircle.visibility = View.VISIBLE
