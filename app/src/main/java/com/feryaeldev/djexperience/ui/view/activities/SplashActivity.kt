@@ -69,7 +69,7 @@ class SplashActivity : BaseActivity() {
         }
 
         // My Services
-        startService(Intent(applicationContext, AppService::class.java))
+        //startService(Intent(applicationContext, AppService::class.java))
         // startService(Intent(applicationContext, MediaService::class.java))
 
         // Init App

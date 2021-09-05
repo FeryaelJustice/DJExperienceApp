@@ -9,14 +9,14 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.data.model.domain.Artist
+import com.feryaeldev.djexperience.data.model.domain.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
 
-class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
+class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
     RecyclerView.Adapter<ArtistsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +25,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = artists[position]
+        val item = users[position]
         holder.render(item)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
@@ -39,7 +39,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
         }
     }
 
-    override fun getItemCount(): Int = artists.size
+    override fun getItemCount(): Int = users.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //private val context: Context = view.context
@@ -47,7 +47,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
         private val artistUsername: TextView = view.findViewById(R.id.searchitem_username)
         private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
-        fun render(item: Artist) {
+        fun render(item: User) {
             val id = item.id
             val profilePicRef =
                 Firebase.storage.reference.child("profile_images/${id}.jpg")
@@ -62,7 +62,7 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
             id?.let {
                 Firebase.firestore.collection("artists").document(id).get()
                     .addOnSuccessListener { documentSnap ->
-                        val artist = Artist(
+                        val artist = User(
                             documentSnap["id"].toString(),
                             documentSnap["name"].toString(),
                             documentSnap["surnames"].toString(),
@@ -70,22 +70,13 @@ class ArtistsRecyclerViewAdapter(private val artists: MutableList<Artist>) :
                             documentSnap["email"].toString(),
                             documentSnap["country"].toString(),
                             documentSnap["category"].toString(),
-                            documentSnap["age"].toString().toLong(),
-                            documentSnap["website"].toString()
+                            documentSnap["age"].toString().toLongOrNull(),
+                            documentSnap["website"].toString(),
+                            arrayListOf()
                         )
                         artistUsername.text = artist.username
                     }
             }
-
-            /*
-            layout.setOnClickListener {
-                val fragment = ArtistDetailsFragment()
-                val bundle = Bundle()
-                bundle.putString("id", id)
-                fragment.arguments = bundle
-                (context as MainActivity).replaceFragment(fragment)
-            }
-            */
         }
     }
 }

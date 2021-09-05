@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
+import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.ArtistsRecyclerViewAdapter
-import com.feryaeldev.djexperience.data.model.domain.Artist
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -21,7 +21,7 @@ class SearchFragment : BaseFragment() {
 
     lateinit var mRecyclerView: RecyclerView
 
-    private var artistsList: MutableList<Artist> = arrayListOf()
+    private var artistsList: MutableList<User> = arrayListOf()
     private var initRecyclerView = false
     private lateinit var progressCircle: FragmentContainerView
 
@@ -108,7 +108,7 @@ class SearchFragment : BaseFragment() {
                     .addOnSuccessListener {
                         if (it.documents.size == 1) {
                             artistsList.add(
-                                Artist(
+                                User(
                                     it.documents[0]["id"].toString(),
                                     it.documents[0]["name"].toString(),
                                     it.documents[0]["surnames"].toString(),
@@ -116,8 +116,9 @@ class SearchFragment : BaseFragment() {
                                     it.documents[0]["email"].toString(),
                                     it.documents[0]["country"].toString(),
                                     it.documents[0]["category"].toString(),
-                                    it.documents[0]["age"].toString().toLong(),
-                                    it.documents[0]["website"].toString()
+                                    it.documents[0]["age"].toString().toLongOrNull(),
+                                    it.documents[0]["website"].toString(),
+                                    arrayListOf()
                                 )
                             )
                             mRecyclerView.adapter?.notifyItemChanged(0)
@@ -133,7 +134,7 @@ class SearchFragment : BaseFragment() {
                 db.collection("artists").get().addOnSuccessListener {
                     it.documents.forEachIndexed { index, document ->
                         artistsList.add(
-                            Artist(
+                            User(
                                 document["id"].toString(),
                                 document["name"].toString(),
                                 document["surnames"].toString(),
@@ -141,7 +142,7 @@ class SearchFragment : BaseFragment() {
                                 document["email"].toString(),
                                 document["country"].toString(),
                                 document["category"].toString(),
-                                document["age"].toString().toLong(),
+                                document["age"].toString().toLongOrNull(),
                                 document["website"].toString()
                             )
                         )

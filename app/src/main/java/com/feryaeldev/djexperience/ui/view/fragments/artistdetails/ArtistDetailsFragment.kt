@@ -18,9 +18,8 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.ui.base.BaseFragment
-import com.feryaeldev.djexperience.data.model.domain.Artist
 import com.feryaeldev.djexperience.data.model.domain.User
+import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -31,6 +30,10 @@ import java.io.FileInputStream
 
 class ArtistDetailsFragment : BaseFragment() {
 
+    private lateinit var artist: User
+    private lateinit var userId: String
+    private lateinit var artistId: String
+
     private lateinit var progressCircle: FragmentContainerView
     private lateinit var artistData: LinearLayout
 
@@ -39,6 +42,7 @@ class ArtistDetailsFragment : BaseFragment() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var seekBar: SeekBar
     private lateinit var playPauseBtn: ImageView
+    private lateinit var mediaTitle: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,17 +50,19 @@ class ArtistDetailsFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
 
+        artist = User()
         progressCircle = view.findViewById(R.id.artistdetails_fragmentProgressBar)
         artistData = view.findViewById(R.id.artistdetails_data)
-
         progressCircle.visibility = View.VISIBLE
         artistData.visibility = View.GONE
 
         // VITAL VARIABLES
-        val arguments = arguments
-        val userId = Firebase.auth.currentUser?.uid
-        val artistId = arguments?.getString("id")
 
+        // Vital data
+        userId = Firebase.auth.currentUser?.uid.toString()
+        artistId = arguments?.getString("id").toString()
+
+        // View
         val addRemoveToProfile: FloatingActionButton =
             view.findViewById(R.id.fragment_artist_details_addRemoveToProfile)
         val addRemoveToProfileText: TextView =
@@ -71,12 +77,19 @@ class ArtistDetailsFragment : BaseFragment() {
         val age: TextView = view.findViewById(R.id.fragment_artist_details_age)
         var websiteUrl = ""
 
+        // Media
+        seekBar = view.findViewById(R.id.seekbarDemoTrack)
+        playPauseBtn = view.findViewById(R.id.media_play_btn_demoTrack)
+        mediaTitle = view.findViewById(R.id.media_demoTrack_title)
+        mediaPlayer = MediaPlayer()
+        mediaPlayer.reset()
+
         val db = Firebase.firestore
 
         // Get artist data
-        artistId?.let { id ->
+        artistId.let { id ->
             db.collection("artists").document(id).get().addOnSuccessListener { documentSnap ->
-                val artist = Artist(
+                artist = User(
                     documentSnap["id"].toString(),
                     documentSnap["name"].toString(),
                     documentSnap["surnames"].toString(),
@@ -84,8 +97,9 @@ class ArtistDetailsFragment : BaseFragment() {
                     documentSnap["email"].toString(),
                     documentSnap["country"].toString(),
                     documentSnap["category"].toString(),
-                    documentSnap["age"].toString().toLong(),
-                    documentSnap["website"].toString()
+                    documentSnap["age"].toString().toLongOrNull(),
+                    documentSnap["website"].toString(),
+                    arrayListOf()
                 )
                 username.text = artist.username
                 name.text = artist.name
@@ -97,6 +111,8 @@ class ArtistDetailsFragment : BaseFragment() {
 
                 progressCircle.visibility = View.GONE
                 artistData.visibility = View.VISIBLE
+
+                initMedia()
             }
             val profilePicRef =
                 Firebase.storage.reference.child("profile_images/${id}.jpg")
@@ -108,10 +124,10 @@ class ArtistDetailsFragment : BaseFragment() {
             tempFile.delete()
         }
 
-        val docRef = userId?.let { db.collection("users").document(it) }
+        val docRef = userId.let { db.collection("users").document(it) }
 
         // Update button if following artist
-        docRef?.get()?.addOnSuccessListener { document ->
+        docRef.get().addOnSuccessListener { document ->
             if (document != null) {
                 val user: User? = document.toObject(User::class.java)
                 var found = false
@@ -137,9 +153,9 @@ class ArtistDetailsFragment : BaseFragment() {
             if (websiteUrl != "") {
                 try {
                     val intentURL = Intent(Intent.ACTION_VIEW)
-                    if(!websiteUrl.contains("http")){
+                    if (!websiteUrl.contains("http")) {
                         intentURL.data = Uri.parse("http://$websiteUrl")
-                    }else{
+                    } else {
                         intentURL.data = Uri.parse(websiteUrl)
                     }
                     startActivity(intentURL)
@@ -151,30 +167,28 @@ class ArtistDetailsFragment : BaseFragment() {
 
         // Add or remove artist from following on user logic
         addRemoveToProfile.setOnClickListener {
-            docRef?.get()?.addOnSuccessListener { document ->
+            docRef.get().addOnSuccessListener { document ->
                 if (document != null) {
                     val user: User? = document.toObject(User::class.java)
                     // Push or substract artist
-                    if (artistId != null) {
-                        if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
-                            user?.following?.add(artistId)
-                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
-                            addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-                            addRemoveToProfileText.text =
-                                view.resources.getString(R.string.sustract)
-                        } else {
-                            val tempList = arrayListOf<String>()
-                            user?.following?.let { it1 -> tempList.addAll(it1) }
-                            user?.following?.forEach {
-                                if (it == artistId) {
-                                    tempList.remove(it)
-                                }
+                    if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
+                        user?.following?.add(artistId)
+                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                        addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+                        addRemoveToProfileText.text =
+                            view.resources.getString(R.string.sustract)
+                    } else {
+                        val tempList = arrayListOf<String>()
+                        user?.following?.let { it1 -> tempList.addAll(it1) }
+                        user?.following?.forEach {
+                            if (it == artistId) {
+                                tempList.remove(it)
                             }
-                            user?.following = tempList
-                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
-                            addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                            addRemoveToProfileText.text = view.resources.getString(R.string.add)
                         }
+                        user?.following = tempList
+                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                        addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+                        addRemoveToProfileText.text = view.resources.getString(R.string.add)
                     }
                     // Update
                     if (user != null) {
@@ -184,21 +198,24 @@ class ArtistDetailsFragment : BaseFragment() {
             }
         }
 
-        // Media demo track
+        // CLOSE BUTTON
+        view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
+            resetMediaPlayer()
+            findNavController().popBackStack()
+        }
 
-        // Instances
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id != R.id.artistDetailsFragment) {
+                resetMediaPlayer()
+            }
+        }
 
-        seekBar = view.findViewById(R.id.seekbarDemoTrack)
-        playPauseBtn = view.findViewById(R.id.media_play_btn_demoTrack)
-        val mediaTitle = view.findViewById<TextView>(R.id.media_demoTrack_title)
+        return view
+    }
 
-        // REMOTE
-        // Init media player:
-        mediaPlayer = MediaPlayer()
-        mediaPlayer.reset()
-        // Get track reference
-        val demoSongRef = Firebase.storage.reference.child("songs/demo/${artistId}.mp3")
-        // Temp file
+    private fun initMedia() {
+        val demoSongRef =
+            Firebase.storage.reference.child("songs/demo/${artist.username?.lowercase()}.mp3")
         val tempFile = File.createTempFile("temp_$artistId", ".mp3")
         tempFile.deleteOnExit()
         // Download track
@@ -227,10 +244,9 @@ class ArtistDetailsFragment : BaseFragment() {
                     }
 
                     // Change displayed song name
-                    artistId?.let { id ->
-                        val idUppercaseFirstLetter = id.replaceFirstChar { it.uppercase() }
-                        mediaTitle.text = getString(R.string.artist_demo, idUppercaseFirstLetter)
-                    }
+                    val usernameUppercase = artist.username.toString().replaceFirstChar { it.uppercase() }
+                    mediaTitle.text = getString(R.string.artist_demo, usernameUppercase)
+
 
                     // Autoplay
                     startMediaPlayer()
@@ -271,20 +287,6 @@ class ArtistDetailsFragment : BaseFragment() {
                 handler.postDelayed(this, 1000)
             }
         })
-
-        // CLOSE BUTTON
-        view.findViewById<ImageView>(R.id.fragment_artist_details_close).setOnClickListener {
-            resetMediaPlayer()
-            findNavController().popBackStack()
-        }
-
-        findNavController().addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.artistDetailsFragment) {
-                resetMediaPlayer()
-            }
-        }
-
-        return view
     }
 
     private fun startMediaPlayer() {

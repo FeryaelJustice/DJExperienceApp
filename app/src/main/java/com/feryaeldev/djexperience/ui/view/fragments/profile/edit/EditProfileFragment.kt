@@ -16,20 +16,20 @@ import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
+import com.feryaeldev.djexperience.util.asMap
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
 import java.io.File
-import kotlin.reflect.KClass
-import kotlin.reflect.full.memberProperties
 
 class EditProfileFragment : BaseFragment() {
 
     private lateinit var user: User
     private lateinit var progressCircle: FragmentContainerView
     private lateinit var profileDataLayout: LinearLayoutCompat
+    private var selectedCategory = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,13 +38,13 @@ class EditProfileFragment : BaseFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_edit_profile, container, false)
 
+        user = User()
+
         profileDataLayout = view.findViewById(R.id.editprofile_data)
         progressCircle = view.findViewById(R.id.editprofile_fragmentProgressBar)
 
         profileDataLayout.visibility = View.GONE
         progressCircle.visibility = View.VISIBLE
-
-        user = User()
 
         val image: ImageView = view.findViewById(R.id.editprofile_photo)
         val name: EditText = view.findViewById(R.id.editprofile_name)
@@ -65,7 +65,7 @@ class EditProfileFragment : BaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                user.category = userListTypes[position]
+                selectedCategory = userListTypes[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -73,37 +73,169 @@ class EditProfileFragment : BaseFragment() {
             }
         }
 
+        // Get current user or artist (we dont know if its user or artist here)
         val db = Firebase.firestore
-        val userId = Firebase.auth.currentUser?.uid
-        val docRef = userId?.let { db.collection("users").document(it) }
+        val userOrArtistID = Firebase.auth.currentUser?.uid
 
-        docRef?.get()?.addOnSuccessListener { document ->
+        val userDocRef = userOrArtistID?.let { db.collection("users").document(it) }
+        val artistDocRef = userOrArtistID?.let { db.collection("artists").document(it) }
+        val profilePicRef =
+            Firebase.storage.reference.child("profile_images/$userOrArtistID.jpg")
+
+        // Search for the user or artist
+        userDocRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
-                name.setText(document.data?.get("name").toString())
-                surnames.setText(document.data?.get("surnames").toString())
-                country.setText(document.data?.get("country").toString())
-                age.setText(document.data?.get("age").toString())
-                website.setText(document.data?.get("website").toString())
-                if (document.data?.get("category").toString() == "User") {
-                    categorySpinner.setSelection(0)
+                if (document.data?.size != null) {
+                    // Get current user to edit
+                    user = User(
+                        document.data?.get("id").toString(),
+                        document.data?.get("name").toString(),
+                        document.data?.get("surnames").toString(),
+                        document.data?.get("username").toString(),
+                        document.data?.get("email").toString(),
+                        document.data?.get("country").toString(),
+                        document.data?.get("category").toString(),
+                        document.data?.get("age").toString().toLongOrNull(),
+                        document.data?.get("website").toString(),
+                        arrayListOf()
+                    )
+
+                    name.setText(user.name)
+                    surnames.setText(user.surnames)
+                    country.setText(user.country)
+                    age.setText(user.age.toString())
+                    website.setText(user.website)
+                    selectedCategory = user.category.toString()
+                    if (user.category == "User") {
+                        categorySpinner.setSelection(0)
+                    } else {
+                        categorySpinner.setSelection(1)
+                    }
+
+                    progressCircle.visibility = View.GONE
+                    profileDataLayout.visibility = View.VISIBLE
                 } else {
-                    categorySpinner.setSelection(1)
+                    Log.d("error", "User no such document")
+
+                    artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
+                        if (documentArtist != null) {
+                            // Get current artist to edit
+                            user = User(
+                                documentArtist.data?.get("id").toString(),
+                                documentArtist.data?.get("name").toString(),
+                                documentArtist.data?.get("surnames").toString(),
+                                documentArtist.data?.get("username").toString(),
+                                documentArtist.data?.get("email").toString(),
+                                documentArtist.data?.get("country").toString(),
+                                documentArtist.data?.get("category").toString(),
+                                documentArtist.data?.get("age").toString().toLongOrNull(),
+                                documentArtist.data?.get("website").toString(),
+                                arrayListOf()
+                            )
+
+                            name.setText(user.name)
+                            surnames.setText(user.surnames)
+                            country.setText(user.country)
+                            age.setText(user.age.toString())
+                            website.setText(user.website)
+                            selectedCategory = user.category.toString()
+                            if (user.category == "User") {
+                                categorySpinner.setSelection(0)
+                            } else {
+                                categorySpinner.setSelection(1)
+                            }
+
+                            progressCircle.visibility = View.GONE
+                            profileDataLayout.visibility = View.VISIBLE
+                        } else {
+                            Log.d("error", "Artist no such document")
+                        }
+                    }?.addOnFailureListener { exceptionArtist ->
+                        Log.d("error", "Artist get failed with ", exceptionArtist)
+                    }
                 }
-
-                // Get current user to edit
-                user = document.data?.let { mapToObject(it, User::class) }!!
-
-                progressCircle.visibility = View.GONE
-                profileDataLayout.visibility = View.VISIBLE
             } else {
-                Log.d("error", "No such document")
+                Log.d("error", "User no such document")
+
+                artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
+                    if (documentArtist != null) {
+                        // Get current artist to edit
+                        user = User(
+                            documentArtist.data?.get("id").toString(),
+                            documentArtist.data?.get("name").toString(),
+                            documentArtist.data?.get("surnames").toString(),
+                            documentArtist.data?.get("username").toString(),
+                            documentArtist.data?.get("email").toString(),
+                            documentArtist.data?.get("country").toString(),
+                            documentArtist.data?.get("category").toString(),
+                            documentArtist.data?.get("age").toString().toLongOrNull(),
+                            documentArtist.data?.get("website").toString(),
+                            arrayListOf()
+                        )
+
+                        name.setText(user.name)
+                        surnames.setText(user.surnames)
+                        country.setText(user.country)
+                        age.setText(user.age.toString())
+                        website.setText(user.website)
+                        selectedCategory = user.category.toString()
+                        if (user.category == "User") {
+                            categorySpinner.setSelection(0)
+                        } else {
+                            categorySpinner.setSelection(1)
+                        }
+
+                        progressCircle.visibility = View.GONE
+                        profileDataLayout.visibility = View.VISIBLE
+                    } else {
+                        Log.d("error", "Artist no such document")
+                    }
+                }?.addOnFailureListener { exceptionArtist ->
+                    Log.d("error", "Artist get failed with ", exceptionArtist)
+                }
             }
         }?.addOnFailureListener { exception ->
-            Log.d("error", "get failed with ", exception)
+            Log.d("error", "User get failed with ", exception)
+
+            artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
+                if (documentArtist != null) {
+                    // Get current artist to edit
+                    user = User(
+                        documentArtist.data?.get("id").toString(),
+                        documentArtist.data?.get("name").toString(),
+                        documentArtist.data?.get("surnames").toString(),
+                        documentArtist.data?.get("username").toString(),
+                        documentArtist.data?.get("email").toString(),
+                        documentArtist.data?.get("country").toString(),
+                        documentArtist.data?.get("category").toString(),
+                        documentArtist.data?.get("age").toString().toLongOrNull(),
+                        documentArtist.data?.get("website").toString(),
+                        arrayListOf()
+                    )
+
+                    name.setText(user.name)
+                    surnames.setText(user.surnames)
+                    country.setText(user.country)
+                    age.setText(user.age.toString())
+                    website.setText(user.website)
+                    selectedCategory = user.category.toString()
+                    if (user.category == "User") {
+                        categorySpinner.setSelection(0)
+                    } else {
+                        categorySpinner.setSelection(1)
+                    }
+
+                    progressCircle.visibility = View.GONE
+                    profileDataLayout.visibility = View.VISIBLE
+                } else {
+                    Log.d("error", "Artist no such document")
+                }
+            }?.addOnFailureListener { exceptionArtist ->
+                Log.d("error", "Artist get failed with ", exceptionArtist)
+            }
         }
 
-        val profilePicRef =
-            Firebase.storage.reference.child("profile_images/${userId}.jpg")
+        // Get profile picture
         val tempFile = File.createTempFile("tempImage", "jpg")
         profilePicRef.getFile(tempFile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
@@ -111,6 +243,8 @@ class EditProfileFragment : BaseFragment() {
         }
         tempFile.delete()
 
+
+        // Save user profile picture
         // Dont put resultlauncher registerforactivityresult inside listeners cause fragment is not created (throws error)
         val resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -143,15 +277,36 @@ class EditProfileFragment : BaseFragment() {
                 user.name = name.text.toString()
                 user.surnames = surnames.text.toString()
                 user.country = country.text.toString()
-                user.age = age.text.toString().toLong()
+                user.category = selectedCategory
+                user.age = age.text.toString().toLongOrNull()
                 user.website = website.text.toString()
-                docRef?.set(user.asMap())
-                    ?.addOnSuccessListener {
-                        showMessageLong("Updated!")
-                        findNavController().popBackStack()
-                    }?.addOnFailureListener {
-                        showMessageShort("Failed!")
+                Log.d("user", user.toString())
+
+                when (selectedCategory) {
+                    "User" -> {
+                        userDocRef?.set(user.asMap())
+                            ?.addOnSuccessListener {
+                                showMessageLong("User updated!")
+                                findNavController().popBackStack()
+                            }?.addOnFailureListener {
+                                showMessageShort("Failed!")
+                            }
+                        artistDocRef?.delete()
                     }
+                    "Artist" -> {
+                        artistDocRef?.set(user.asMap())
+                            ?.addOnSuccessListener {
+                                showMessageLong("Artist updated!")
+                                findNavController().popBackStack()
+                            }?.addOnFailureListener {
+                                showMessageShort("Failed!")
+                            }
+                        userDocRef?.delete()
+                    }
+                    else -> {
+                        Log.d("error", "nosaved")
+                    }
+                }
             } else {
                 Toast.makeText(
                     view.context,
@@ -167,28 +322,5 @@ class EditProfileFragment : BaseFragment() {
         }
 
         return view
-    }
-
-    // UTILS
-
-    // Object to Map
-    private inline fun <reified T : Any> T.asMap(): Map<String, Any?> {
-        val props = T::class.memberProperties.associateBy { it.name }
-        return props.keys.associateWith { props[it]?.get(this) }
-    }
-
-    // Map to Object
-    private fun <T : Any> mapToObject(map: Map<String, Any>, clazz: KClass<T>): T {
-        //Get default constructor
-        val constructor = clazz.constructors.first()
-
-        //Map constructor parameters to map values
-        val args = constructor
-            .parameters
-            .map { it to map[it.name] }
-            .toMap()
-
-        //return object from constructor call
-        return constructor.callBy(args)
     }
 }
