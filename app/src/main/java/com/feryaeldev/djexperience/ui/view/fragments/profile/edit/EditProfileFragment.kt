@@ -136,18 +136,29 @@ class EditProfileFragment : BaseFragment() {
 
         // Save
         view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
-            user.name = name.text.toString()
-            user.surnames = surnames.text.toString()
-            user.country = country.text.toString()
-            user.age = age.text.toString().toLong()
-            user.website = website.text.toString()
-            docRef?.set(user.asMap())
-                ?.addOnSuccessListener {
-                    showMessageLong("Updated!")
-                    findNavController().popBackStack()
-                }?.addOnFailureListener {
-                    showMessageShort("Failed!")
-                }
+            if (name.text.toString().isNotBlank() && surnames.text.toString()
+                    .isNotBlank() && country.text.toString().isNotBlank() && age.text.toString()
+                    .isNotBlank() && website.text.toString().isNotBlank()
+            ) {
+                user.name = name.text.toString()
+                user.surnames = surnames.text.toString()
+                user.country = country.text.toString()
+                user.age = age.text.toString().toLong()
+                user.website = website.text.toString()
+                docRef?.set(user.asMap())
+                    ?.addOnSuccessListener {
+                        showMessageLong("Updated!")
+                        findNavController().popBackStack()
+                    }?.addOnFailureListener {
+                        showMessageShort("Failed!")
+                    }
+            } else {
+                Toast.makeText(
+                    view.context,
+                    "At least one of the fields is empty!",
+                    Toast.LENGTH_LONG
+                ).show();
+            }
         }
 
         // Back
