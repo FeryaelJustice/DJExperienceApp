@@ -106,7 +106,7 @@ class ArtistDetailsFragment : BaseFragment() {
                 surnames.text = artist.surnames
                 country.text = artist.country
                 category.text = artist.category
-                age.text = resources.getString(R.string.age, artist.age.toString())
+                age.text = view.context.resources.getString(R.string.age, artist.age.toString())
                 websiteUrl = artist.website.toString()
 
                 progressCircle.visibility = View.GONE
@@ -139,11 +139,11 @@ class ArtistDetailsFragment : BaseFragment() {
                 if (found) {
                     addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
                     addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-                    addRemoveToProfileText.text = view.resources.getString(R.string.sustract)
+                    addRemoveToProfileText.text = view.context.resources.getString(R.string.sustract)
                 } else {
                     addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
                     addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                    addRemoveToProfileText.text = view.resources.getString(R.string.add)
+                    addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
                 }
             }
         }
@@ -176,7 +176,7 @@ class ArtistDetailsFragment : BaseFragment() {
                         addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
                         addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
                         addRemoveToProfileText.text =
-                            view.resources.getString(R.string.sustract)
+                            view.context.resources.getString(R.string.sustract)
                     } else {
                         val tempList = arrayListOf<String>()
                         user?.following?.let { it1 -> tempList.addAll(it1) }
@@ -188,7 +188,7 @@ class ArtistDetailsFragment : BaseFragment() {
                         user?.following = tempList
                         addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
                         addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                        addRemoveToProfileText.text = view.resources.getString(R.string.add)
+                        addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
                     }
                     // Update
                     if (user != null) {
@@ -244,9 +244,10 @@ class ArtistDetailsFragment : BaseFragment() {
                     }
 
                     // Change displayed song name
-                    val usernameUppercase = artist.username.toString().replaceFirstChar { it.uppercase() }
-                    mediaTitle.text = getString(R.string.artist_demo, usernameUppercase)
-
+                    val usernameUppercase =
+                        artist.username.toString().replaceFirstChar { it.uppercase() }
+                    mediaTitle.text =
+                        view?.context?.getString(R.string.artist_demo, usernameUppercase) ?: ""
 
                     // Autoplay
                     startMediaPlayer()

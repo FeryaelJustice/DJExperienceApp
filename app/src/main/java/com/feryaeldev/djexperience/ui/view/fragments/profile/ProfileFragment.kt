@@ -47,7 +47,6 @@ class ProfileFragment : BaseFragment() {
         mRecyclerView = view.findViewById(R.id.fragment_profile_recyclerView)
         mRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
 
-        var followingArtistsIds: ArrayList<String>
         val artistsList: MutableList<User> = arrayListOf()
 
         mAdapter = ArtistsRecyclerViewAdapter(artistsList)
@@ -66,11 +65,10 @@ class ProfileFragment : BaseFragment() {
                     username.text = user?.username
                     category.text = user?.category
                     country.text = user?.country
-                    followingArtistsIds = user?.following ?: arrayListOf()
 
                     mRecyclerView.visibility = View.GONE
 
-                    for (id: String in followingArtistsIds) {
+                    for (id: String in user?.following ?: arrayListOf()) {
                         artistsList.add(User(id))
                     }
 

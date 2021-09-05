@@ -42,8 +42,6 @@ class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
     override fun getItemCount(): Int = users.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //private val context: Context = view.context
-        //private val layout: LinearLayout = view.findViewById(R.id.search_item)
         private val artistUsername: TextView = view.findViewById(R.id.searchitem_username)
         private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
@@ -60,21 +58,9 @@ class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
 
             // Por si solo viene el artist con el ID y no rellenado.
             id?.let {
-                Firebase.firestore.collection("artists").document(id).get()
+                Firebase.firestore.collection("artists").document(it).get()
                     .addOnSuccessListener { documentSnap ->
-                        val artist = User(
-                            documentSnap["id"].toString(),
-                            documentSnap["name"].toString(),
-                            documentSnap["surnames"].toString(),
-                            documentSnap["username"].toString(),
-                            documentSnap["email"].toString(),
-                            documentSnap["country"].toString(),
-                            documentSnap["category"].toString(),
-                            documentSnap["age"].toString().toLongOrNull(),
-                            documentSnap["website"].toString(),
-                            arrayListOf()
-                        )
-                        artistUsername.text = artist.username
+                        artistUsername.text = documentSnap["username"].toString()
                     }
             }
         }

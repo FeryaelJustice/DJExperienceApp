@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,11 +15,14 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.ArtistsRecyclerViewAdapter
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class SearchFragment : BaseFragment() {
 
+    private lateinit var mainView: View
+    lateinit var search: SearchView
     lateinit var mRecyclerView: RecyclerView
 
     private var artistsList: MutableList<User> = arrayListOf()
@@ -30,6 +34,7 @@ class SearchFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+        mainView = view
 
         // Code here
         progressCircle = view.findViewById(R.id.search_fragmentProgressBar)
@@ -43,7 +48,7 @@ class SearchFragment : BaseFragment() {
             Log.d("search", "searched")
         }
 
-        val search: SearchView = view.findViewById(R.id.fragment_search_searchView)
+        search = view.findViewById(R.id.fragment_search_searchView)
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
@@ -56,11 +61,15 @@ class SearchFragment : BaseFragment() {
                         }
                         progressCircle.visibility = View.GONE
                     }
+                } else {
+                    Toast.makeText(view?.context, "Empty search", Toast.LENGTH_SHORT).show()
+                    resetSearch()
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                /*
                 if (!newText.isNullOrBlank()) {
                     progressCircle.visibility = View.VISIBLE
                     // Show rv if not blank and not rv init
@@ -68,13 +77,7 @@ class SearchFragment : BaseFragment() {
                         showRecyclerView(view, true)
                     }
                     progressCircle.visibility = View.GONE
-                } else {
-                    // Reset
-                    search(newText, false) {
-                        Log.d("search", "searched")
-                        showRecyclerView(view, false)
-                    }
-                }
+                }*/
                 return false
             }
         })
@@ -107,21 +110,12 @@ class SearchFragment : BaseFragment() {
                 db.collection("artists").whereEqualTo("username", search).get()
                     .addOnSuccessListener {
                         if (it.documents.size == 1) {
-                            artistsList.add(
-                                User(
-                                    it.documents[0]["id"].toString(),
-                                    it.documents[0]["name"].toString(),
-                                    it.documents[0]["surnames"].toString(),
-                                    it.documents[0]["username"].toString(),
-                                    it.documents[0]["email"].toString(),
-                                    it.documents[0]["country"].toString(),
-                                    it.documents[0]["category"].toString(),
-                                    it.documents[0]["age"].toString().toLongOrNull(),
-                                    it.documents[0]["website"].toString(),
-                                    arrayListOf()
+                            if (it.documents[0]["id"].toString() != Firebase.auth.currentUser?.uid) {
+                                artistsList.add(
+                                    User(it.documents[0]["id"].toString())
                                 )
-                            )
-                            mRecyclerView.adapter?.notifyItemChanged(0)
+                                mRecyclerView.adapter?.notifyItemChanged(0)
+                            }
                         } else {
                             showMessageShort("More than one or empty result in DB.")
                         }
@@ -133,20 +127,12 @@ class SearchFragment : BaseFragment() {
             } else {
                 db.collection("artists").get().addOnSuccessListener {
                     it.documents.forEachIndexed { index, document ->
-                        artistsList.add(
-                            User(
-                                document["id"].toString(),
-                                document["name"].toString(),
-                                document["surnames"].toString(),
-                                document["username"].toString(),
-                                document["email"].toString(),
-                                document["country"].toString(),
-                                document["category"].toString(),
-                                document["age"].toString().toLongOrNull(),
-                                document["website"].toString()
+                        if (document["id"].toString() != Firebase.auth.currentUser?.uid) {
+                            artistsList.add(
+                                User(document["id"].toString())
                             )
-                        )
-                        mRecyclerView.adapter?.notifyItemChanged(index)
+                            mRecyclerView.adapter?.notifyItemChanged(index)
+                        }
                     }
                     completion()
                 }.addOnFailureListener {
@@ -160,4 +146,20 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    private fun resetSearch() {
+        search.setQuery("", false)
+        search.clearFocus()
+        artistsList.clear()
+        showRecyclerView(mainView, false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        resetSearch()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resetSearch()
+    }
 }
