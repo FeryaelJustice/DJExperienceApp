@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_launcher_background.xml" value="0.33611111111111114" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.33611111111111114" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/indicator_active_background.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/indicator_inactive_background.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/media_btn_background.xml" value="0.21041666666666667" />
