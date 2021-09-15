@@ -39,7 +39,8 @@
     <string name="username">Nombre de usuario</string>
     <string name="category">Categoría</string>
     <string name="country">País</string>
-    <string name="age">"Edad: %1$s"</string>
+    <string name="age">Edad</string>
+    <string name="ageInfo">"Edad: %1$s"</string>
     <string name="website">Web</string>
     <string-array name="user_categories">
         <item>User</item>

@@ -36,7 +36,8 @@
     <string name="username">Username</string>
     <string name="category">Category</string>
     <string name="country">Country</string>
-    <string name="age">"Age: %1$s "</string>
+    <string name="age">Age</string>
+    <string name="ageInfo">"Age: %1$s"</string>
     <string name="website">Website</string>
     <string-array name="user_categories">
         <item>User</item>

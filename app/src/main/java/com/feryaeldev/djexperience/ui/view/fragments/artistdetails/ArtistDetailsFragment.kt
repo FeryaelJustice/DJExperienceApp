@@ -108,7 +108,7 @@ class ArtistDetailsFragment : BaseFragment() {
                 surnames.text = artist.surnames
                 country.text = artist.country
                 category.text = artist.category
-                age.text = view.context.resources.getString(R.string.age, artist.age.toString())
+                age.text = view.context.resources.getString(R.string.ageInfo, artist.age.toString())
                 websiteUrl = artist.website.toString()
 
                 progressCircle.visibility = View.GONE

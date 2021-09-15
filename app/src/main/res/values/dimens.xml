@@ -9,6 +9,7 @@
 
     <!-- Common -->
     <dimen name="text_size">14sp</dimen>
+    <dimen name="text_size_big">22sp</dimen>
     <dimen name="editText_size_material">56dp</dimen>
     <dimen name="image_size_big">200dp</dimen>
     <dimen name="image_size_medium">80dp</dimen>

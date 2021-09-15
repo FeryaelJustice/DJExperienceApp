@@ -45,6 +45,7 @@ class ProfileFragment : BaseFragment() {
         val username: TextView = view.findViewById(R.id.profile_username)
         val category: TextView = view.findViewById(R.id.profile_category)
         val country: TextView = view.findViewById(R.id.profile_country)
+        val age: TextView = view.findViewById(R.id.profile_age)
         mRecyclerView = view.findViewById(R.id.fragment_profile_recyclerView)
         mRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
 
@@ -66,6 +67,7 @@ class ProfileFragment : BaseFragment() {
                     username.text = user?.username
                     category.text = user?.category
                     country.text = user?.country
+                    age.text = user?.age.toString()
 
                     mRecyclerView.visibility = View.GONE
 
@@ -88,6 +90,7 @@ class ProfileFragment : BaseFragment() {
                             username.text = user?.username
                             category.text = user?.category
                             country.text = user?.country
+                            age.text = user?.age.toString()
                         } else {
                             Log.d("error", "Artist no such document")
                         }
@@ -108,6 +111,7 @@ class ProfileFragment : BaseFragment() {
                         username.text = user?.username
                         category.text = user?.category
                         country.text = user?.country
+                        age.text = user?.age.toString()
                     } else {
                         Log.d("error", "Artist no such document")
                     }
@@ -128,6 +132,7 @@ class ProfileFragment : BaseFragment() {
                     username.text = user?.username
                     category.text = user?.category
                     country.text = user?.country
+                    age.text = user?.age.toString()
                 } else {
                     Log.d("error", "Artist no such document")
                 }
