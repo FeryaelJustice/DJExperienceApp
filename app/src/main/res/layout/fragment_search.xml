@@ -4,20 +4,21 @@
     android:id="@+id/fragment_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary"
     android:orientation="vertical"
     tools:context=".ui.view.fragments.search.SearchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="4dp">
 
         <Spinner
             android:id="@+id/fragment_search_spinnerSearch"
-            android:layout_width="120dp"
-            android:layout_height="match_parent" />
+            style="@style/MySpinner"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:spinnerMode="dropdown" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_search_searchView"

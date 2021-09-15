@@ -53,7 +53,7 @@
     <string name="description"><b>Description:</b> %1$s</string>
     <string name="createArtist">Create artist</string>
     <!-- Profile details -->
-    <string name="artist_demo">%1$s demo:</string>
+    <string name="artist_demo">Demo found! %1$s demo:</string>
     <string name="clearCache">Delete cache</string>
     <string name="confirmPassword">Confirm your password</string>
 </resources>

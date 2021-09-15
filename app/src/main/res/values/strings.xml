@@ -56,7 +56,7 @@
     <string name="description"><b>Descripción:</b> %1$s</string>
     <string name="createArtist">Crear artista</string>
     <!-- Profile details -->
-    <string name="artist_demo">%1$s demo:</string>
+    <string name="artist_demo">¡Demo encontrada! %1$s demo:</string>
     <string name="clearCache">Eliminar la caché</string>
     <string name="confirmPassword">Confirma tu contraseña</string>
 </resources>

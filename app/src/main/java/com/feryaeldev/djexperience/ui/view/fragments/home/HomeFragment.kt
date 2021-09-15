@@ -18,6 +18,7 @@ import com.feryaeldev.djexperience.data.provider.services.newsapi.NewsApiService
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.NewsRecyclerViewAdapter
 import com.feryaeldev.djexperience.util.HttpResponseStatus
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -48,7 +49,7 @@ class HomeFragment : BaseFragment() {
         mRecyclerView.adapter = mAdapter
 
         // Button create artist
-        view.findViewById<Button>(R.id.home_createArtist).setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.home_createArtist).setOnClickListener {
             findNavController().navigate(
                 R.id.action_homeFragment_to_createArtistFragment,
                 arguments

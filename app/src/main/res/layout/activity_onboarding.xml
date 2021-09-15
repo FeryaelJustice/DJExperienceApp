@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary"
-    tools:context=".ui.view.activities.onboarding.OnboardingActivity">
+    tools:context=".ui.view.activities.onboarding.OnBoardingActivity">
 
     <LinearLayout
         android:id="@+id/indicatorsContainer"
@@ -21,31 +20,29 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onboardingViewPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/view_pager_background"
-        app:layout_constraintBottom_toTopOf="@id/btnsOnboardingContainer"
+        android:layout_height="520dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/btnsOnboardingContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/btnOnboardingStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/onboardingViewPager">
 
         <ImageView
             android:id="@+id/imagePrevious"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/icon_background"
             android:contentDescription="@string/defaultImageDescription"
             android:src="@drawable/ic_left"
-            android:layout_marginEnd="10dp"
-            app:tint="@color/color_background" />
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageNext"
@@ -54,7 +51,7 @@
             android:background="@drawable/icon_background"
             android:contentDescription="@string/defaultImageDescription"
             android:src="@drawable/ic_right"
-            app:tint="@color/color_background" />
+            app:tint="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -62,6 +59,7 @@
         android:id="@+id/btnOnboardingStart"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/color_secondary"
         android:contentDescription="@string/app_name"
         android:paddingStart="40dp"
@@ -71,9 +69,8 @@
         android:textSize="@dimen/text_size"
         android:textStyle="bold"
         app:cornerRadius="@dimen/onBoarding_cornerSize"
-        app:layout_constraintTop_toTopOf="@id/btnsOnboardingContainer"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnsOnboardingContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

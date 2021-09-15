@@ -17,6 +17,7 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.ArtistsRecyclerViewAdapter
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -155,7 +156,7 @@ class ProfileFragment : BaseFragment() {
             Log.d("error", e.toString())
         }
 
-        view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.profile_editProfileBtn).setOnClickListener {
             findNavController().navigate(
                 R.id.action_profileFragment_to_editProfileFragment,
                 arguments

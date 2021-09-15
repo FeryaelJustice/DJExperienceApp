@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary"
     tools:context=".ui.view.fragments.profile.ProfileFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -76,13 +75,19 @@
             android:paddingEnd="10dp"
             android:paddingBottom="10dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/profile_editProfileBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/color_secondary"
+                android:contentDescription="@string/defaultImageDescription"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
                 android:text="@string/edit_profile"
-                android:textColor="@color/white" />
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold"
+                app:cornerRadius="@dimen/onBoarding_cornerSize" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View

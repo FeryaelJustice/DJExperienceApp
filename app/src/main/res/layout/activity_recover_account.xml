@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_secondary"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.view.activities.RegisterActivity">
+
+
+    <ImageView
+        android:layout_width="@dimen/image_size_medium"
+        android:layout_height="@dimen/image_size_medium"
+        android:layout_gravity="center"
+        android:contentDescription="@string/defaultImageDescription"
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/image_size_medium"
-            android:layout_height="@dimen/image_size_medium"
-            android:layout_gravity="center"
-            android:contentDescription="@string/defaultImageDescription"
-            android:src="@mipmap/ic_launcher" />
-
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:errorEnabled="true"
+            app:hintEnabled="false">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/recover_email"
+                style="@style/MyTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
                 android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/color_primary" />
+                android:inputType="textEmailAddress" />
 
-            <Button
-                android:id="@+id/recover_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/send_email" />
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recover_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/color_secondary"
+            android:contentDescription="@string/defaultImageDescription"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:text="@string/send_email"
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            app:cornerRadius="@dimen/onBoarding_cornerSize" />
     </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

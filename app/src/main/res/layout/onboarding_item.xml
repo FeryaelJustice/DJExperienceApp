@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:textColor="@color/color_text_primary"
+        android:textColor="@color/black"
         android:textSize="@dimen/onBoarding_text_item_title"
         android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:gravity="center"
-        android:textColor="@color/color_text_secondary"
+        android:textColor="@color/grey"
         android:textSize="@dimen/onBoarding_text_item_description" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

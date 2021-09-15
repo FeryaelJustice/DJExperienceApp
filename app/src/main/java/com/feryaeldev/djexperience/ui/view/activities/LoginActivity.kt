@@ -8,7 +8,8 @@ import android.widget.TextView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.feryaeldev.djexperience.data.provider.settings.Settings
-import com.feryaeldev.djexperience.ui.view.activities.onboarding.OnboardingActivity
+import com.feryaeldev.djexperience.ui.view.activities.onboarding.OnBoardingActivity
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -34,7 +35,7 @@ class LoginActivity : BaseActivity() {
             finish()
         }
 
-        findViewById<Button>(R.id.login_btn).setOnClickListener {
+        findViewById<MaterialButton>(R.id.login_btn).setOnClickListener {
             val emailEditText = findViewById<EditText>(R.id.login_email)
             val passwordEditText = findViewById<EditText>(R.id.login_password)
 
@@ -69,7 +70,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun navigateToOnboarding() {
-        startActivity(Intent(applicationContext, OnboardingActivity::class.java))
+        startActivity(Intent(applicationContext, OnBoardingActivity::class.java))
         finish()
     }
 

@@ -17,6 +17,7 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -270,7 +271,7 @@ class EditProfileFragment : BaseFragment() {
         }
 
         // Save
-        view.findViewById<Button>(R.id.editprofile_saveBtn).setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.editprofile_saveBtn).setOnClickListener {
             if (name.text.toString().isNotBlank() && surnames.text.toString()
                     .isNotBlank() && country.text.toString().isNotBlank() && age.text.toString()
                     .isNotBlank() && website.text.toString().isNotBlank()

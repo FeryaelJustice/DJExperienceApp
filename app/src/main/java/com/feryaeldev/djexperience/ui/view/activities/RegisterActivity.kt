@@ -3,10 +3,10 @@ package com.feryaeldev.djexperience.ui.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.EditText
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -18,7 +18,7 @@ class RegisterActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        findViewById<Button>(R.id.signup_btn).setOnClickListener {
+        findViewById<MaterialButton>(R.id.signup_btn).setOnClickListener {
             val emailEditText = findViewById<EditText>(R.id.signup_email)
             val passwordEditText = findViewById<EditText>(R.id.signup_password)
             val repeatPasswordEditText = findViewById<EditText>(R.id.signup_repeatpassword)

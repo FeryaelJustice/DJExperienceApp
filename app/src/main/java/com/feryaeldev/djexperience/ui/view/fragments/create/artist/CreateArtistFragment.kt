@@ -17,6 +17,7 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -62,7 +63,7 @@ class CreateArtistFragment : BaseFragment() {
         val profilePicsRef =
             Firebase.storage.reference
 
-        view.findViewById<Button>(R.id.createArtist_saveBtn).setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.createArtist_saveBtn).setOnClickListener {
             if (username.text.toString().isNotBlank() && email.text.toString()
                     .isNotBlank() && name.text.toString()
                     .isNotBlank() && surnames.text.toString()
