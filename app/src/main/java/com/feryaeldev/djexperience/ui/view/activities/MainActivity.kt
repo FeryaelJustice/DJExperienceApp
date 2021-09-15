@@ -39,6 +39,12 @@ class MainActivity : BaseActivity() {
         bottomNavigationView.setOnItemReselectedListener {
             // Avoid reload
         }
+        /*
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if ((destination.id != R.id.homeFragment) && (destination.id != R.id.searchFragment) && (destination.id != R.id.profileFragment)){
+                bottomNavigationView.menu.setGroupCheckable(0,false,true)
+            }
+        }*/
 
         messageFirebaseAnalytics()
 

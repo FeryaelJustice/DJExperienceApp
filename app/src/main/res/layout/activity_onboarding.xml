@@ -42,7 +42,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/icon_background"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/defaultImageDescription"
             android:src="@drawable/ic_left"
             android:layout_marginEnd="10dp"
             app:tint="@color/color_background" />
@@ -52,7 +52,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/icon_background"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/defaultImageDescription"
             android:src="@drawable/ic_right"
             app:tint="@color/color_background" />
 
@@ -66,11 +66,11 @@
         android:contentDescription="@string/app_name"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
-        android:text="@string/onboarding_start"
+        android:text="@string/onBoarding_start"
         android:textAllCaps="true"
-        android:textSize="@dimen/text_onboarding_start"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold"
-        app:cornerRadius="@dimen/corner_onboarding"
+        app:cornerRadius="@dimen/onBoarding_cornerSize"
         app:layout_constraintTop_toTopOf="@id/btnsOnboardingContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

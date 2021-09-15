@@ -26,8 +26,8 @@
     <string name="bottom_nav_profile">Profile</string>
 
     <!-- Activity -->
-    <!-- Onboarding -->
-    <string name="onboarding_start">Start</string>
+    <!-- OnBoarding -->
+    <string name="onBoarding_start">Start</string>
     <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="following">Following:</string>
@@ -55,4 +55,5 @@
     <!-- Profile details -->
     <string name="artist_demo">%1$s demo:</string>
     <string name="clearCache">Delete cache</string>
+    <string name="confirmPassword">Confirm your password</string>
 </resources>

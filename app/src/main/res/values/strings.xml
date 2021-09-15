@@ -1,6 +1,7 @@
 <resources>
-    <!-- App Name -->
+    <!-- App -->
     <string name="app_name" translatable="false">DJ Experience</string>
+    <string name="defaultImageDescription" translatable="false">image</string>
 
     <!-- App Global -->
     <string name="settings">Ajustes</string>
@@ -28,8 +29,8 @@
     <string name="bottom_nav_profile">Perfil</string>
 
     <!-- Activity -->
-    <!-- Onboarding -->
-    <string name="onboarding_start">Comenzar</string>
+    <!-- OnBoarding -->
+    <string name="onBoarding_start">Comenzar</string>
     <!-- Profile -->
     <string name="edit_profile">Editar perfil</string>
     <string name="following">Siguiendo:</string>
@@ -57,4 +58,5 @@
     <!-- Profile details -->
     <string name="artist_demo">%1$s demo:</string>
     <string name="clearCache">Eliminar la caché</string>
+    <string name="confirmPassword">Confirma tu contraseña</string>
 </resources>

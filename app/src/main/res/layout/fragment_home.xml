@@ -17,17 +17,17 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription=""
-            android:src="@drawable/headphoneswhite" />
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            android:contentDescription="@string/defaultImageDescription"
+            android:src="@drawable/launcher_image" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@color/color_secondary"
-            android:textSize="@dimen/text_onboarding_start"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

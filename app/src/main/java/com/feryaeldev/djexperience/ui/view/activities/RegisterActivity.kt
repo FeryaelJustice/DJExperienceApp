@@ -38,7 +38,7 @@ class RegisterActivity : BaseActivity() {
                                 "surnames" to "",
                                 "age" to 0,
                                 "country" to "",
-                                "category" to "",
+                                "category" to "User",
                                 "age" to 0,
                                 "following" to arrayListOf<String>(),
                                 "website" to ""

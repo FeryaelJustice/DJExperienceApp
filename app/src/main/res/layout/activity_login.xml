@@ -15,10 +15,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
             android:layout_gravity="center"
-            android:contentDescription=""
+            android:contentDescription="@string/defaultImageDescription"
             android:src="@mipmap/ic_launcher" />
 
         <LinearLayout

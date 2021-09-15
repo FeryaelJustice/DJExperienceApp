@@ -32,13 +32,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/settings_clearCache"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/clearCache"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/settings_screenMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change screen mode (dark or light)"/>
     </LinearLayout>
 
 </LinearLayout>

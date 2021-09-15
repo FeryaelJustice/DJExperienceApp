@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/bottom_navigation_itembackground.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_launcher_background.xml" value="0.33611111111111114" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.33611111111111114" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/indicator_active_background.xml" value="0.22135416666666666" />
@@ -24,7 +25,7 @@
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_profile.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_search.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/onboarding_item.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/search_item.xml" value="0.13858695652173914" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/search_item.xml" value="0.17" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/search_new_item.xml" value="0.19429347826086957" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/menu/bottom_navigation.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />

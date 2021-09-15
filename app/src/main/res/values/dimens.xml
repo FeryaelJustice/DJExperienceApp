@@ -6,8 +6,16 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Custom -->
-    <dimen name="text_onboarding_start">14sp</dimen>
-    <dimen name="corner_onboarding">20dp</dimen>
-    <dimen name="text_onboarding_item">20sp</dimen>
+
+    <!-- Common -->
+    <dimen name="text_size">14sp</dimen>
+    <dimen name="image_size_big">200dp</dimen>
+    <dimen name="image_size_medium">80dp</dimen>
+    <dimen name="image_size_small">40dp</dimen>
+
+    <!-- Activities / Fragments -->
+    <dimen name="onBoarding_cornerSize">20dp</dimen>
+    <dimen name="onBoarding_text_item_title">20sp</dimen>
+    <dimen name="onBoarding_text_item_description">16sp</dimen>
 
 </resources>

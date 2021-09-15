@@ -142,12 +142,18 @@ class ProfileFragment : BaseFragment() {
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/${userOrArtistID}.jpg")
         val image: ImageView = view.findViewById(R.id.profile_photo)
-        val tempFile = File.createTempFile("tempImage", "jpg")
-        profilePicRef.getFile(tempFile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
-            image.setImageBitmap(bitmap)
+        try {
+            //if (view.context.cacheDir != null) {
+                val tempFile = File.createTempFile("tempImage", "jpg")
+                profilePicRef.getFile(tempFile).addOnSuccessListener {
+                    val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
+                    image.setImageBitmap(bitmap)
+                }
+                tempFile.delete()
+            //}
+        } catch (e: Error) {
+            Log.d("error", e.toString())
         }
-        tempFile.delete()
 
         view.findViewById<Button>(R.id.profile_editProfileBtn).setOnClickListener {
             findNavController().navigate(

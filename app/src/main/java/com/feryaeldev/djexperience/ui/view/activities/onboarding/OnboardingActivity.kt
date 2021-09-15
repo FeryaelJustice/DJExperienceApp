@@ -46,19 +46,19 @@ class OnboardingActivity : BaseActivity() {
         onboardingItemsAdapter = OnboardingItemsAdapter(
             listOf(
                 OnboardingItem(
-                    R.drawable.ic_right,
-                    "Primera",
-                    "Primera descripción"
+                    R.drawable.launcher_image,
+                    "Welcome to DJExperience!",
+                    "In this app you will find all you need about DJ's."
                 ),
                 OnboardingItem(
-                    R.drawable.ic_right,
-                    "Segunda",
-                    "Segunda descripción"
+                    R.drawable.ic_baseline_person_24,
+                    "With account system",
+                    "You have to login to use the app, because it syncs all your data (who you follow and other)"
                 ),
                 OnboardingItem(
-                    R.drawable.ic_right,
-                    "Tercera",
-                    "Tercera descripción"
+                    R.drawable.ic_baseline_play_arrow_24,
+                    "Quick introduction",
+                    "You only have to search your favourite artists (lowercase sensitive and no spaces) and create your own DJ's."
                 ),
             )
         )
