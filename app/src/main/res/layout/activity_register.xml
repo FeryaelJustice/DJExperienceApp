@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     android:paddingStart="40dp"
     android:paddingEnd="40dp"
-    android:orientation="vertical"
     tools:context=".ui.view.activities.RegisterActivity">
 
     <ImageView
@@ -24,74 +24,85 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/username"
+            app:counterEnabled="true"
+            app:counterMaxLength="40"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
-            app:hintEnabled="false">
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_username"
-                style="@style/MyTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/username"
-                android:maxLength="20"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/email"
+            app:counterEnabled="true"
+            app:counterMaxLength="40"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
-            app:hintEnabled="false">
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_email"
-                style="@style/MyTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/password"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:endIconMode="password_toggle"
+            app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
             app:hintEnabled="false"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/black">
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_password"
-                style="@style/MyTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/MyTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/confirmPassword"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:endIconMode="password_toggle"
+            app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
             app:hintEnabled="false"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/black">
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_repeatpassword"
-                style="@style/MyTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/confirmPassword"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>

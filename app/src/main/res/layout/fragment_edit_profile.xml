@@ -53,57 +53,116 @@
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp" />
 
-        <EditText
-            android:id="@+id/editprofile_name"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
+            android:layout_marginTop="20dp"
             android:hint="@string/name"
-            android:inputType="text"
-            android:textColor="@color/white" />
+            app:counterEnabled="true"
+            app:counterMaxLength="30"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
-        <EditText
-            android:id="@+id/editprofile_surnames"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofile_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:hint="@string/surnames"
-            android:inputType="text"
-            android:textColor="@color/white" />
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
-        <EditText
-            android:id="@+id/editprofile_country"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofile_surnames"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:hint="@string/country"
-            android:inputType="text"
-            android:textColor="@color/white" />
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
-        <EditText
-            android:id="@+id/editprofile_age"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofile_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:hint="@string/age"
-            android:inputType="number"
-            android:textColor="@color/white" />
+            app:counterEnabled="true"
+            app:counterMaxLength="4"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
-        <EditText
-            android:id="@+id/editprofile_website"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofile_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:hint="@string/website"
-            android:inputType="textWebEditText"
-            android:textColor="@color/white" />
+            app:counterEnabled="true"
+            app:counterMaxLength="120"
+            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/defaultImageDescription"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_public_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofile_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textWebEditText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/editprofile_category_sp"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:foregroundTint="@color/white" />
+            android:layout_height="40dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/editprofile_saveBtn"

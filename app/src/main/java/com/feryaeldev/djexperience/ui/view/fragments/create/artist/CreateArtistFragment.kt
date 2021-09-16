@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
@@ -16,6 +15,7 @@ import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -32,13 +32,13 @@ class CreateArtistFragment : BaseFragment() {
         var uri = Uri.parse("")
 
         val image: ImageView = view.findViewById(R.id.createArtist_photo)
-        val email: EditText = view.findViewById(R.id.createArtist_email)
-        val username: EditText = view.findViewById(R.id.createArtist_username)
-        val name: EditText = view.findViewById(R.id.createArtist_name)
-        val surnames: EditText = view.findViewById(R.id.createArtist_surnames)
-        val country: EditText = view.findViewById(R.id.createArtist_country)
-        val age: EditText = view.findViewById(R.id.createArtist_age)
-        val website: EditText = view.findViewById(R.id.createArtist_website)
+        val email: TextInputEditText = view.findViewById(R.id.createArtist_email)
+        val username: TextInputEditText = view.findViewById(R.id.createArtist_username)
+        val name: TextInputEditText = view.findViewById(R.id.createArtist_name)
+        val surnames: TextInputEditText = view.findViewById(R.id.createArtist_surnames)
+        val country: TextInputEditText = view.findViewById(R.id.createArtist_country)
+        val age: TextInputEditText = view.findViewById(R.id.createArtist_age)
+        val website: TextInputEditText = view.findViewById(R.id.createArtist_website)
 
         // Profile picture
         val resultLauncher =

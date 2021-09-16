@@ -25,13 +25,13 @@ import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
 import java.io.File
-
 
 class EditProfileFragment : BaseFragment() {
 
@@ -64,11 +64,11 @@ class EditProfileFragment : BaseFragment() {
         progressCircle.visibility = View.VISIBLE
 
         val image: ImageView = view.findViewById(R.id.editprofile_photo)
-        val name: EditText = view.findViewById(R.id.editprofile_name)
-        val surnames: EditText = view.findViewById(R.id.editprofile_surnames)
-        val country: EditText = view.findViewById(R.id.editprofile_country)
-        val age: EditText = view.findViewById(R.id.editprofile_age)
-        val website: EditText = view.findViewById(R.id.editprofile_website)
+        val name: TextInputEditText = view.findViewById(R.id.editprofile_name)
+        val surnames: TextInputEditText = view.findViewById(R.id.editprofile_surnames)
+        val country: TextInputEditText = view.findViewById(R.id.editprofile_country)
+        val age: TextInputEditText = view.findViewById(R.id.editprofile_age)
+        val website: TextInputEditText = view.findViewById(R.id.editprofile_website)
         val categorySpinner: Spinner = view.findViewById(R.id.editprofile_category_sp)
 
         val userListTypes = resources.getStringArray(R.array.user_categories)
@@ -119,7 +119,7 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
         cameraResultLauncher =
-            registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            registerForActivityResult(ActivityResultContracts.TakePicture(),) { success ->
                 if (success) {
                     uri.let { url ->
                         profilePicRef.putFile(url).addOnCompleteListener {
