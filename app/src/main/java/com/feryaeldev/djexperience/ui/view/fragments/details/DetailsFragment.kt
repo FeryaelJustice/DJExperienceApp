@@ -152,6 +152,8 @@ class DetailsFragment : BaseFragment() {
                     detailsData.visibility = View.VISIBLE
 
                     initMedia()
+
+                    showOrNotShowFollowFunction(addRemoveToProfile, addRemoveToProfileText)
                 } else {
                     db.collection("users").document(id).get()
                         .addOnSuccessListener { documentSnaps ->
@@ -181,6 +183,8 @@ class DetailsFragment : BaseFragment() {
                             progressCircle.visibility = View.GONE
                             detailsData.visibility = View.VISIBLE
                             mediaLayout.visibility = View.GONE
+
+                            showOrNotShowFollowFunction(addRemoveToProfile, addRemoveToProfileText)
                         }
                 }
             }
@@ -207,30 +211,35 @@ class DetailsFragment : BaseFragment() {
         addRemoveToProfile.setOnClickListener {
             authenticatedUserDbRef.get().addOnSuccessListener { document ->
                 if (document != null) {
-                    val user: User? = document.toObject(User::class.java)
-                    // Push or substract artist
-                    if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
-                        userOrArtist.id?.let { it1 -> user?.following?.add(it1) }
-                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
-                        addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-                        addRemoveToProfileText.text =
-                            view.context.resources.getString(R.string.sustract)
-                    } else {
-                        val tempList = arrayListOf<String>()
-                        user?.following?.let { it1 -> tempList.addAll(it1) }
-                        user?.following?.forEach {
-                            if (it == userOrArtist.id) {
-                                tempList.remove(it)
+                    // ONLY FOLLOW ARTISTS check
+                    if(userOrArtist.category=="Artist"){
+                        val user: User? = document.toObject(User::class.java)
+                        // Push or substract artist
+                        if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
+                            userOrArtist.id?.let { it1 -> user?.following?.add(it1) }
+                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                            addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+                            addRemoveToProfileText.text =
+                                view.context.resources.getString(R.string.sustract)
+                        } else {
+                            val tempList = arrayListOf<String>()
+                            user?.following?.let { it1 -> tempList.addAll(it1) }
+                            user?.following?.forEach {
+                                if (it == userOrArtist.id) {
+                                    tempList.remove(it)
+                                }
                             }
+                            user?.following = tempList
+                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                            addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+                            addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
                         }
-                        user?.following = tempList
-                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
-                        addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                        addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
-                    }
-                    // Update
-                    if (user != null) {
-                        db.collection("users").document(authenticatedUserID).set(user)
+                        // Update
+                        if (user != null) {
+                            db.collection("users").document(authenticatedUserID).set(user)
+                        }
+                    }else{
+                        showMessageShort("You cant use this function to follow a User.")
                     }
                 }
             }
@@ -249,6 +258,17 @@ class DetailsFragment : BaseFragment() {
         }
 
         return view
+    }
+
+    private fun showOrNotShowFollowFunction(addRemoveToProfile: FloatingActionButton, addRemoveToProfileText: TextView) {
+        userOrArtist.category?.let { showMessageShort(it) }
+        if(userOrArtist.category == "User"){
+            addRemoveToProfile.visibility = View.GONE
+            addRemoveToProfileText.visibility = View.GONE
+        }else{
+            addRemoveToProfile.visibility = View.VISIBLE
+            addRemoveToProfileText.visibility = View.VISIBLE
+        }
     }
 
     private fun initMedia() {
