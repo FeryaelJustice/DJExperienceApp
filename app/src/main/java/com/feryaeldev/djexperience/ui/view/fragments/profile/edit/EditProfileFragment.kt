@@ -1,16 +1,27 @@
 package com.feryaeldev.djexperience.ui.view.fragments.profile.edit
 
 import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.graphics.createBitmap
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
@@ -23,7 +34,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
+import java.io.ByteArrayOutputStream
 import java.io.File
+
 
 class EditProfileFragment : BaseFragment() {
 
@@ -247,12 +260,37 @@ class EditProfileFragment : BaseFragment() {
 
 
         // Save user profile picture
-        // Dont put resultlauncher registerforactivityresult inside listeners cause fragment is not created (throws error)
+        // Don't put result launcher register for activity result inside listeners cause fragment is not created (throws error)
         val resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     val uri = result.data?.data
                     uri?.let { url ->
+                        // Check image orientation before upload to server
+                        /*
+                        val convertedBitmap = rotateImageIfRequired(url)
+                        convertedBitmap?.compress(
+                            Bitmap.CompressFormat.JPEG,
+                            1100,
+                            ByteArrayOutputStream()
+                        )
+                        val finalUri = convertedBitmap?.let { convBitmap ->
+                            getImageUriFromBitmap(
+                                view.context,
+                                convBitmap
+                            )
+                        }
+                        finalUri?.let { finalUrl ->
+                            profilePicRef.putFile(finalUrl).addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    Picasso.get().load(finalUrl).into(image)
+                                    showMessageLong("Image uploaded successfully!")
+                                } else {
+                                    showMessageLong("Error on uploading image...")
+                                }
+                            }
+                        }
+                        */
                         profilePicRef.putFile(url).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Picasso.get().load(url).into(image)
@@ -324,5 +362,60 @@ class EditProfileFragment : BaseFragment() {
         }
 
         return view
+    }
+
+    private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "file_name")
+            contentValues.put(MediaStore.Files.FileColumns.MIME_TYPE, "image/png")
+            contentValues.put(
+                MediaStore.MediaColumns.RELATIVE_PATH,
+                (context.getExternalFilesDir(null)?.absolutePath ?: "") + "relativePath"
+            )
+            contentValues.put(MediaStore.MediaColumns.IS_PENDING, 1)
+            Uri.parse(contentValues.getAsString(MediaStore.MediaColumns.RELATIVE_PATH))
+        } else {
+            val path =
+                MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
+            Uri.parse(path.toString())
+        }
+    }
+
+
+    // Fix correct orientation when upload
+    private fun rotateImageIfRequired(selectedImage: Uri): Bitmap? {
+        val bitmap = context?.let { context ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ImageDecoder.decodeBitmap(
+                    ImageDecoder.createSource(
+                        context.contentResolver,
+                        selectedImage
+                    )
+                )
+            } else {
+                createBitmap(0, 0, Bitmap.Config.RGB_565)
+            }
+        }
+        val exifInterface = ExifInterface(selectedImage.path!!);
+        val orientation = exifInterface.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        );
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> bitmap?.let { rotateImage(it, 90) }
+            ExifInterface.ORIENTATION_ROTATE_180 -> bitmap?.let { rotateImage(it, 180) }
+            ExifInterface.ORIENTATION_ROTATE_270 -> bitmap?.let { rotateImage(it, 270) }
+            else -> Bitmap.createBitmap(0, 0, Bitmap.Config.RGB_565)
+        }
+    }
+
+    private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
+        val matrix = Matrix()
+        matrix.postRotate(degree.toFloat())
+        return Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
     }
 }

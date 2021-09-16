@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentContainerView
@@ -149,14 +148,14 @@ class ProfileFragment : BaseFragment() {
             Firebase.storage.reference.child("profile_images/${userOrArtistID}.jpg")
         val image: ImageView = view.findViewById(R.id.profile_photo)
         try {
-            //if (view.context.cacheDir != null) {
-                val tempFile = File.createTempFile("tempImage", "jpg")
+            if (view.context.cacheDir != null) {
+                val tempFile = File.createTempFile("tempImage", "jpg", view.context.cacheDir)
                 profilePicRef.getFile(tempFile).addOnSuccessListener {
                     val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
                     image.setImageBitmap(bitmap)
                 }
                 tempFile.delete()
-            //}
+            }
         } catch (e: Error) {
             Log.d("error", e.toString())
         }
