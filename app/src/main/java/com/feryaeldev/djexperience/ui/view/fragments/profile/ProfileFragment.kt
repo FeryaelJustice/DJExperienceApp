@@ -1,6 +1,8 @@
 package com.feryaeldev.djexperience.ui.view.fragments.profile
 
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -147,7 +150,12 @@ class ProfileFragment : BaseFragment() {
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/${userOrArtistID}.jpg")
         val image: ImageView = view.findViewById(R.id.profile_photo)
+        var downloadUrl = ""
         try {
+            profilePicRef.downloadUrl.addOnSuccessListener {
+                downloadUrl = it.toString()
+            }
+
             if (view.context.cacheDir != null) {
                 val tempFile = File.createTempFile("tempImage", "jpg", view.context.cacheDir)
                 profilePicRef.getFile(tempFile).addOnSuccessListener {
@@ -158,6 +166,11 @@ class ProfileFragment : BaseFragment() {
             }
         } catch (e: Error) {
             Log.d("error", e.toString())
+        }
+        image.setOnLongClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl))
+            startActivity(browserIntent)
+            true
         }
 
         view.findViewById<MaterialButton>(R.id.profile_editProfileBtn).setOnClickListener {
