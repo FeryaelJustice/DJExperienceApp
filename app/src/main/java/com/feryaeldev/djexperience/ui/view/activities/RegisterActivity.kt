@@ -55,10 +55,11 @@ class RegisterActivity : BaseActivity() {
                                             "UserAddedToDB",
                                             "DocumentSnapshot added successfully"
                                         )
-                                        showMessageShort("Error on creating user in DB, auth success.")
+                                        showMessageShort("User successfully created!")
                                     }
                                     .addOnFailureListener { e ->
                                         Log.w("UserFailedToAddToDB", "Error adding document", e)
+                                        showMessageShort("Error adding document!")
                                     }
                             }
                             startActivity(Intent(applicationContext, MainActivity::class.java))
@@ -71,7 +72,7 @@ class RegisterActivity : BaseActivity() {
                             showMessageLong(getString(R.string.signUpError))
                         }
                     }.addOnFailureListener {
-                        showMessageLong(getString(R.string.signUpError))
+                        showMessageLong(getString(R.string.signUpError,it.toString()))
                     }
                 } else {
                     showMessageLong(getString(R.string.passwordsNotMatch))

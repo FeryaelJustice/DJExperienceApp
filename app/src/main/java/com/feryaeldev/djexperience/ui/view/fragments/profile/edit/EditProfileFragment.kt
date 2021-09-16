@@ -351,11 +351,7 @@ class EditProfileFragment : BaseFragment() {
                     }
                 }
             } else {
-                Toast.makeText(
-                    view.context,
-                    "At least one of the fields is empty!",
-                    Toast.LENGTH_LONG
-                ).show()
+                showMessageLong("At least one of the fields is empty!")
             }
         }
 

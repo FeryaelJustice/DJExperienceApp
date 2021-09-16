@@ -23,7 +23,7 @@ class RecoverAccountActivity : BaseActivity() {
                         showMessageLong("Check your email!")
                         onBackPressed()
                     } else {
-                        showMessageLong("Failed to send an email.")
+                        showMessageLong("This mail doesn't belong to any account.")
                     }
                 }
             } else {

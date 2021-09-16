@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
@@ -98,11 +96,7 @@ class CreateArtistFragment : BaseFragment() {
                         showMessageLong("Failed! Error on uploading image...")
                     }
             } else {
-                Toast.makeText(
-                    view.context,
-                    "At least one of the fields is empty!",
-                    Toast.LENGTH_LONG
-                ).show()
+                showMessageLong("At least one of the fields is empty!")
             }
         }
 

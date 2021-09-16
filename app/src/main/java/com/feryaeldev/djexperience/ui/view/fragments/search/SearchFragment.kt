@@ -81,7 +81,7 @@ class SearchFragment : BaseFragment() {
                         progressCircle.visibility = View.GONE
                     }
                 } else {
-                    Toast.makeText(view?.context, "Empty search", Toast.LENGTH_SHORT).show()
+                    showMessageShort("Empty search")
                     resetSearch()
                 }
                 return false

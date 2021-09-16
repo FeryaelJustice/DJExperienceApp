@@ -2,12 +2,10 @@ package com.feryaeldev.djexperience.ui.view.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.feryaeldev.djexperience.data.provider.settings.Settings
+import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.feryaeldev.djexperience.ui.view.activities.onboarding.OnBoardingActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -31,8 +29,7 @@ class LoginActivity : BaseActivity() {
 
         if (Firebase.auth.currentUser != null) {
             // User is signed in (getCurrentUser() will be null if not signed in)
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
@@ -46,6 +43,9 @@ class LoginActivity : BaseActivity() {
                     passwordEditText.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
+                        settings.setUserEmail(emailEditText.text.toString())
+                        settings.setUserPassword(passwordEditText.text.toString())
+
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         overridePendingTransition(
                             R.anim.slide_down_reverse,

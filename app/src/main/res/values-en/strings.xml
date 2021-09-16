@@ -7,7 +7,7 @@
     <string name="signUp">Sign up</string>
     <string name="signUpInfo">Still not have an account? Register here.</string>
     <string name="signInError">Error on trying to sign in</string>
-    <string name="signUpError">Error on register</string>
+    <string name="signUpError">Error on register: %1$s</string>
     <string name="email">Email</string>
     <string name="send_email">Send email</string>
     <string name="password">Password</string>

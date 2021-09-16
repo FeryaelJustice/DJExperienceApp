@@ -38,13 +38,13 @@
             android:id="@+id/settings_clearCache"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/clearCache"/>
+            android:text="@string/clearCache" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
             android:id="@+id/settings_deleteAccount"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/deleteAccount"/>
+            android:text="@string/deleteAccount" />
     </LinearLayout>
 
 </LinearLayout>

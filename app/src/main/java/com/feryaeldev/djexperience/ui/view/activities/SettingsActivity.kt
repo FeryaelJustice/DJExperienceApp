@@ -8,16 +8,21 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.feryaeldev.djexperience.R
+import com.feryaeldev.djexperience.data.provider.settings.Settings
 import com.feryaeldev.djexperience.ui.base.BaseActivity
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class SettingsActivity : BaseActivity() {
+
+    private val userOrArtistID = Firebase.auth.currentUser?.uid
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -42,18 +47,34 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun deleteAccount() {
-        val user = Firebase.auth.currentUser!!
-        user.delete().addOnCompleteListener { deleteTask ->
+        val user = Firebase.auth.currentUser
+        user?.delete()?.addOnCompleteListener { deleteTask ->
             if (deleteTask.isSuccessful) {
+                // Now user doesnt exist, get id before this to delete it from DB
                 deleteUserInDB()
+                signOut()
             }
+        }?.addOnFailureListener {
+            showMessageShort("Error deleting account: $it")
+            reAuthenticate(user)
         }
+    }
+
+    private fun reAuthenticate(user: FirebaseUser) {
+        showMessageLong("Reautheticating...")
+        val settings = Settings(applicationContext)
+        val credential = EmailAuthProvider
+            .getCredential(settings.getUserEmail().orEmpty(), settings.getUserPassword().orEmpty())
+        user.reauthenticate(credential)
+            .addOnCompleteListener {
+                Log.d("auth", "User re-authenticated.")
+                showMessageLong("Reauthenticated!")
+            }
     }
 
     override fun signOut() {
         super.signOut()
-        Toast.makeText(applicationContext, "Account successfully deleted.", Toast.LENGTH_SHORT)
-            .show()
+        showMessageShort("Account successfully deleted.")
         Firebase.auth.signOut()
         startActivity(Intent(applicationContext, LoginActivity::class.java))
         finish()
@@ -61,36 +82,36 @@ class SettingsActivity : BaseActivity() {
 
     private fun deleteUserInDB() {
         val db = Firebase.firestore
-        val userOrArtistID = Firebase.auth.currentUser?.uid
         val userDocRef = userOrArtistID?.let { db.collection("users").document(it) }
         val artistDocRef = userOrArtistID?.let { db.collection("artists").document(it) }
 
         userDocRef?.delete()?.addOnCompleteListener { deleteUserTask ->
             if (deleteUserTask.isSuccessful) {
                 deleteProfilePicture()
-                signOut()
             } else {
                 artistDocRef?.delete()?.addOnCompleteListener { deleteArtistTask ->
                     if (deleteArtistTask.isSuccessful) {
                         deleteProfilePicture()
-                        signOut()
                     } else {
                         Log.d("error", "Error on delete account")
+                        showMessageLong("Error deleting account. Not successful!")
                     }
                 }?.addOnFailureListener {
                     Log.d("error", "Error on delete account")
+                    showMessageLong("Error deleting account: $it")
                 }
             }
         }?.addOnFailureListener {
             artistDocRef?.delete()?.addOnCompleteListener { deleteArtistTask ->
                 if (deleteArtistTask.isSuccessful) {
                     deleteProfilePicture()
-                    signOut()
                 } else {
                     Log.d("error", "Error on delete account")
+                    showMessageLong("Error deleting account. Not successful!")
                 }
             }?.addOnFailureListener {
                 Log.d("error", "Error on delete account")
+                showMessageLong("Error deleting account: $it")
             }
         }
     }

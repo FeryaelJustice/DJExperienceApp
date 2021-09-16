@@ -3,9 +3,7 @@ package com.feryaeldev.djexperience.ui.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.feryaeldev.djexperience.data.provider.settings.Settings
-import com.feryaeldev.djexperience.service.AppService
 import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -55,13 +53,11 @@ class SplashActivity : BaseActivity() {
 
         firebaseRemoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(
-                    this,
+                showMessageShort(
                     "Author message: ${
                         FirebaseRemoteConfig.getInstance().getString("authorMessage")
-                    }",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    }"
+                )
                 settings.setAuthorMessage(
                     FirebaseRemoteConfig.getInstance().getString("authorMessage")
                 )

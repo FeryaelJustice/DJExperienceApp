@@ -10,6 +10,13 @@ class Settings(context: Context) {
     private val preferences: SharedPreferences =
         context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE)
 
+    fun clearSharedPrefs(){
+        with(preferences.edit()){
+            clear()
+            commit()
+        }
+    }
+
     fun isFirstOpen(): Boolean = preferences.getBoolean("firstOpen", true)
     fun setFirstOpen(firstOpen: Boolean) {
         with(preferences.edit()) {
@@ -34,5 +41,27 @@ class Settings(context: Context) {
             putString("authorMessage", authorMessage)
             commit()
         }
+    }
+
+    // Account
+    fun getUserEmail(): String? = preferences.getString("userEmail", "")
+    fun setUserEmail(userEmail: String) {
+        with(preferences.edit()) {
+            putString("userEmail", userEmail)
+            commit()
+        }
+    }
+
+    fun getUserPassword(): String? = preferences.getString("userPassword", "")
+    fun setUserPassword(userPassword: String) {
+        with(preferences.edit()) {
+            putString("userPassword", userPassword)
+            commit()
+        }
+    }
+
+    fun clearUserInSharedPrefs() {
+        setUserEmail("")
+        setUserPassword("")
     }
 }
