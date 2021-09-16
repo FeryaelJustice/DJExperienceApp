@@ -32,7 +32,7 @@ class DetailsFragment : BaseFragment() {
 
     private lateinit var userOrArtistID: String
     private lateinit var userOrArtist: User
-    private lateinit var userId: String // Current user id session auth
+    private lateinit var authenticatedUserID: String // Current user id session auth
 
     private lateinit var progressCircle: FragmentContainerView
     private lateinit var detailsData: LinearLayout
@@ -61,7 +61,8 @@ class DetailsFragment : BaseFragment() {
 
         // Vital data
         val db = Firebase.firestore
-        userId = Firebase.auth.currentUser?.uid.toString()
+        authenticatedUserID = Firebase.auth.currentUser?.uid.toString()
+        val authenticatedUserDbRef = authenticatedUserID.let { db.collection("users").document(it) }
         userOrArtistID = arguments?.getString("id").toString()
         userOrArtist = User()
 
@@ -87,6 +88,29 @@ class DetailsFragment : BaseFragment() {
         mediaTitle = view.findViewById(R.id.media_demoTrack_title)
         mediaPlayer = MediaPlayer()
         mediaPlayer.reset()
+
+        // Get if following
+        authenticatedUserDbRef.get().addOnSuccessListener { document ->
+            if (document != null) {
+                val user: User? = document.toObject(User::class.java)
+                var found = false
+                user?.following?.forEach checkFollow@ {
+                    if(it == userOrArtistID){
+                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                        addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+                        addRemoveToProfileText.text =
+                            view.context.resources.getString(R.string.sustract)
+                        found = true
+                        return@checkFollow
+                    }
+                }
+                if(!found){
+                    addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                    addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+                    addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
+                }
+            }
+        }
 
         // Get artist data
         val profilePicRef =
@@ -128,37 +152,37 @@ class DetailsFragment : BaseFragment() {
                     detailsData.visibility = View.VISIBLE
 
                     initMedia()
-                }else{
-                    db.collection("users").document(id).get().addOnSuccessListener { documentSnaps ->
-                        userOrArtist = User(
-                            documentSnaps.data?.get("id").toString(),
-                            documentSnaps.data?.get("name").toString(),
-                            documentSnaps.data?.get("surnames").toString(),
-                            documentSnaps.data?.get("username").toString(),
-                            documentSnaps.data?.get("email").toString(),
-                            documentSnaps.data?.get("country").toString(),
-                            documentSnaps.data?.get("category").toString(),
-                            documentSnaps.data?.get("age").toString().toLongOrNull(),
-                            documentSnaps.data?.get("website").toString(),
-                            documentSnaps.data?.get("following") as ArrayList<String>?
-                        )
-                        username.text = userOrArtist.username
-                        name.text = userOrArtist.name
-                        surnames.text = userOrArtist.surnames
-                        country.text = userOrArtist.country
-                        category.text = userOrArtist.category
-                        age.text = view.context.resources.getString(
-                            R.string.ageInfo,
-                            userOrArtist.age.toString()
-                        )
-                        websiteUrl = userOrArtist.website.toString()
+                } else {
+                    db.collection("users").document(id).get()
+                        .addOnSuccessListener { documentSnaps ->
+                            userOrArtist = User(
+                                documentSnaps.data?.get("id").toString(),
+                                documentSnaps.data?.get("name").toString(),
+                                documentSnaps.data?.get("surnames").toString(),
+                                documentSnaps.data?.get("username").toString(),
+                                documentSnaps.data?.get("email").toString(),
+                                documentSnaps.data?.get("country").toString(),
+                                documentSnaps.data?.get("category").toString(),
+                                documentSnaps.data?.get("age").toString().toLongOrNull(),
+                                documentSnaps.data?.get("website").toString(),
+                                documentSnaps.data?.get("following") as ArrayList<String>?
+                            )
+                            username.text = userOrArtist.username
+                            name.text = userOrArtist.name
+                            surnames.text = userOrArtist.surnames
+                            country.text = userOrArtist.country
+                            category.text = userOrArtist.category
+                            age.text = view.context.resources.getString(
+                                R.string.ageInfo,
+                                userOrArtist.age.toString()
+                            )
+                            websiteUrl = userOrArtist.website.toString()
 
-                        progressCircle.visibility = View.GONE
-                        detailsData.visibility = View.VISIBLE
-                        mediaLayout.visibility = View.GONE
-                    }
+                            progressCircle.visibility = View.GONE
+                            detailsData.visibility = View.VISIBLE
+                            mediaLayout.visibility = View.GONE
+                        }
                 }
-
             }
         }
 
@@ -180,7 +204,6 @@ class DetailsFragment : BaseFragment() {
         }
 
         // Add or remove artist from following on user logic
-        val authenticatedUserDbRef = userId.let { db.collection("users").document(it) }
         addRemoveToProfile.setOnClickListener {
             authenticatedUserDbRef.get().addOnSuccessListener { document ->
                 if (document != null) {
@@ -207,7 +230,7 @@ class DetailsFragment : BaseFragment() {
                     }
                     // Update
                     if (user != null) {
-                        db.collection("users").document(userId).set(user)
+                        db.collection("users").document(authenticatedUserID).set(user)
                     }
                 }
             }
