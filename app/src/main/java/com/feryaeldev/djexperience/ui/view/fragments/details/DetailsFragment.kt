@@ -30,38 +30,40 @@ import java.io.FileInputStream
 
 class DetailsFragment : BaseFragment() {
 
-    private lateinit var artist: User
-    private lateinit var userId: String
-    private lateinit var artistId: String
+    private lateinit var userOrArtistID: String
+    private lateinit var userOrArtist: User
+    private lateinit var userId: String // Current user id session auth
 
     private lateinit var progressCircle: FragmentContainerView
-    private lateinit var artistData: LinearLayout
+    private lateinit var detailsData: LinearLayout
 
     // Media
     private lateinit var mediaLayout: LinearLayout
-    private val handler = Handler(Looper.getMainLooper())
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var seekBar: SeekBar
     private lateinit var playPauseBtn: ImageView
     private lateinit var mediaTitle: TextView
+    private val handler = Handler(Looper.getMainLooper())
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_details, container, false)
 
-        artist = User()
         progressCircle = view.findViewById(R.id.details_fragmentProgressBar)
-        artistData = view.findViewById(R.id.details_data)
+        detailsData = view.findViewById(R.id.details_data)
         progressCircle.visibility = View.VISIBLE
-        artistData.visibility = View.GONE
+        detailsData.visibility = View.GONE
 
         // VITAL VARIABLES
 
         // Vital data
+        val db = Firebase.firestore
         userId = Firebase.auth.currentUser?.uid.toString()
-        artistId = arguments?.getString("id").toString()
+        userOrArtistID = arguments?.getString("id").toString()
+        userOrArtist = User()
 
         // View
         val addRemoveToProfile: FloatingActionButton =
@@ -69,7 +71,6 @@ class DetailsFragment : BaseFragment() {
         val addRemoveToProfileText: TextView =
             view.findViewById(R.id.fragment_artist_details_addRemoveToProfileText)
 
-        mediaLayout = view.findViewById(R.id.media_layout)
         val image: ImageView = view.findViewById(R.id.fragment_artist_details_photo)
         val username: TextView = view.findViewById(R.id.fragment_artist_details_username)
         val name: TextView = view.findViewById(R.id.fragment_artist_details_name)
@@ -80,73 +81,84 @@ class DetailsFragment : BaseFragment() {
         var websiteUrl = ""
 
         // Media
+        mediaLayout = view.findViewById(R.id.media_layout)
         seekBar = view.findViewById(R.id.seekbarDemoTrack)
         playPauseBtn = view.findViewById(R.id.media_play_btn_demoTrack)
         mediaTitle = view.findViewById(R.id.media_demoTrack_title)
         mediaPlayer = MediaPlayer()
         mediaPlayer.reset()
 
-        val db = Firebase.firestore
-
         // Get artist data
-        artistId.let { id ->
-            db.collection("artists").document(id).get().addOnSuccessListener { documentSnap ->
-                artist = User(
-                    documentSnap["id"].toString(),
-                    documentSnap["name"].toString(),
-                    documentSnap["surnames"].toString(),
-                    documentSnap["username"].toString(),
-                    documentSnap["email"].toString(),
-                    documentSnap["country"].toString(),
-                    documentSnap["category"].toString(),
-                    documentSnap["age"].toString().toLongOrNull(),
-                    documentSnap["website"].toString(),
-                    arrayListOf()
-                )
-                username.text = artist.username
-                name.text = artist.name
-                surnames.text = artist.surnames
-                country.text = artist.country
-                category.text = artist.category
-                age.text = view.context.resources.getString(R.string.ageInfo, artist.age.toString())
-                websiteUrl = artist.website.toString()
-
-                progressCircle.visibility = View.GONE
-                artistData.visibility = View.VISIBLE
-
-                initMedia()
-            }
-            val profilePicRef =
-                Firebase.storage.reference.child("profile_images/${id}.jpg")
-            val tempFile = File.createTempFile("tempImage", "jpg")
-            profilePicRef.getFile(tempFile).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
-                image.setImageBitmap(bitmap)
-            }
-            tempFile.delete()
+        val profilePicRef =
+            Firebase.storage.reference.child("profile_images/${userOrArtistID}.jpg")
+        val tempFile = File.createTempFile("tempImage", "jpg")
+        profilePicRef.getFile(tempFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
+            image.setImageBitmap(bitmap)
         }
+        tempFile.delete()
 
-        val docRef = userId.let { db.collection("users").document(it) }
+        userOrArtistID.let { id ->
+            db.collection("artists").document(id).get().addOnSuccessListener { documentSnap ->
+                if (documentSnap.data?.get("id") != null) {
+                    userOrArtist = User(
+                        documentSnap.data?.get("id").toString(),
+                        documentSnap.data?.get("name").toString(),
+                        documentSnap.data?.get("surnames").toString(),
+                        documentSnap.data?.get("username").toString(),
+                        documentSnap.data?.get("email").toString(),
+                        documentSnap.data?.get("country").toString(),
+                        documentSnap.data?.get("category").toString(),
+                        documentSnap.data?.get("age").toString().toLongOrNull(),
+                        documentSnap.data?.get("website").toString(),
+                        documentSnap.data?.get("following") as ArrayList<String>?
+                    )
+                    username.text = userOrArtist.username
+                    name.text = userOrArtist.name
+                    surnames.text = userOrArtist.surnames
+                    country.text = userOrArtist.country
+                    category.text = userOrArtist.category
+                    age.text = view.context.resources.getString(
+                        R.string.ageInfo,
+                        userOrArtist.age.toString()
+                    )
+                    websiteUrl = userOrArtist.website.toString()
 
-        // Update button if following artist
-        docRef.get().addOnSuccessListener { document ->
-            if (document != null) {
-                val user: User? = document.toObject(User::class.java)
-                var found = false
-                user?.following?.forEach {
-                    if (it == artistId) {
-                        found = true
+                    progressCircle.visibility = View.GONE
+                    detailsData.visibility = View.VISIBLE
+
+                    initMedia()
+                }else{
+                    db.collection("users").document(id).get().addOnSuccessListener { documentSnaps ->
+                        userOrArtist = User(
+                            documentSnaps.data?.get("id").toString(),
+                            documentSnaps.data?.get("name").toString(),
+                            documentSnaps.data?.get("surnames").toString(),
+                            documentSnaps.data?.get("username").toString(),
+                            documentSnaps.data?.get("email").toString(),
+                            documentSnaps.data?.get("country").toString(),
+                            documentSnaps.data?.get("category").toString(),
+                            documentSnaps.data?.get("age").toString().toLongOrNull(),
+                            documentSnaps.data?.get("website").toString(),
+                            documentSnaps.data?.get("following") as ArrayList<String>?
+                        )
+                        username.text = userOrArtist.username
+                        name.text = userOrArtist.name
+                        surnames.text = userOrArtist.surnames
+                        country.text = userOrArtist.country
+                        category.text = userOrArtist.category
+                        age.text = view.context.resources.getString(
+                            R.string.ageInfo,
+                            userOrArtist.age.toString()
+                        )
+                        websiteUrl = userOrArtist.website.toString()
+
+                        progressCircle.visibility = View.GONE
+                        detailsData.visibility = View.VISIBLE
+                        mediaLayout.visibility = View.GONE
                     }
                 }
-                if (found) {
-                    addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
-                    addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-                    addRemoveToProfileText.text = view.context.resources.getString(R.string.sustract)
-                } else {
-                    addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
-                    addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                    addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
-                }
+
             }
         }
 
@@ -168,13 +180,14 @@ class DetailsFragment : BaseFragment() {
         }
 
         // Add or remove artist from following on user logic
+        val authenticatedUserDbRef = userId.let { db.collection("users").document(it) }
         addRemoveToProfile.setOnClickListener {
-            docRef.get().addOnSuccessListener { document ->
+            authenticatedUserDbRef.get().addOnSuccessListener { document ->
                 if (document != null) {
                     val user: User? = document.toObject(User::class.java)
                     // Push or substract artist
                     if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
-                        user?.following?.add(artistId)
+                        userOrArtist.id?.let { it1 -> user?.following?.add(it1) }
                         addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
                         addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
                         addRemoveToProfileText.text =
@@ -183,7 +196,7 @@ class DetailsFragment : BaseFragment() {
                         val tempList = arrayListOf<String>()
                         user?.following?.let { it1 -> tempList.addAll(it1) }
                         user?.following?.forEach {
-                            if (it == artistId) {
+                            if (it == userOrArtist.id) {
                                 tempList.remove(it)
                             }
                         }
@@ -217,8 +230,8 @@ class DetailsFragment : BaseFragment() {
 
     private fun initMedia() {
         val demoSongRef =
-            Firebase.storage.reference.child("songs/demo/${artist.username?.lowercase()}.mp3")
-        val tempFile = File.createTempFile("temp_$artistId", ".mp3")
+            Firebase.storage.reference.child("songs/demo/${userOrArtist.username?.lowercase()}.mp3")
+        val tempFile = File.createTempFile("temp_$userOrArtist", ".mp3")
         tempFile.deleteOnExit()
         // Download track
         demoSongRef.getFile(tempFile).addOnSuccessListener {
@@ -248,7 +261,7 @@ class DetailsFragment : BaseFragment() {
 
                     // Change displayed song name
                     val usernameUppercase =
-                        artist.username.toString().replaceFirstChar { it.uppercase() }
+                        userOrArtist.username.toString().replaceFirstChar { it.uppercase() }
                     mediaTitle.text =
                         view?.context?.getString(R.string.artist_demo, usernameUppercase) ?: ""
 
@@ -257,8 +270,9 @@ class DetailsFragment : BaseFragment() {
                 }
             } catch (e: Error) {
                 showMessageShort("Error: $e")
+                mediaLayout.visibility = View.GONE
             }
-        }.addOnFailureListener{
+        }.addOnFailureListener {
             mediaLayout.visibility = View.GONE
         }
 

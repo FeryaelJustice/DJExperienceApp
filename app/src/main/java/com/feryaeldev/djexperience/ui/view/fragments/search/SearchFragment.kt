@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
-import com.feryaeldev.djexperience.ui.common.ArtistsRecyclerViewAdapter
+import com.feryaeldev.djexperience.ui.common.UsersOrArtistsRecyclerViewAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -23,7 +23,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var mainView: View
     private lateinit var search: SearchView
     private lateinit var mRecyclerView: RecyclerView
-    private var artistsList: MutableList<User> = arrayListOf()
+    private var userOrArtistsList: MutableList<User> = arrayListOf()
     private var initRecyclerView = false
     private lateinit var progressCircle: FragmentContainerView
     private var categoryFilterText = "Artist"
@@ -62,8 +62,8 @@ class SearchFragment : BaseFragment() {
         }
 
         search("", false, categoryFilterText) {
-            val mAdapter = ArtistsRecyclerViewAdapter(artistsList)
-            mRecyclerView.adapter = mAdapter
+            val usersOrArtistsAdapter = UsersOrArtistsRecyclerViewAdapter(userOrArtistsList)
+            mRecyclerView.adapter = usersOrArtistsAdapter
             Log.d("search", "searched")
         }
 
@@ -128,7 +128,7 @@ class SearchFragment : BaseFragment() {
         completion: () -> Unit
     ) {
         try {
-            artistsList.clear()
+            userOrArtistsList.clear()
             val db = Firebase.firestore
             if (filter) {
                 if (filterCategory == "Artist") {
@@ -136,7 +136,7 @@ class SearchFragment : BaseFragment() {
                         .addOnSuccessListener {
                             if (it.documents.size == 1) {
                                 if (it.documents[0]["id"].toString() != Firebase.auth.currentUser?.uid) {
-                                    artistsList.add(
+                                    userOrArtistsList.add(
                                         User(it.documents[0]["id"].toString())
                                     )
                                     mRecyclerView.adapter?.notifyItemChanged(0)
@@ -154,7 +154,7 @@ class SearchFragment : BaseFragment() {
                         .addOnSuccessListener {
                             if (it.documents.size == 1) {
                                 if (it.documents[0]["id"].toString() != Firebase.auth.currentUser?.uid) {
-                                    artistsList.add(
+                                    userOrArtistsList.add(
                                         User(it.documents[0]["id"].toString())
                                     )
                                     mRecyclerView.adapter?.notifyItemChanged(0)
@@ -172,7 +172,7 @@ class SearchFragment : BaseFragment() {
                 db.collection("artists").get().addOnSuccessListener {
                     it.documents.forEachIndexed { index, document ->
                         if (document["id"].toString() != Firebase.auth.currentUser?.uid) {
-                            artistsList.add(
+                            userOrArtistsList.add(
                                 User(document["id"].toString())
                             )
                             mRecyclerView.adapter?.notifyItemChanged(index)
@@ -193,7 +193,7 @@ class SearchFragment : BaseFragment() {
     private fun resetSearch() {
         search.setQuery("", false)
         search.clearFocus()
-        artistsList.clear()
+        userOrArtistsList.clear()
         showRecyclerView(mainView, false)
     }
 

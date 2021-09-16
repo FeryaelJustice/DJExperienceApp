@@ -16,8 +16,8 @@ import com.google.firebase.storage.ktx.storage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
 
-class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
-    RecyclerView.Adapter<ArtistsRecyclerViewAdapter.ViewHolder>() {
+class UsersOrArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
+    RecyclerView.Adapter<UsersOrArtistsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -45,10 +45,11 @@ class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
         private val artistUsername: TextView = view.findViewById(R.id.searchitem_username)
         private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
-        fun render(item: User) {
-            val id = item.id
+        fun render(user: User) {
+            val db = Firebase.firestore
+
             val profilePicRef =
-                Firebase.storage.reference.child("profile_images/${id}.jpg")
+                Firebase.storage.reference.child("profile_images/${user.id}.jpg")
             val tempFile = File.createTempFile("tempImage", "jpg")
             profilePicRef.getFile(tempFile).addOnSuccessListener {
                 val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
@@ -56,11 +57,20 @@ class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
             }
             tempFile.delete()
 
-            // Por si solo viene el artist con el ID y no rellenado.
-            id?.let {
-                Firebase.firestore.collection("artists").document(it).get()
+            user.id?.let { id ->
+                db.collection("artists").document(id).get()
                     .addOnSuccessListener { documentSnap ->
-                        artistUsername.text = documentSnap["username"].toString()
+                        // Although it doesnt find anything, it doesnt go to On Failure Listener, we have to check a field if its not null
+                        val usernameRes = documentSnap.data?.get("username").toString()
+                        if (documentSnap.data?.get("id") != null) {
+                            artistUsername.text = usernameRes
+                        } else {
+                            db.collection("users").document(id).get()
+                                .addOnSuccessListener { docSnap ->
+                                    val usernameUserRes = docSnap.data?.get("username").toString()
+                                    artistUsername.text = usernameUserRes
+                                }
+                        }
                     }
             }
         }

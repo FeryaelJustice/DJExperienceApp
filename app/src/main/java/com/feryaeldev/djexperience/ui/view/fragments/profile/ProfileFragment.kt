@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.ui.base.BaseFragment
-import com.feryaeldev.djexperience.ui.common.ArtistsRecyclerViewAdapter
+import com.feryaeldev.djexperience.ui.common.UsersOrArtistsRecyclerViewAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -29,7 +29,7 @@ import java.io.File
 class ProfileFragment : BaseFragment() {
 
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: ArtistsRecyclerViewAdapter
+    lateinit var mAdapter: UsersOrArtistsRecyclerViewAdapter
 
     private lateinit var progressCircle: FragmentContainerView
     private var user: User? = null
@@ -53,7 +53,7 @@ class ProfileFragment : BaseFragment() {
 
         val artistsList: MutableList<User> = arrayListOf()
 
-        mAdapter = ArtistsRecyclerViewAdapter(artistsList)
+        mAdapter = UsersOrArtistsRecyclerViewAdapter(artistsList)
         mRecyclerView.adapter = mAdapter
 
         val db = Firebase.firestore
@@ -77,7 +77,8 @@ class ProfileFragment : BaseFragment() {
                         artistsList.add(User(id))
                     }
 
-                    mAdapter = ArtistsRecyclerViewAdapter(artistsList)
+                    Log.d("list",artistsList.toString())
+                    mAdapter = UsersOrArtistsRecyclerViewAdapter(artistsList)
                     mRecyclerView.adapter = mAdapter
 
                     progressCircle.visibility = View.GONE
