@@ -105,6 +105,13 @@ class MainActivity : BaseActivity() {
         analytics.logEvent("Init", bundle)
     }
 
+    override fun signOut(){
+        super.signOut()
+        Firebase.auth.signOut()
+        startActivity(Intent(applicationContext, LoginActivity::class.java))
+        finish()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_info -> {
             val intentInfo = Intent(applicationContext, InfoActivity::class.java)
@@ -119,9 +126,7 @@ class MainActivity : BaseActivity() {
             true
         }
         R.id.action_signout -> {
-            Firebase.auth.signOut()
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
-            finish()
+            signOut()
             true
         }
         else -> {

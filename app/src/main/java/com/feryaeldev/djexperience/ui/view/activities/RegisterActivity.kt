@@ -3,27 +3,31 @@ package com.feryaeldev.djexperience.ui.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlin.random.Random
 
 class RegisterActivity : BaseActivity() {
+
+    private val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         findViewById<MaterialButton>(R.id.signup_btn).setOnClickListener {
-            val emailEditText = findViewById<EditText>(R.id.signup_email)
-            val passwordEditText = findViewById<EditText>(R.id.signup_password)
-            val repeatPasswordEditText = findViewById<EditText>(R.id.signup_repeatpassword)
+            val usernameEditText = findViewById<TextInputEditText>(R.id.signup_username)
+            val emailEditText = findViewById<TextInputEditText>(R.id.signup_email)
+            val passwordEditText = findViewById<TextInputEditText>(R.id.signup_password)
+            val repeatPasswordEditText = findViewById<TextInputEditText>(R.id.signup_repeatpassword)
 
-            if (!emailEditText.text.isNullOrBlank() && !passwordEditText.text.isNullOrBlank() && !repeatPasswordEditText.text.isNullOrBlank()) {
+            if (!usernameEditText.text.isNullOrBlank() && !emailEditText.text.isNullOrBlank() && !passwordEditText.text.isNullOrBlank() && !repeatPasswordEditText.text.isNullOrBlank()) {
                 if (passwordEditText.text.toString() == repeatPasswordEditText.text.toString()) {
                     Firebase.auth.createUserWithEmailAndPassword(
                         emailEditText.text.toString(),
@@ -32,16 +36,16 @@ class RegisterActivity : BaseActivity() {
                         if (it.isSuccessful) {
                             val db = Firebase.firestore
                             val user = hashMapOf(
+                                "id" to (Firebase.auth.currentUser?.uid ?: randomString(28)),
                                 "email" to emailEditText.text.toString(),
-                                "username" to "",
-                                "name" to "",
-                                "surnames" to "",
+                                "username" to usernameEditText.text.toString(),
+                                "name" to "Default name",
+                                "surnames" to "Default surnames",
                                 "age" to 0,
-                                "country" to "",
+                                "country" to "Earth",
                                 "category" to "User",
-                                "age" to 0,
                                 "following" to arrayListOf<String>(),
-                                "website" to ""
+                                "website" to "www.google.com"
                             )
                             Firebase.auth.currentUser?.let { fUser ->
                                 db.collection("users").document(fUser.uid)
@@ -66,14 +70,23 @@ class RegisterActivity : BaseActivity() {
                         } else {
                             showMessageLong(getString(R.string.signUpError))
                         }
+                    }.addOnFailureListener {
+                        showMessageLong(getString(R.string.signUpError))
                     }
                 } else {
-                    showMessageLong(getString(R.string.signUpError))
+                    showMessageLong(getString(R.string.passwordsNotMatch))
                 }
             } else {
-                showMessageLong(getString(R.string.signUpError))
+                showMessageLong(getString(R.string.someEmptyFieldsError))
             }
         }
+    }
+
+    private fun randomString(stringLength: Int): String {
+        return (1..stringLength)
+            .map { Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("")
     }
 
 

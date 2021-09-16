@@ -151,6 +151,7 @@ class ProfileFragment : BaseFragment() {
             Firebase.storage.reference.child("profile_images/${userOrArtistID}.jpg")
         val image: ImageView = view.findViewById(R.id.profile_photo)
         var downloadUrl = ""
+
         try {
             profilePicRef.downloadUrl.addOnSuccessListener {
                 downloadUrl = it.toString()
@@ -167,6 +168,7 @@ class ProfileFragment : BaseFragment() {
         } catch (e: Error) {
             Log.d("error", e.toString())
         }
+
         image.setOnLongClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl))
             startActivity(browserIntent)

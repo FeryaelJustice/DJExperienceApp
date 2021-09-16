@@ -3,19 +3,13 @@ package com.feryaeldev.djexperience.ui.view.fragments.profile.edit
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.graphics.Matrix
-import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +18,6 @@ import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.graphics.createBitmap
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
@@ -37,7 +30,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
-import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -106,6 +98,51 @@ class EditProfileFragment : BaseFragment() {
         val artistDocRef = userOrArtistID?.let { db.collection("artists").document(it) }
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/$userOrArtistID.jpg")
+
+        // LAUNCHERS
+        // Don't put result launcher register for activity result inside listeners cause fragment is not created (throws error)
+        galleryResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    uri = result.data?.data!!
+                    uri.let { url ->
+                        checkImageOrientation()
+                        profilePicRef.putFile(url).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Picasso.get().load(url).into(image)
+                                showMessageLong("Image uploaded successfully!")
+                            } else {
+                                showMessageLong("Error on uploading image...")
+                            }
+                        }
+                    }
+                }
+            }
+        cameraResultLauncher =
+            registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+                if (success) {
+                    uri.let { url ->
+                        profilePicRef.putFile(url).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Picasso.get().load(url).into(image)
+                                showMessageLong("Image uploaded successfully!")
+                            } else {
+                                showMessageLong("Error on uploading image...")
+                            }
+                        }
+                    }
+                }
+
+            }
+        requestMultiplePermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
+                resultsMap.forEach {
+                    Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
+                    if (it.value == true) {
+                        counterPermissions++
+                    }
+                }
+            }
 
         // Search for the user or artist
         userDocRef?.get()?.addOnSuccessListener { document ->
@@ -270,74 +307,6 @@ class EditProfileFragment : BaseFragment() {
 
 
         // Save user profile picture
-        // Don't put result launcher register for activity result inside listeners cause fragment is not created (throws error)
-        galleryResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    //val uri = result.data?.data
-                    uri = result.data?.data!!
-                    uri.let { url ->
-                        // Check image orientation before upload to server
-                        /*
-                        val convertedBitmap = rotateImageIfRequired(url)
-                        convertedBitmap?.compress(
-                            Bitmap.CompressFormat.JPEG,
-                            1100,
-                            ByteArrayOutputStream()
-                        )
-                        val finalUri = convertedBitmap?.let { convBitmap ->
-                            getImageUriFromBitmap(
-                                view.context,
-                                convBitmap
-                            )
-                        }
-                        finalUri?.let { finalUrl ->
-                            profilePicRef.putFile(finalUrl).addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    Picasso.get().load(finalUrl).into(image)
-                                    showMessageLong("Image uploaded successfully!")
-                                } else {
-                                    showMessageLong("Error on uploading image...")
-                                }
-                            }
-                        }
-                        */
-                        profilePicRef.putFile(url).addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                Picasso.get().load(url).into(image)
-                                showMessageLong("Image uploaded successfully!")
-                            } else {
-                                showMessageLong("Error on uploading image...")
-                            }
-                        }
-                    }
-                }
-            }
-        cameraResultLauncher =
-            registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-                if (success) {
-                    uri.let { url ->
-                        profilePicRef.putFile(url).addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                Picasso.get().load(url).into(image)
-                                showMessageLong("Image uploaded successfully!")
-                            } else {
-                                showMessageLong("Error on uploading image...")
-                            }
-                        }
-                    }
-                }
-
-            }
-        requestMultiplePermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
-                resultsMap.forEach {
-                    Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
-                    if (it.value == true) {
-                        counterPermissions++
-                    }
-                }
-            }
         image.setOnClickListener {
             chooseImageUploadMethod()
         }
@@ -398,6 +367,34 @@ class EditProfileFragment : BaseFragment() {
         return view
     }
 
+    private fun checkImageOrientation() {
+        // Check image orientation before upload to server
+        /*
+        val convertedBitmap = rotateImageIfRequired(url)
+        convertedBitmap?.compress(
+            Bitmap.CompressFormat.JPEG,
+            1100,
+            ByteArrayOutputStream()
+        )
+        val finalUri = convertedBitmap?.let { convBitmap ->
+            getImageUriFromBitmap(
+                view.context,
+                convBitmap
+            )
+        }
+        finalUri?.let { finalUrl ->
+            profilePicRef.putFile(finalUrl).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Picasso.get().load(finalUrl).into(image)
+                    showMessageLong("Image uploaded successfully!")
+                } else {
+                    showMessageLong("Error on uploading image...")
+                }
+            }
+        }
+        */
+    }
+
     private fun chooseImageUploadMethod() {
         val alertBuilder = AlertDialog.Builder(view?.context)
         val inflater = layoutInflater
@@ -450,6 +447,13 @@ class EditProfileFragment : BaseFragment() {
     }
 
 
+    private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
+        val matrix = Matrix()
+        matrix.postRotate(degree.toFloat())
+        return Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
+    }
+
+    /*
     private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -470,8 +474,6 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
-
-    // Fix correct orientation when upload
     private fun rotateImageIfRequired(selectedImage: Uri): Bitmap? {
         val bitmap = context?.let { context ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -498,10 +500,5 @@ class EditProfileFragment : BaseFragment() {
             else -> Bitmap.createBitmap(0, 0, Bitmap.Config.RGB_565)
         }
     }
-
-    private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
-        val matrix = Matrix()
-        matrix.postRotate(degree.toFloat())
-        return Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
-    }
+    */
 }

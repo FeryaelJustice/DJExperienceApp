@@ -29,6 +29,10 @@
     <string name="bottom_nav_profile">Perfil</string>
 
     <!-- Activity -->
+    <!-- Register -->
+    <string name="confirmPassword">Confirma tu contraseña</string>
+    <string name="passwordsNotMatch">¡Las contraseñas no coinciden!</string>
+    <string name="someEmptyFieldsError">¡Algun campo está vacío!</string>
     <!-- OnBoarding -->
     <string name="onBoarding_start">Comenzar</string>
     <!-- Profile -->
@@ -58,6 +62,7 @@
     <string name="createArtist">Crear artista</string>
     <!-- Profile details -->
     <string name="artist_demo">¡Demo encontrada! %1$s demo:</string>
+    <!-- Settings -->
+    <string name="deleteAccount">Eliminar cuenta</string>
     <string name="clearCache">Eliminar la caché</string>
-    <string name="confirmPassword">Confirma tu contraseña</string>
 </resources>

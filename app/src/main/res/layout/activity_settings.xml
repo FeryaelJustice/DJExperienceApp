@@ -41,10 +41,10 @@
             android:text="@string/clearCache"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/settings_screenMode"
             android:layout_width="match_parent"
+            android:id="@+id/settings_deleteAccount"
             android:layout_height="wrap_content"
-            android:text="Change screen mode (dark or light)"/>
+            android:text="@string/deleteAccount"/>
     </LinearLayout>
 
 </LinearLayout>
