@@ -1,9 +1,12 @@
 package com.feryaeldev.djexperience.ui.view.fragments.profile.edit
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ACTION_PICK
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -18,8 +21,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.graphics.createBitmap
 import androidx.fragment.app.FragmentContainerView
@@ -303,9 +306,7 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
         image.setOnClickListener {
-            val intentPick = Intent(Intent.ACTION_PICK)
-            intentPick.type = "image/*"
-            resultLauncher.launch(intentPick)
+            chooseImageUploadMethod(resultLauncher)
         }
 
         // Save
@@ -363,6 +364,66 @@ class EditProfileFragment : BaseFragment() {
 
         return view
     }
+
+    private fun chooseImageUploadMethod(
+        resultLauncher: ActivityResultLauncher<Intent>
+    ) {
+        val alertBuilder = AlertDialog.Builder(view?.context)
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.alert_dialog_chooseuploadphotomethod, null)
+        alertBuilder.setCancelable(false)
+        alertBuilder.setView(dialogView)
+        val alertDialog = alertBuilder.create()
+
+        dialogView.findViewById<ImageView>(R.id.cameraMethod).setOnClickListener {
+            alertDialog.dismiss()
+            if(checkPermissions()){
+                takePictureFromCamera(resultLauncher)
+            }
+        }
+        dialogView.findViewById<ImageView>(R.id.galleryMethod).setOnClickListener {
+            alertDialog.dismiss()
+            if(checkPermissions()) {
+                takePictureFromGallery(resultLauncher)
+            }
+        }
+
+        alertDialog.show()
+
+    }
+
+    private fun takePictureFromCamera(resultLauncher: ActivityResultLauncher<Intent>) {
+        val intentCameraPick = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intentCameraPick.type = "image/*"
+        resultLauncher.launch(intentCameraPick)
+    }
+
+    private fun takePictureFromGallery(resultLauncher: ActivityResultLauncher<Intent>) {
+        val intentCameraPick = Intent(ACTION_PICK)
+        intentCameraPick.type = "image/*"
+        resultLauncher.launch(intentCameraPick)
+    }
+
+    private fun checkPermissions(): Boolean {
+        var counter = 0
+        val requestMultiplePermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
+                resultsMap.forEach {
+                    Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
+                    if (it.value == true) {
+                        counter++
+                    }
+                }
+            }
+        requestMultiplePermissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            )
+        )
+        return counter == 2
+    }
+
 
     private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
