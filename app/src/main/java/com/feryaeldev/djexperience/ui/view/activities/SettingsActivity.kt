@@ -51,10 +51,18 @@ class SettingsActivity : BaseActivity() {
         user?.delete()?.addOnCompleteListener { deleteTask ->
             if (deleteTask.isSuccessful) {
                 // Now user doesnt exist, get id before this to delete it from DB
-                deleteUserInDB()
-                signOut()
+                try {
+                    deleteUserInDB()
+                    showMessageShort("Account successfully deleted.")
+                    signOut()
+                } catch (e: Error) {
+                    Log.d("error", "Error deleting account:$e")
+                    showMessageShort("Error deleting account: $e")
+                    reAuthenticate(user)
+                }
             }
         }?.addOnFailureListener {
+            Log.d("error", "Error deleting account:$it")
             showMessageShort("Error deleting account: $it")
             reAuthenticate(user)
         }
@@ -70,11 +78,12 @@ class SettingsActivity : BaseActivity() {
                 Log.d("auth", "User re-authenticated.")
                 showMessageLong("Reauthenticated!")
             }
+        finish()
+        startActivity(Intent(applicationContext, MainActivity::class.java))
     }
 
     override fun signOut() {
         super.signOut()
-        showMessageShort("Account successfully deleted.")
         Firebase.auth.signOut()
         startActivity(Intent(applicationContext, LoginActivity::class.java))
         finish()
@@ -93,12 +102,12 @@ class SettingsActivity : BaseActivity() {
                     if (deleteArtistTask.isSuccessful) {
                         deleteProfilePicture()
                     } else {
-                        Log.d("error", "Error on delete account")
-                        showMessageLong("Error deleting account. Not successful!")
+                        Log.d("error", "Error on delete account in DB")
+                        showMessageLong("Error deleting account in DB. Not successful!")
                     }
                 }?.addOnFailureListener {
-                    Log.d("error", "Error on delete account")
-                    showMessageLong("Error deleting account: $it")
+                    Log.d("error", "Error on delete account in DB")
+                    showMessageLong("Error deleting account in DB: $it")
                 }
             }
         }?.addOnFailureListener {
@@ -106,12 +115,12 @@ class SettingsActivity : BaseActivity() {
                 if (deleteArtistTask.isSuccessful) {
                     deleteProfilePicture()
                 } else {
-                    Log.d("error", "Error on delete account")
-                    showMessageLong("Error deleting account. Not successful!")
+                    Log.d("error", "Error on delete account in DB")
+                    showMessageLong("Error deleting account in DB. Not successful!")
                 }
             }?.addOnFailureListener {
-                Log.d("error", "Error on delete account")
-                showMessageLong("Error deleting account: $it")
+                Log.d("error", "Error on delete account in DB")
+                showMessageLong("Error deleting account in DB: $it")
             }
         }
     }

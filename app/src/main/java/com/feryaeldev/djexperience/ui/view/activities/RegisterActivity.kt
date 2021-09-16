@@ -69,7 +69,7 @@ class RegisterActivity : BaseActivity() {
                             )
                             finish()
                         } else {
-                            showMessageLong(getString(R.string.signUpError))
+                            showMessageLong(getString(R.string.signUpError,""))
                         }
                     }.addOnFailureListener {
                         showMessageLong(getString(R.string.signUpError,it.toString()))
