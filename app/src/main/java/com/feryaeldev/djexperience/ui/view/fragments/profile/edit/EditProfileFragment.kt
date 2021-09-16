@@ -48,6 +48,13 @@ class EditProfileFragment : BaseFragment() {
     private lateinit var profileDataLayout: LinearLayoutCompat
     private var selectedCategory = ""
 
+    private lateinit var uri: Uri
+
+    private var counterPermissions = 0
+    private lateinit var galleryResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cameraResultLauncher: ActivityResultLauncher<Uri>
+    private lateinit var requestMultiplePermissionLauncher: ActivityResultLauncher<Array<String>>
+
     @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -264,11 +271,12 @@ class EditProfileFragment : BaseFragment() {
 
         // Save user profile picture
         // Don't put result launcher register for activity result inside listeners cause fragment is not created (throws error)
-        val resultLauncher =
+        galleryResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    val uri = result.data?.data
-                    uri?.let { url ->
+                    //val uri = result.data?.data
+                    uri = result.data?.data!!
+                    uri.let { url ->
                         // Check image orientation before upload to server
                         /*
                         val convertedBitmap = rotateImageIfRequired(url)
@@ -305,8 +313,33 @@ class EditProfileFragment : BaseFragment() {
                     }
                 }
             }
+        cameraResultLauncher =
+            registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+                if (success) {
+                    uri.let { url ->
+                        profilePicRef.putFile(url).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Picasso.get().load(url).into(image)
+                                showMessageLong("Image uploaded successfully!")
+                            } else {
+                                showMessageLong("Error on uploading image...")
+                            }
+                        }
+                    }
+                }
+
+            }
+        requestMultiplePermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
+                resultsMap.forEach {
+                    Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
+                    if (it.value == true) {
+                        counterPermissions++
+                    }
+                }
+            }
         image.setOnClickListener {
-            chooseImageUploadMethod(resultLauncher)
+            chooseImageUploadMethod()
         }
 
         // Save
@@ -365,9 +398,7 @@ class EditProfileFragment : BaseFragment() {
         return view
     }
 
-    private fun chooseImageUploadMethod(
-        resultLauncher: ActivityResultLauncher<Intent>
-    ) {
+    private fun chooseImageUploadMethod() {
         val alertBuilder = AlertDialog.Builder(view?.context)
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.alert_dialog_chooseuploadphotomethod, null)
@@ -377,14 +408,14 @@ class EditProfileFragment : BaseFragment() {
 
         dialogView.findViewById<ImageView>(R.id.cameraMethod).setOnClickListener {
             alertDialog.dismiss()
-            if(checkPermissions()){
-                takePictureFromCamera(resultLauncher)
+            if (checkPermissions()) {
+                takePictureFromCamera()
             }
         }
         dialogView.findViewById<ImageView>(R.id.galleryMethod).setOnClickListener {
             alertDialog.dismiss()
-            if(checkPermissions()) {
-                takePictureFromGallery(resultLauncher)
+            if (checkPermissions()) {
+                takePictureFromGallery()
             }
         }
 
@@ -392,36 +423,30 @@ class EditProfileFragment : BaseFragment() {
 
     }
 
-    private fun takePictureFromCamera(resultLauncher: ActivityResultLauncher<Intent>) {
-        val intentCameraPick = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intentCameraPick.type = "image/*"
-        resultLauncher.launch(intentCameraPick)
+    private fun takePictureFromCamera() {
+        cameraResultLauncher.launch(uri)
     }
 
-    private fun takePictureFromGallery(resultLauncher: ActivityResultLauncher<Intent>) {
+    private fun takePictureFromGallery() {
         val intentCameraPick = Intent(ACTION_PICK)
         intentCameraPick.type = "image/*"
-        resultLauncher.launch(intentCameraPick)
+        galleryResultLauncher.launch(intentCameraPick)
     }
 
     private fun checkPermissions(): Boolean {
-        var counter = 0
-        val requestMultiplePermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
-                resultsMap.forEach {
-                    Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
-                    if (it.value == true) {
-                        counter++
-                    }
-                }
-            }
         requestMultiplePermissionLauncher.launch(
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
             )
         )
-        return counter == 2
+        return if (counterPermissions == 2) {
+            counterPermissions = 0
+            true
+        } else {
+            counterPermissions = 0
+            false
+        }
     }
 
 
