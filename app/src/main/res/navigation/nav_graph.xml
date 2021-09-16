@@ -17,8 +17,8 @@
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_artistDetailsFragment"
-            app:destination="@id/artistDetailsFragment" />
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_createArtistFragment"
             app:destination="@id/createArtistFragment" />
@@ -35,8 +35,8 @@
             android:id="@+id/action_searchFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_searchFragment_to_artistDetailsFragment"
-            app:destination="@id/artistDetailsFragment" />
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -50,25 +50,25 @@
             android:id="@+id/action_profileFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_artistDetailsFragment"
-            app:destination="@id/artistDetailsFragment" />
+            android:id="@+id/action_profileFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/artistDetailsFragment"
-        android:name="com.feryaeldev.djexperience.ui.view.fragments.artistdetails.ArtistDetailsFragment"
+        android:id="@+id/detailsFragment"
+        android:name="com.feryaeldev.djexperience.ui.view.fragments.details.DetailsFragment"
         android:label="fragment_artist_details"
-        tools:layout="@layout/fragment_artist_details" >
+        tools:layout="@layout/fragment_details" >
         <action
-            android:id="@+id/action_artistDetailsFragment_to_searchFragment"
+            android:id="@+id/action_detailsFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_artistDetailsFragment_to_homeFragment"
+            android:id="@+id/action_detailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_artistDetailsFragment_to_profileFragment"
+            android:id="@+id/action_detailsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
     <fragment

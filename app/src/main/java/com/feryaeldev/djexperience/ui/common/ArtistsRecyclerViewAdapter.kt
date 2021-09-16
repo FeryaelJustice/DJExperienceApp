@@ -32,9 +32,9 @@ class ArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
             bundle.putString("id", item.id)
             val navController = Navigation.findNavController(it)
             if (navController.currentDestination?.id == R.id.profileFragment) {
-                navController.navigate(R.id.action_profileFragment_to_artistDetailsFragment, bundle)
+                navController.navigate(R.id.action_profileFragment_to_detailsFragment, bundle)
             } else if (navController.currentDestination?.id == R.id.searchFragment) {
-                navController.navigate(R.id.action_searchFragment_to_artistDetailsFragment, bundle)
+                navController.navigate(R.id.action_searchFragment_to_detailsFragment, bundle)
             }
         }
     }

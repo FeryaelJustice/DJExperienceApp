@@ -1,4 +1,4 @@
-package com.feryaeldev.djexperience.ui.view.fragments.artistdetails
+package com.feryaeldev.djexperience.ui.view.fragments.details
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -28,7 +28,7 @@ import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.FileInputStream
 
-class ArtistDetailsFragment : BaseFragment() {
+class DetailsFragment : BaseFragment() {
 
     private lateinit var artist: User
     private lateinit var userId: String
@@ -49,11 +49,11 @@ class ArtistDetailsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_artist_details, container, false)
+        val view = inflater.inflate(R.layout.fragment_details, container, false)
 
         artist = User()
-        progressCircle = view.findViewById(R.id.artistdetails_fragmentProgressBar)
-        artistData = view.findViewById(R.id.artistdetails_data)
+        progressCircle = view.findViewById(R.id.details_fragmentProgressBar)
+        artistData = view.findViewById(R.id.details_data)
         progressCircle.visibility = View.VISIBLE
         artistData.visibility = View.GONE
 
@@ -207,7 +207,7 @@ class ArtistDetailsFragment : BaseFragment() {
         }
 
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.artistDetailsFragment) {
+            if (destination.id != R.id.detailsFragment) {
                 resetMediaPlayer()
             }
         }

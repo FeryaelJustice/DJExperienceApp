@@ -5,7 +5,7 @@
     android:id="@+id/dr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.fragments.artistdetails.ArtistDetailsFragment">
+    tools:context=".ui.view.fragments.details.DetailsFragment">
 
     <ImageView
         android:id="@+id/fragment_artist_details_close"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/artistdetails_fragmentProgressBar"
+        android:id="@+id/details_fragmentProgressBar"
         android:name="com.feryaeldev.djexperience.ui.common.loading.LoadingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/artistdetails_data"
+        android:id="@+id/details_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
