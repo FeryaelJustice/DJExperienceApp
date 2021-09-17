@@ -1,17 +1,32 @@
 package com.feryaeldev.djexperience.ui.view.activities
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.feryaeldev.djexperience.BuildConfig
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
+import com.feryaeldev.djexperience.util.saveImageToInternalStorage
 import com.google.firebase.messaging.FirebaseMessaging
 
 class InfoActivity : BaseActivity() {
+
+    private var counterPermissions = 0
+    private val requestMultiplePermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
+            resultsMap.forEach {
+                Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
+                if (it.value == true) {
+                    counterPermissions++
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +34,19 @@ class InfoActivity : BaseActivity() {
         findViewById<ImageView>(R.id.info_close).setOnClickListener {
             onBackPressed()
         }
-        findViewById<ImageView>(R.id.info_image).setOnClickListener {
+        val infoImage = findViewById<ImageView>(R.id.info_image)
+        infoImage.setOnClickListener {
             val intentURL = Intent(Intent.ACTION_VIEW)
             intentURL.data = Uri.parse("https://feryael-justice.jimdosite.com/")
             startActivity(intentURL)
+        }
+        infoImage.setOnLongClickListener {
+            if(checkPermissions()){
+                saveImageToInternalStorage(applicationContext, R.drawable.launcher_image)
+            }else{
+                showMessageLong("You don't have permissions.")
+            }
+            true
         }
         findViewById<ImageView>(R.id.info_yt).setOnClickListener {
             val intentURL = Intent(Intent.ACTION_VIEW)
@@ -42,6 +66,22 @@ class InfoActivity : BaseActivity() {
         }
         findViewById<TextView>(R.id.info_bottomInfo_version).text =
             getString(R.string.version, BuildConfig.VERSION_NAME)
+    }
+
+    private fun checkPermissions(): Boolean {
+        requestMultiplePermissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        )
+        return if (counterPermissions == 2) {
+            counterPermissions = 0
+            true
+        } else {
+            counterPermissions = 0
+            false
+        }
     }
 
     override fun onBackPressed() {
