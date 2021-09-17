@@ -206,6 +206,15 @@ class DetailsFragment : BaseFragment() {
                 }
             }
         }
+        var downloadUrl = ""
+        profilePicRef.downloadUrl.addOnSuccessListener {
+            downloadUrl = it.toString()
+        }
+        image.setOnLongClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl))
+            startActivity(browserIntent)
+            true
+        }
 
         // Add or remove artist from following on user logic
         addRemoveToProfile.setOnClickListener {
