@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/username"
-                    android:textSize="@dimen/text_size_big"
+                    android:textSize="@dimen/text_size_superBig"
                     android:textStyle="bold"
                     android:textColor="@color/white" />
 
@@ -72,7 +72,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="20dp"
-            android:paddingTop="10dp"
             android:paddingEnd="20dp">
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -96,7 +95,7 @@
                 android:paddingEnd="40dp"
                 android:text="@string/edit_profile"
                 android:textAllCaps="true"
-                android:textSize="@dimen/text_size"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
                 app:cornerRadius="@dimen/onBoarding_cornerSize" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -114,9 +113,12 @@
                 android:id="@+id/profile_followingTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_separation_small"
+                android:layout_marginBottom="@dimen/text_separation_small"
                 android:gravity="center"
-                android:text="@string/following"
-                android:textColor="@color/white"
+                android:text="@string/artistsFollowing"
+                android:textColor="@color/color_accent"
+                android:textSize="@dimen/text_size_big"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

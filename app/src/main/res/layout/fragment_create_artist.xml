@@ -1,219 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/fragment_createArtist_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|top"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/defaultImageDescription"
-        android:src="@drawable/ic_baseline_close_24"
-        app:tint="@color/white" />
-
-    <TextView
-        android:id="@+id/fragment_createArtist_titleFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_baseline_close_24"
-        android:text="@string/createArtist"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/editprofile_fragmentProgressBar"
-        android:name="com.feryaeldev.djexperience.ui.common.loading.LoadingFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:layout="@layout/fragment_loading" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/createArtist_data"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/createArtist_photo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_person_24"
-            app:civ_border_color="@color/black"
-            app:civ_border_width="2dp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/username"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXYZ"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/name"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/surnames"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_surnames"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/country"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/age"
-            app:counterEnabled="true"
-            app:counterMaxLength="4"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/website"
-            app:counterEnabled="true"
-            app:counterMaxLength="120"
-            app:endIconMode="clear_text"
-            app:errorContentDescription="@string/defaultImageDescription"
-            app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_public_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createArtist_website"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textWebEditText" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/createArtist_saveBtn"
+        <ImageView
+            android:id="@+id/fragment_createArtist_close"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/color_secondary"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|top"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:translationZ="1dp"
             android:contentDescription="@string/defaultImageDescription"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="@string/save"
-            android:textAllCaps="true"
-            android:textSize="@dimen/text_size"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/onBoarding_cornerSize" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:src="@drawable/ic_baseline_close_24" />
 
-</FrameLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/editprofile_fragmentProgressBar"
+            android:name="com.feryaeldev.djexperience.ui.common.loading.LoadingFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:layout="@layout/fragment_loading" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/createArtist_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/createArtist_photo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginBottom="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_person_24"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="2dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                android:inputType="textFilter"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                    android:hint="@string/username"
+                    android:inputType="textFilter" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_surnames"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/surnames"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/country"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="4"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/age"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="120"
+                app:endIconMode="clear_text"
+                app:errorContentDescription="@string/defaultImageDescription"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_public_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/createArtist_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/website"
+                    android:inputType="textWebEditText" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/createArtist_saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/color_secondary"
+                android:contentDescription="@string/defaultImageDescription"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/save"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                app:cornerRadius="@dimen/onBoarding_cornerSize" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </FrameLayout>
+</ScrollView>

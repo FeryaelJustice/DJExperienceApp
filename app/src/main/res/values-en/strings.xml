@@ -13,8 +13,9 @@
     <string name="password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="action_info">Information</string>
-    <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!</string>
+    <string name="information">Hello! I am FeryaelDev, creator of DJ Experience.\n\nThis application has been developed to provide all the information you need about your favorite DJs.\nIf you want you can follow me on my main networks for any questions or suggestions.\n\nThank you so much!\n\nPD: If you press the image, you will go to my official website!</string>
     <string name="info_bottom">Visit DJExperience website to know all the official information.</string>
+    <string name="following">Following:</string>
     <string name="add">Add</string>
     <string name="sustract">Subtract</string>
     <string name="save">Save</string>
@@ -34,7 +35,7 @@
     <string name="onBoarding_start">Start</string>
     <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
-    <string name="following">Following:</string>
+    <string name="artistsFollowing">Artists you follow:</string>
     <string name="name">Name</string>
     <string name="surnames">Surnames</string>
     <string name="username">Username</string>

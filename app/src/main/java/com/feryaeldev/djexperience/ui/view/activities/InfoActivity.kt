@@ -19,6 +19,11 @@ class InfoActivity : BaseActivity() {
         findViewById<ImageView>(R.id.info_close).setOnClickListener {
             onBackPressed()
         }
+        findViewById<ImageView>(R.id.info_image).setOnClickListener {
+            val intentURL = Intent(Intent.ACTION_VIEW)
+            intentURL.data = Uri.parse("https://feryael-justice.jimdosite.com/")
+            startActivity(intentURL)
+        }
         findViewById<ImageView>(R.id.info_yt).setOnClickListener {
             val intentURL = Intent(Intent.ACTION_VIEW)
             intentURL.data = Uri.parse("https://www.youtube.com/channel/UCDYgeJeEqB9tMCE0EqcXE3Q")

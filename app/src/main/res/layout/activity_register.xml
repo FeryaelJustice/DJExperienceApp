@@ -26,7 +26,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username"
             app:counterEnabled="true"
             app:counterMaxLength="40"
             app:endIconMode="clear_text"
@@ -40,14 +39,15 @@
                 android:id="@+id/signup_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                android:hint="@string/username"
+                android:inputType="textFilter" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email"
             app:counterEnabled="true"
             app:counterMaxLength="40"
             app:endIconMode="clear_text"
@@ -61,6 +61,7 @@
                 android:id="@+id/signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -68,7 +69,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconMode="password_toggle"
@@ -82,6 +82,7 @@
                 android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +90,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/confirmPassword"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconMode="password_toggle"
@@ -103,6 +103,7 @@
                 android:id="@+id/signup_repeatpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/confirmPassword"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +120,7 @@
             android:paddingEnd="40dp"
             android:text="@string/signUp"
             android:textAllCaps="true"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
             app:cornerRadius="@dimen/onBoarding_cornerSize" />
     </LinearLayout>

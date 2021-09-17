@@ -55,7 +55,6 @@
     </style>
 
     <style name="MySpinner" parent="Widget.AppCompat.Spinner">
-        <item name="android:dropDownVerticalOffset">40dip</item>
         <item name="overlapAnchor">false</item>
     </style>
 

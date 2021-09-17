@@ -109,14 +109,14 @@ class SearchFragment : BaseFragment() {
             mRecyclerView.let {
                 mRecyclerView.visibility = View.VISIBLE
             }
-            view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+            view.findViewById<LinearLayout>(R.id.fragment_search_infoLayout).visibility =
                 View.GONE
         } else {
             initRecyclerView = false
             mRecyclerView.let {
                 mRecyclerView.visibility = View.GONE
             }
-            view.findViewById<TextView>(R.id.fragment_search_textInfo).visibility =
+            view.findViewById<LinearLayout>(R.id.fragment_search_infoLayout).visibility =
                 View.VISIBLE
         }
     }

@@ -26,7 +26,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email"
             app:counterEnabled="true"
             app:counterMaxLength="40"
             app:endIconMode="clear_text"
@@ -40,6 +39,7 @@
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -47,7 +47,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconMode="password_toggle"
@@ -62,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                app:textInputLayoutFocusedRectEnabled="false" />
+                android:hint="@string/password"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +78,7 @@
             android:paddingEnd="40dp"
             android:text="@string/signIn"
             android:textAllCaps="true"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
             app:cornerRadius="@dimen/onBoarding_cornerSize" />
 

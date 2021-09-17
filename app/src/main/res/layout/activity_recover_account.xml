@@ -27,7 +27,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email"
             app:counterEnabled="true"
             app:counterMaxLength="40"
             app:endIconMode="clear_text"
@@ -41,6 +40,7 @@
                 android:id="@+id/recover_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +58,7 @@
             android:paddingEnd="40dp"
             android:text="@string/send_email"
             android:textAllCaps="true"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
             app:cornerRadius="@dimen/onBoarding_cornerSize" />
     </LinearLayout>

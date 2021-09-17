@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_search"
     android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         <Spinner
             android:id="@+id/fragment_search_spinnerSearch"
             style="@style/MySpinner"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown" />
 
@@ -42,15 +43,33 @@
         android:visibility="gone"
         tools:layout="@layout/fragment_loading" />
 
-    <TextView
-        android:id="@+id/fragment_search_textInfo"
+    <LinearLayout
+        android:id="@+id/fragment_search_infoLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/search_hint"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_baseline_search_24"/>
+
+            <TextView
+                android:id="@+id/fragment_search_textInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/search_hint"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_extremeBig"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

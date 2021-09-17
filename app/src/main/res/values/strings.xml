@@ -16,8 +16,9 @@
     <string name="password">Contraseña</string>
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="action_info">Información</string>
-    <string name="information">¡Hola! Soy FeryaelDev, creador de DJ Experience.\n\nEsta app se ha desarrollado para proporcionarte toda la información que necesitabas sobre tus DJs favoritos.\nSi quieres puedes seguirme en mis redes principales para cualquier duda o sugerencia.\n\n¡Muchas gracias!</string>
+    <string name="information">¡Hola! Soy FeryaelDev, creador de DJ Experience.\n\nEsta app se ha desarrollado para proporcionarte toda la información que necesitabas sobre tus DJs favoritos.\nSi quieres puedes seguirme en mis redes principales para cualquier duda o sugerencia.\n\n¡Muchas gracias!\n\nPD: ¡Si pulsas la imagen irás a mi página web oficial!</string>
     <string name="info_bottom">Visita la web de DJExperience para saber toda la información oficial.</string>
+    <string name="following">Siguiendo:</string>
     <string name="add">Añadir</string>
     <string name="sustract">Restar</string>
     <string name="save">Guardar</string>
@@ -37,7 +38,7 @@
     <string name="onBoarding_start">Comenzar</string>
     <!-- Profile -->
     <string name="edit_profile">Editar perfil</string>
-    <string name="following">Siguiendo:</string>
+    <string name="artistsFollowing">Artistas que sigue:</string>
     <string name="name">Nombre</string>
     <string name="surnames">Apellidos</string>
     <string name="username">Nombre de usuario</string>
