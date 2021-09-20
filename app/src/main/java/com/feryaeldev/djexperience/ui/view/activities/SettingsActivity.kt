@@ -78,15 +78,13 @@ class SettingsActivity : BaseActivity() {
                 Log.d("auth", "User re-authenticated.")
                 showMessageLong("Reauthenticated!")
             }
-        finish()
-        startActivity(Intent(applicationContext, MainActivity::class.java))
+        reloadApp(Intent(applicationContext, MainActivity::class.java))
     }
 
     override fun signOut() {
         super.signOut()
         Firebase.auth.signOut()
-        startActivity(Intent(applicationContext, LoginActivity::class.java))
-        finish()
+        reloadApp(Intent(applicationContext, LoginActivity::class.java))
     }
 
     private fun deleteUserInDB() {
@@ -96,11 +94,11 @@ class SettingsActivity : BaseActivity() {
 
         userDocRef?.delete()?.addOnCompleteListener { deleteUserTask ->
             if (deleteUserTask.isSuccessful) {
-                deleteProfilePicture()
+                deleteProfilePicture(userOrArtistID)
             } else {
                 artistDocRef?.delete()?.addOnCompleteListener { deleteArtistTask ->
                     if (deleteArtistTask.isSuccessful) {
-                        deleteProfilePicture()
+                        deleteProfilePicture(userOrArtistID)
                     } else {
                         Log.d("error", "Error on delete account in DB")
                         showMessageLong("Error deleting account in DB. Not successful!")
@@ -113,7 +111,7 @@ class SettingsActivity : BaseActivity() {
         }?.addOnFailureListener {
             artistDocRef?.delete()?.addOnCompleteListener { deleteArtistTask ->
                 if (deleteArtistTask.isSuccessful) {
-                    deleteProfilePicture()
+                    deleteProfilePicture(userOrArtistID)
                 } else {
                     Log.d("error", "Error on delete account in DB")
                     showMessageLong("Error deleting account in DB. Not successful!")
@@ -125,9 +123,9 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    private fun deleteProfilePicture() {
+    private fun deleteProfilePicture(userOrArtistID: String?) {
         val profilePicRef =
-            Firebase.storage.reference.child("profile_images/${Firebase.auth.currentUser?.uid}.jpg")
+            Firebase.storage.reference.child("profile_images/$userOrArtistID.jpg")
         profilePicRef.delete().addOnCompleteListener {
             Log.d("deletePicture", "success")
         }
@@ -145,7 +143,7 @@ class SettingsActivity : BaseActivity() {
             target.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 
         if (Build.VERSION.SDK_INT <= 22) {
-            uiManager.enableCarMode(0);
+            uiManager.enableCarMode(0)
         }
 
         if (state) {
@@ -155,7 +153,7 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    private fun reloadApp() {
+    private fun reloadApp(intent: Intent) {
         finish()
         startActivity(intent)
     }

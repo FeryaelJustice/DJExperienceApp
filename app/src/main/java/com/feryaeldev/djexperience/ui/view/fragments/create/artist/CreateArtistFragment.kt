@@ -59,8 +59,7 @@ class CreateArtistFragment : BaseFragment() {
 
         val db = Firebase.firestore
         val artistsDocRef = db.collection("artists")
-        val profilePicsRef =
-            Firebase.storage.reference
+        val storageRef = Firebase.storage.reference
 
         view.findViewById<MaterialButton>(R.id.createArtist_saveBtn).setOnClickListener {
             if (username.text.toString().isNotBlank() && email.text.toString()
@@ -80,7 +79,7 @@ class CreateArtistFragment : BaseFragment() {
                 user.age = age.text.toString().toLongOrNull()
                 user.website = website.text.toString()
 
-                profilePicsRef.child("profile_images/${user.id}.jpg").putFile(uri)
+                storageRef.child("profile_images/${user.id}.jpg").putFile(uri)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             artistsDocRef.document(user.id!!).set(user.asMap())
@@ -109,7 +108,7 @@ class CreateArtistFragment : BaseFragment() {
         return view
     }
 
-    fun randomString(length: Int): String {
+    private fun randomString(length: Int): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..length).map { allowedChars.random() }.joinToString("")
     }

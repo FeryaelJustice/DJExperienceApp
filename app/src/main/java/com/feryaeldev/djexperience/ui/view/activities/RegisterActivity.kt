@@ -1,6 +1,8 @@
 package com.feryaeldev.djexperience.ui.view.activities
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import com.feryaeldev.djexperience.R
@@ -12,6 +14,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.ktx.storage
+import java.io.File
+import java.io.FileOutputStream
 import kotlin.random.Random
 
 class RegisterActivity : BaseActivity() {
@@ -30,6 +35,7 @@ class RegisterActivity : BaseActivity() {
 
             if (!usernameEditText.text.isNullOrBlank() && !emailEditText.text.isNullOrBlank() && !passwordEditText.text.isNullOrBlank() && !repeatPasswordEditText.text.isNullOrBlank()) {
                 if (passwordEditText.text.toString() == repeatPasswordEditText.text.toString()) {
+                    // Create user in Auth Firebase
                     Firebase.auth.createUserWithEmailAndPassword(
                         emailEditText.text.toString(),
                         passwordEditText.text.toString()
@@ -37,7 +43,7 @@ class RegisterActivity : BaseActivity() {
                         if (it.isSuccessful) {
                             val db = Firebase.firestore
                             val user = hashMapOf(
-                                "id" to (Firebase.auth.currentUser?.uid ?: randomString(28)),
+                                "id" to (Firebase.auth.currentUser?.uid ?: randomString()),
                                 "email" to emailEditText.text.toString(),
                                 "username" to usernameEditText.text.toString(),
                                 "name" to "Default name",
@@ -49,31 +55,70 @@ class RegisterActivity : BaseActivity() {
                                 "website" to "www.google.com"
                             )
                             Firebase.auth.currentUser?.let { fUser ->
+                                // Create user in DB Firebase
                                 db.collection("users").document(fUser.uid)
                                     .set(user)
                                     .addOnSuccessListener {
+                                        val storageRef = Firebase.storage.reference
+
+                                        // Convert drawable to file (default photo)
+                                        val bitmap = BitmapFactory.decodeResource(
+                                            resources,
+                                            R.drawable.launcher_icon_jpg
+                                        )
+                                        val dir = File(
+                                            applicationContext.externalCacheDir!!.absolutePath,
+                                            "/tempDJExperience"
+                                        )
+                                        if (!dir.exists()) dir.mkdirs()
+                                        val profilePicFile =
+                                            File(dir, "tempProfilePhotoDJExperience.jpg")
+                                        val fOut = FileOutputStream(profilePicFile)
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
+
+                                        // Upload file
+                                        storageRef.child("profile_images/${fUser.uid}.jpg")
+                                            .putBytes(profilePicFile.readBytes())
+                                            .addOnCompleteListener {
+                                                Log.d("register","Success uploading register photo.")
+                                            }.addOnFailureListener{
+                                                showMessageLong("Error on upload register image!")
+                                            }
                                         Log.d(
                                             "UserAddedToDB",
                                             "DocumentSnapshot added successfully"
                                         )
+
+                                        // Delete temp files and directories
+                                        fOut.flush()
+                                        fOut.close()
+                                        profilePicFile.delete()
+                                        dir.delete()
+
+                                        // Navigate
                                         showMessageShort("User successfully created!")
+                                        startActivity(
+                                            Intent(
+                                                applicationContext,
+                                                MainActivity::class.java
+                                            )
+                                        )
+                                        overridePendingTransition(
+                                            R.anim.slide_down_reverse,
+                                            R.anim.slide_up_reverse
+                                        )
+                                        finish()
                                     }
                                     .addOnFailureListener { e ->
                                         Log.w("UserFailedToAddToDB", "Error adding document", e)
                                         showMessageShort("Error adding document!")
                                     }
                             }
-                            startActivity(Intent(applicationContext, MainActivity::class.java))
-                            overridePendingTransition(
-                                R.anim.slide_down_reverse,
-                                R.anim.slide_up_reverse
-                            )
-                            finish()
                         } else {
-                            showMessageLong(getString(R.string.signUpError,""))
+                            showMessageLong(getString(R.string.signUpError, "Register not successful!"))
                         }
                     }.addOnFailureListener {
-                        showMessageLong(getString(R.string.signUpError,it.toString()))
+                        showMessageLong(getString(R.string.signUpError, it.toString()))
                     }
                 } else {
                     showMessageLong(getString(R.string.passwordsNotMatch))
@@ -84,13 +129,12 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-    private fun randomString(stringLength: Int): String {
-        return (1..stringLength)
+    private fun randomString(): String {
+        return (1..28)
             .map { Random.nextInt(0, charPool.size) }
             .map(charPool::get)
             .joinToString("")
     }
-
 
     override fun onBackPressed() {
         super.onBackPressed()
