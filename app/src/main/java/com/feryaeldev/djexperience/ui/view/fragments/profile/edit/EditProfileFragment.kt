@@ -45,6 +45,22 @@ class EditProfileFragment : BaseFragment() {
 
     private var counterPermissions = 0
     private lateinit var galleryResultLauncher: ActivityResultLauncher<Intent>
+
+    /* External Library
+    private lateinit var galleryCropResultLauncher: ActivityResultLauncher<Any?>
+    private val cropActivityResultContract = object : ActivityResultContract<Any?, Uri?>(){
+     override fun createIntent(context: Context, input: Any?): Intent {
+         CropImage.activity().setAspectRatio(16,9).getIntent(this@EditProfileFragment)
+     }
+
+     override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+         return CropImage.getActivityResult(intent)?.uri
+     }
+
+     override fun getSynchronousResult(context: Context, input: Any?): SynchronousResult<Uri?>? {
+         return super.getSynchronousResult(context, input)
+     }
+    }*/
     private lateinit var cameraResultLauncher: ActivityResultLauncher<Uri>
     private lateinit var requestMultiplePermissionLauncher: ActivityResultLauncher<Array<String>>
 
@@ -107,7 +123,7 @@ class EditProfileFragment : BaseFragment() {
                 if (result.resultCode == Activity.RESULT_OK) {
                     uri = result.data?.data!!
                     uri.let { url ->
-                        checkImageOrientation()
+                        checkImageOrientation(url)
                         profilePicRef.putFile(url).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Picasso.get().load(url).into(image)
@@ -119,8 +135,23 @@ class EditProfileFragment : BaseFragment() {
                     }
                 }
             }
+
+        /* With crop library
+        galleryCropResultLauncher = registerForActivityResult(cropActivityResultContract){
+            it?.let { uri ->
+                profilePicRef.putFile(uri).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Picasso.get().load(uri).into(image)
+                        showMessageLong("Image uploaded successfully!")
+                    } else {
+                        showMessageLong("Error on uploading image...")
+                    }
+                }
+            }
+        }*/
+
         cameraResultLauncher =
-            registerForActivityResult(ActivityResultContracts.TakePicture(),) { success ->
+            registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
                 if (success) {
                     uri.let { url ->
                         profilePicRef.putFile(url).addOnCompleteListener {
@@ -364,7 +395,7 @@ class EditProfileFragment : BaseFragment() {
         return view
     }
 
-    private fun checkImageOrientation() {
+    private fun checkImageOrientation(url: Uri) {
         // Check image orientation before upload to server
         /*
         val convertedBitmap = rotateImageIfRequired(url)
@@ -422,9 +453,10 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun takePictureFromGallery() {
-        val intentCameraPick = Intent(ACTION_PICK)
-        intentCameraPick.type = "image/*"
-        galleryResultLauncher.launch(intentCameraPick)
+        val intentPick = Intent(ACTION_PICK)
+        intentPick.type = "image/*"
+        galleryResultLauncher.launch(intentPick)
+        // With crop library: galleryCropResultLauncher.launch(intentPick)
     }
 
     private fun checkPermissions(): Boolean {
