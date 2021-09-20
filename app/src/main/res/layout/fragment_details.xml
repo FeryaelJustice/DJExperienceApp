@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/fragment_artist_details_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_baseline_close_24"
+        android:layout_width="@dimen/image_size_small"
+        android:layout_height="@dimen/image_size_small"
         android:contentDescription="@string/defaultImageDescription"
+        android:padding="@dimen/text_separation_small"
+        android:src="@drawable/ic_baseline_close_24"
+        android:translationZ="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -29,11 +29,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:layout="@layout/fragment_loading"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_loading" />
 
     <LinearLayout
         android:id="@+id/details_data"
@@ -132,8 +132,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="4dp"
-            android:contentDescription="@string/defaultImageDescription"
             android:background="@drawable/media_btn_background"
+            android:contentDescription="@string/defaultImageDescription"
             android:src="@drawable/ic_baseline_play_arrow_24" />
 
         <LinearLayout

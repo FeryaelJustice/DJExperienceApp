@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
+import com.feryaeldev.djexperience.data.model.enum.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.UsersOrArtistsRecyclerViewAdapter
 import com.google.firebase.auth.ktx.auth
@@ -26,7 +27,7 @@ class SearchFragment : BaseFragment() {
     private var userOrArtistsList: MutableList<User> = arrayListOf()
     private var initRecyclerView = false
     private lateinit var progressCircle: FragmentContainerView
-    private var categoryFilterText = "Artist"
+    private var categoryFilterText = Category.Artist.name
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -131,7 +132,7 @@ class SearchFragment : BaseFragment() {
             userOrArtistsList.clear()
             val db = Firebase.firestore
             if (filter) {
-                if (filterCategory == "Artist") {
+                if (filterCategory == Category.Artist.name) {
                     db.collection("artists").whereEqualTo("username", search).get()
                         .addOnSuccessListener {
                             if (it.documents.size == 1) {

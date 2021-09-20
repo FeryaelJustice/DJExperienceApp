@@ -19,6 +19,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         lastMessage = remoteMessage.notification?.title.toString()
-        Toast.makeText(applicationContext,remoteMessage.notification?.title,Toast.LENGTH_LONG).show()
+        //Toast.makeText(applicationContext,remoteMessage.notification?.title,Toast.LENGTH_LONG).show()
     }
 }

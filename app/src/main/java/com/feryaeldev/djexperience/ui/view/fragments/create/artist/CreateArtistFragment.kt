@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
+import com.feryaeldev.djexperience.data.model.enum.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
 import com.google.android.material.button.MaterialButton
@@ -75,7 +76,7 @@ class CreateArtistFragment : BaseFragment() {
                 user.name = name.text.toString()
                 user.surnames = surnames.text.toString()
                 user.country = country.text.toString()
-                user.category = "Artist"
+                user.category = Category.Artist.name
                 user.age = age.text.toString().toLongOrNull()
                 user.website = website.text.toString()
 

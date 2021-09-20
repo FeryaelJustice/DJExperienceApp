@@ -14,7 +14,6 @@ import com.feryaeldev.djexperience.data.provider.settings.Settings
 import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.feryaeldev.djexperience.ui.view.activities.LoginActivity
 import com.google.android.material.button.MaterialButton
-import java.util.*
 
 class OnBoardingActivity : BaseActivity() {
 
@@ -34,8 +33,10 @@ class OnBoardingActivity : BaseActivity() {
         if (settings.isFirstOpen()) {
             settings.setFirstOpen(false)
         }
-        val language = Locale.getDefault().displayLanguage
+        /*val language = Locale.getDefault().displayLanguage
         showMessageLong("Welcome to DJ Experience! Language: $language")
+        */
+        showMessageLong(getString(R.string.welcome))
         val intent = Intent(applicationContext, LoginActivity::class.java)
         intent.putExtra("goToOnboarding", false)
         startActivity(intent)

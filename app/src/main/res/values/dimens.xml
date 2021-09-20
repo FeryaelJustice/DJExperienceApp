@@ -9,6 +9,7 @@
 
     <!-- Common -->
     <dimen name="text_size_small">8sp</dimen>
+    <dimen name="text_size_presmall">13sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_big">18sp</dimen>
     <dimen name="text_size_superBig">21sp</dimen>
@@ -16,6 +17,7 @@
     <dimen name="text_separation_small">8dp</dimen>
     <dimen name="editText_size_material">56dp</dimen>
     <dimen name="image_size_big">200dp</dimen>
+    <dimen name="image_size_smallbig">120dp</dimen>
     <dimen name="image_size_medium">80dp</dimen>
     <dimen name="image_size_small">40dp</dimen>
 

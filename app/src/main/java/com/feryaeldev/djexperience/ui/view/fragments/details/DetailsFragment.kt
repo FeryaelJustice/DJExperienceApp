@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
+import com.feryaeldev.djexperience.data.model.enum.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
@@ -221,7 +222,7 @@ class DetailsFragment : BaseFragment() {
             authenticatedUserDbRef.get().addOnSuccessListener { document ->
                 if (document != null) {
                     // ONLY FOLLOW ARTISTS check
-                    if(userOrArtist.category=="Artist"){
+                    if(userOrArtist.category==Category.Artist.name){
                         val user: User? = document.toObject(User::class.java)
                         // Push or substract artist
                         if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
@@ -270,8 +271,8 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun showOrNotShowFollowFunction(addRemoveToProfile: FloatingActionButton, addRemoveToProfileText: TextView) {
-        userOrArtist.category?.let { showMessageShort(it) }
-        if(userOrArtist.category == "User"){
+        //userOrArtist.category?.let { showMessageShort(it) }
+        if(userOrArtist.category == Category.User.name){
             addRemoveToProfile.visibility = View.GONE
             addRemoveToProfileText.visibility = View.GONE
         }else{

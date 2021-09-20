@@ -4,13 +4,12 @@
     <string name="defaultImageDescription" translatable="false">image</string>
 
     <!-- App Global -->
+    <string name="welcome">¡Bienvenido a DJ Experience!</string>
     <string name="settings">Ajustes</string>
     <string name="signIn">Iniciar sesión</string>
     <string name="signOut">Cerrar Sesión</string>
     <string name="signUp">Registrarse</string>
     <string name="signUpInfo">¿Aún no tienes una cuenta? Regístrate aquí.</string>
-    <string name="signInError">Error al intentar iniciar sesión</string>
-    <string name="signUpError">Error al registrarse: %1$s</string>
     <string name="email">Correo electrónico</string>
     <string name="send_email">Enviar correo</string>
     <string name="password">Contraseña</string>
@@ -22,7 +21,7 @@
     <string name="add">Añadir</string>
     <string name="sustract">Restar</string>
     <string name="save">Guardar</string>
-    <string name="version">DJ Experience - Versión %1$s.</string>
+    <string name="version">© DJ Experience - Versión %1$s (Haz click aquí para ver el descargo de responsabilidad de derechos de autor).</string>
 
     <!-- App Nav -->
     <string name="bottom_nav_home">Inicio</string>
@@ -72,4 +71,11 @@
     <!-- Settings -->
     <string name="deleteAccount">Eliminar cuenta</string>
     <string name="clearCache">Eliminar la caché</string>
+    <!-- Copyright -->
+    <string name="copyright">© Copyright - DJ Experience\n\nNo recopilamos música con derechos de autor de sus artistas, sólo ponemos un trozo corto como demostración y vinculamos referencias a su contenido. Sólo se utiliza información pública.\n\nTodos los derechos reservados,\ncreador de DJ Experience.</string>
+
+    <!-- Errors -->
+    <string name="signInError">Error al intentar iniciar sesión</string>
+    <string name="signUpError">Error al registrarse: %1$s</string>
+    <string name="noPermissionsError">You don\'t have permissions.</string>
 </resources>

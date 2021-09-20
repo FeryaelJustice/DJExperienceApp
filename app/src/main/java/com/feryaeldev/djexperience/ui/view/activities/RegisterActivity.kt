@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.feryaeldev.djexperience.R
+import com.feryaeldev.djexperience.data.model.enum.Category
 import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -43,7 +44,7 @@ class RegisterActivity : BaseActivity() {
                                 "surnames" to "Default surnames",
                                 "age" to 0,
                                 "country" to "Earth",
-                                "category" to "User",
+                                "category" to Category.User.name,
                                 "following" to arrayListOf<String>(),
                                 "website" to "www.google.com"
                             )

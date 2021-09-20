@@ -41,10 +41,10 @@ class InfoActivity : BaseActivity() {
             startActivity(intentURL)
         }
         infoImage.setOnLongClickListener {
-            if(checkPermissions()){
+            if (checkPermissions()) {
                 saveImageToInternalStorage(applicationContext, R.drawable.launcher_icon)
-            }else{
-                showMessageLong("You don't have permissions.")
+            } else {
+                showMessageLong(getString(R.string.noPermissionsError))
             }
             true
         }
@@ -64,8 +64,12 @@ class InfoActivity : BaseActivity() {
                 Uri.parse("https://feryaeljustice.notion.site/DJ-Experience-d4d4928723af4250a258ac638d7f09a0")
             startActivity(intentURL)
         }
-        findViewById<TextView>(R.id.info_bottomInfo_version).text =
+        val versionAndCopyright = findViewById<TextView>(R.id.info_bottomInfo_version)
+        versionAndCopyright.text =
             getString(R.string.version, BuildConfig.VERSION_NAME)
+        versionAndCopyright.setOnClickListener {
+            startActivity(Intent(applicationContext, CopyrightActivity::class.java))
+        }
     }
 
     private fun checkPermissions(): Boolean {

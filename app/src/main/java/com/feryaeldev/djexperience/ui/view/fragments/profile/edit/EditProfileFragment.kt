@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
+import com.feryaeldev.djexperience.data.model.enum.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
 import com.google.android.material.button.MaterialButton
@@ -168,7 +169,7 @@ class EditProfileFragment : BaseFragment() {
                     age.setText(user.age.toString())
                     website.setText(user.website)
                     selectedCategory = user.category.toString()
-                    if (user.category == "User") {
+                    if (user.category == Category.User.name) {
                         categorySpinner.setSelection(0)
                     } else {
                         categorySpinner.setSelection(1)
@@ -201,7 +202,7 @@ class EditProfileFragment : BaseFragment() {
                             age.setText(user.age.toString())
                             website.setText(user.website)
                             selectedCategory = user.category.toString()
-                            if (user.category == "User") {
+                            if (user.category == Category.User.name) {
                                 categorySpinner.setSelection(0)
                             } else {
                                 categorySpinner.setSelection(1)
@@ -241,7 +242,7 @@ class EditProfileFragment : BaseFragment() {
                         age.setText(user.age.toString())
                         website.setText(user.website)
                         selectedCategory = user.category.toString()
-                        if (user.category == "User") {
+                        if (user.category == Category.User.name) {
                             categorySpinner.setSelection(0)
                         } else {
                             categorySpinner.setSelection(1)
@@ -281,7 +282,7 @@ class EditProfileFragment : BaseFragment() {
                     age.setText(user.age.toString())
                     website.setText(user.website)
                     selectedCategory = user.category.toString()
-                    if (user.category == "User") {
+                    if (user.category == Category.User.name) {
                         categorySpinner.setSelection(0)
                     } else {
                         categorySpinner.setSelection(1)
@@ -326,7 +327,7 @@ class EditProfileFragment : BaseFragment() {
                 Log.d("user", user.toString())
 
                 when (selectedCategory) {
-                    "User" -> {
+                    Category.User.name -> {
                         userDocRef?.set(user.asMap())
                             ?.addOnSuccessListener {
                                 showMessageLong("User updated!")
@@ -336,7 +337,7 @@ class EditProfileFragment : BaseFragment() {
                             }
                         artistDocRef?.delete()
                     }
-                    "Artist" -> {
+                    Category.Artist.name -> {
                         artistDocRef?.set(user.asMap())
                             ?.addOnSuccessListener {
                                 showMessageLong("Artist updated!")
