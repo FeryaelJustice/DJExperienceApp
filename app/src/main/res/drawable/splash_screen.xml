@@ -10,6 +10,6 @@
         android:top="10dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/launcher_icon_nobackground" />
     </item>
 </layer-list>

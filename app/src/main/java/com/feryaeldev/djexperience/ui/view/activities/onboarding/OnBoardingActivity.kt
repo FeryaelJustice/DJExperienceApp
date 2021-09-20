@@ -46,7 +46,7 @@ class OnBoardingActivity : BaseActivity() {
         onBoardingItemsAdapter = OnBoardingItemsAdapter(
             listOf(
                 OnBoardingItem(
-                    R.drawable.launcher_icon,
+                    R.drawable.launcher_icon_png,
                     "Welcome to DJExperience!",
                     "In this app you will find all you need about DJ's."
                 ),

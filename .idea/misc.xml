@@ -3,39 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/bottom_navigation_itembackground.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.3828125" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_launcher_background.xml" value="0.33611111111111114" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.33611111111111114" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/icon_background.xml" value="0.2203125" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/indicator_active_background.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/indicator_inactive_background.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/media_btn_background.xml" value="0.21041666666666667" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/splash_screen.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/drawable/view_pager_background.xml" value="0.3828125" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_info.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_login.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_main.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_onboarding.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_recover_account.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_register.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_settings.xml" value="0.18" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/activity_splash.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/alert_dialog_chooseuploadphotomethod.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_artist_details.xml" value="0.19427083333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_create_artist.xml" value="0.25" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_details.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_edit_profile.xml" value="0.22418478260869565" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_home.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_loading.xml" value="0.2151268115942029" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_profile.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/fragment_search.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/onboarding_item.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/search_item.xml" value="0.17" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/layout/search_new_item.xml" value="0.19429347826086957" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/menu/bottom_navigation.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJExperience/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/icon_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/indicator_active_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/splash_screen.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/activity_splash.xml" value="0.12001811594202899" />
       </map>
     </option>
   </component>
