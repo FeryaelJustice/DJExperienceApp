@@ -27,19 +27,21 @@ fun saveImageToInternalStorage(applicationContext: Context, drawableId: Int) {
 
     var outputStream: FileOutputStream
     val filePath = applicationContext.getExternalFilesDir(null)?.absolutePath
-    val dir = File(filePath)
-    //dir.mkdirs()
+    filePath?.let { filePathNotNull ->
+        val dir = File(filePathNotNull)
+        //dir.mkdirs()
 
-    val filename = String.format("djexperiencelogo.jpg")
-    val outFile = File(dir,filename)
+        val filename = String.format("djexperiencelogo.jpg")
+        val outFile = File(dir,filename)
 
-    try {
-        outputStream = FileOutputStream(outFile)
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream)
-        outputStream.flush()
-        outputStream.close()
-        Toast.makeText(applicationContext,"Image saved successfully!",Toast.LENGTH_SHORT).show();
-    }catch (e:Error){
-        e.printStackTrace()
+        try {
+            outputStream = FileOutputStream(outFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream)
+            outputStream.flush()
+            outputStream.close()
+            Toast.makeText(applicationContext,"Image saved successfully!",Toast.LENGTH_SHORT).show();
+        }catch (e:Error){
+            e.printStackTrace()
+        }
     }
 }

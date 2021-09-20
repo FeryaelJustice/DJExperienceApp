@@ -11,6 +11,7 @@
     <color name="color_secondary">#6C0000</color>
     <color name="color_secondary_night">#400000</color>
     <color name="color_accent">#FFEB3B</color>
+    <color name="color_background">#191919</color>
 
     <!-- Elements -->
     <color name="color_navigation_text">#FFD299</color>
