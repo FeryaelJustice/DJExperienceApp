@@ -18,6 +18,7 @@
         <item name="android:background">@color/color_primary</item>
         <!-- Styles -->
         <item name="textInputStyle">@style/MyTextInputLayout</item>
+        <!--<item name="toolbarStyle">@style/AppBarTheme</item>-->
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -31,16 +32,13 @@
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <style name="AppBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:background">@color/color_primary</item>
-        <item name="titleTextColor">@color/white</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="AppBarTheme" parent="Widget.AppCompat.ActionBar">
+        <item name="popupTheme">@style/AppBarTheme.Menu</item>
     </style>
 
-    <style name="AppBarTheme.Menu" parent="ThemeOverlay.AppCompat">
-        <item name="android:background">@color/color_primary</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:popupBackground">@color/color_primary</item>
+    <style name="AppBarTheme.Menu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:background">@color/color_secondary</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="BottomNavigationTheme">
@@ -61,11 +59,7 @@
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="queryBackground">@color/color_primary</item>
-        <item name="queryHint">@string/searchSV_hint</item>
-        <item name="android:inputType">text</item>
-
         <item name="android:textColor">@color/white</item>
-        <item name="android:editTextColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
     </style>
 </resources>

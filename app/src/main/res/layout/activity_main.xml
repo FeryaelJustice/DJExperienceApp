@@ -8,13 +8,14 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
+        style="@style/AppBarTheme"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/AppBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/AppBarTheme.Menu" />
+        app:menu="@menu/menu_settings" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

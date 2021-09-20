@@ -23,9 +23,11 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_search_searchView"
-            style="@style/SearchViewStyle"
+            android:theme="@style/SearchViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:queryHint="@string/searchSV_hint" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -57,7 +59,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_baseline_search_24"/>
+                android:src="@drawable/ic_baseline_search_24" />
 
             <TextView
                 android:id="@+id/fragment_search_textInfo"
