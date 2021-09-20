@@ -42,7 +42,7 @@ class InfoActivity : BaseActivity() {
         }
         infoImage.setOnLongClickListener {
             if(checkPermissions()){
-                saveImageToInternalStorage(applicationContext, R.drawable.launcher_icon_png)
+                saveImageToInternalStorage(applicationContext, R.drawable.launcher_icon)
             }else{
                 showMessageLong("You don't have permissions.")
             }

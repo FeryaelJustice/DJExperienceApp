@@ -36,6 +36,12 @@
     <string name="someEmptyFieldsError">¡Algun campo está vacío!</string>
     <!-- OnBoarding -->
     <string name="onBoarding_start">Comenzar</string>
+    <string name="onBoarding_item_welcome_title">¡Bienvenido a DJ Experience!</string>
+    <string name="onBoarding_item_welcome_description">En esta app encontrarás todo lo que necesitas sobre los DJs.</string>
+    <string name="onBoarding_item_account_title">Con sistema de cuentas</string>
+    <string name="onBoarding_item_account_description">Tienes que iniciar sesión para usar la aplicación, porque sincroniza todos tus datos (a quién sigues y otros).</string>
+    <string name="onBoarding_item_intro_title">Rápida introducción:</string>
+    <string name="onBoarding_item_intro_description">Sólo tienes que buscar tus artistas favoritos (minúsculas sensibles y sin espacios) y crear tus propios DJs.</string>
     <!-- Profile -->
     <string name="edit_profile">Editar perfil</string>
     <string name="artistsFollowing">Artistas que sigue:</string>

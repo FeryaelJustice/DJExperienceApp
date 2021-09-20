@@ -23,7 +23,7 @@
         android:layout_height="120dp"
         android:layout_gravity="center"
         android:contentDescription="@string/defaultImageDescription"
-        android:src="@drawable/launcher_icon_png" />
+        android:src="@drawable/launcher_icon" />
 
     <TextView
         android:layout_width="wrap_content"

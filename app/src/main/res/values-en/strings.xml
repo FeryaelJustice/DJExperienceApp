@@ -33,6 +33,12 @@
     <string name="someEmptyFieldsError">Some field is empty!</string>
     <!-- OnBoarding -->
     <string name="onBoarding_start">Start</string>
+    <string name="onBoarding_item_welcome_title">Welcome to DJExperience!</string>
+    <string name="onBoarding_item_welcome_description">In this app you will find all you need about DJs.</string>
+    <string name="onBoarding_item_account_title">With account system</string>
+    <string name="onBoarding_item_account_description">You have to login to use the app, because it syncs all your data (who you follow and other)</string>
+    <string name="onBoarding_item_intro_title">Quick introduction</string>
+    <string name="onBoarding_item_intro_description">You only have to search your favourite artists (lowercase sensitive and no spaces) and create your own DJs.</string>
     <!-- Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="artistsFollowing">Artists you follow:</string>

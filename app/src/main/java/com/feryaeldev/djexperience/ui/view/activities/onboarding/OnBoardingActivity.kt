@@ -9,10 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.feryaeldev.djexperience.R
-import com.feryaeldev.djexperience.ui.view.activities.LoginActivity
-import com.feryaeldev.djexperience.ui.base.BaseActivity
 import com.feryaeldev.djexperience.data.model.domain.OnBoardingItem
 import com.feryaeldev.djexperience.data.provider.settings.Settings
+import com.feryaeldev.djexperience.ui.base.BaseActivity
+import com.feryaeldev.djexperience.ui.view.activities.LoginActivity
 import com.google.android.material.button.MaterialButton
 import java.util.*
 
@@ -46,19 +46,19 @@ class OnBoardingActivity : BaseActivity() {
         onBoardingItemsAdapter = OnBoardingItemsAdapter(
             listOf(
                 OnBoardingItem(
-                    R.drawable.launcher_icon_png,
-                    "Welcome to DJExperience!",
-                    "In this app you will find all you need about DJ's."
+                    R.drawable.launcher_icon,
+                    getString(R.string.onBoarding_item_welcome_title),
+                    getString(R.string.onBoarding_item_welcome_description)
                 ),
                 OnBoardingItem(
                     R.drawable.ic_baseline_person_24,
-                    "With account system",
-                    "You have to login to use the app, because it syncs all your data (who you follow and other)"
+                    getString(R.string.onBoarding_item_account_title),
+                    getString(R.string.onBoarding_item_account_description)
                 ),
                 OnBoardingItem(
                     R.drawable.ic_baseline_play_arrow_24,
-                    "Quick introduction",
-                    "You only have to search your favourite artists (lowercase sensitive and no spaces) and create your own DJ's."
+                    getString(R.string.onBoarding_item_intro_title),
+                    getString(R.string.onBoarding_item_intro_description)
                 ),
             )
         )
