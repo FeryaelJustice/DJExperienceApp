@@ -20,7 +20,7 @@
             android:layout_width="@dimen/image_size_big"
             android:layout_height="@dimen/image_size_big"
             android:contentDescription="@string/defaultImageDescription"
-            android:src="@drawable/launcher_image" />
+            android:src="@drawable/launcher_icon" />
 
         <TextView
             android:layout_width="wrap_content"

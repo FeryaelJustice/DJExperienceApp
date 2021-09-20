@@ -4,12 +4,12 @@
     <item android:drawable="@color/color_primary" />
 
     <item
-        android:bottom="100dp"
-        android:left="100dp"
-        android:right="100dp"
-        android:top="100dp">
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/launcher_image" />
+            android:src="@drawable/ic_launcher" />
     </item>
 </layer-list>
