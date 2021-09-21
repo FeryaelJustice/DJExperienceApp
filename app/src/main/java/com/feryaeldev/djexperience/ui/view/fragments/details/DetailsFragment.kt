@@ -289,8 +289,6 @@ class DetailsFragment : BaseFragment() {
         // Download track
         demoSongRef.getFile(tempFile).addOnSuccessListener {
             Log.d("download", "success")
-            mediaLayout.visibility = View.VISIBLE
-
             // Configure media player
             try {
                 val fis = FileInputStream(tempFile)
@@ -318,6 +316,8 @@ class DetailsFragment : BaseFragment() {
                     mediaTitle.text =
                         view?.context?.getString(R.string.artist_demo, usernameUppercase) ?: ""
 
+                    // Make media player visible
+                    mediaLayout.visibility = View.VISIBLE
                     // Autoplay
                     startMediaPlayer()
                 }

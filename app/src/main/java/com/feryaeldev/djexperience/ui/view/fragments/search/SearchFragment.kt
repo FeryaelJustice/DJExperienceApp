@@ -143,7 +143,8 @@ class SearchFragment : BaseFragment() {
                                     mRecyclerView.adapter?.notifyItemChanged(0)
                                 }
                             } else {
-                                showMessageShort("More than one or empty result in DB.")
+                                Log.d("error","More than one or empty result in DB.")
+                                showMessageShort("Empty result in DB.")
                             }
                             completion()
                         }.addOnFailureListener {
@@ -161,7 +162,8 @@ class SearchFragment : BaseFragment() {
                                     mRecyclerView.adapter?.notifyItemChanged(0)
                                 }
                             } else {
-                                showMessageShort("More than one or empty result in DB.")
+                                Log.d("error","More than one or empty result in DB.")
+                                showMessageShort("Empty result in DB.")
                             }
                             completion()
                         }.addOnFailureListener {

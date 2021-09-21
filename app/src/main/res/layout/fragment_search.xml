@@ -23,10 +23,10 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_search_searchView"
-            android:theme="@style/SearchViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:theme="@style/SearchViewStyle"
             app:queryHint="@string/searchSV_hint" />
     </LinearLayout>
 
@@ -59,7 +59,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_baseline_search_24" />
+                android:contentDescription="@string/defaultImageDescription"
+                android:src="@drawable/ic_baseline_search_24"
+                app:tint="@color/color_secondary" />
 
             <TextView
                 android:id="@+id/fragment_search_textInfo"
