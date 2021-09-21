@@ -18,6 +18,9 @@
     <string name="add">Add</string>
     <string name="sustract">Subtract</string>
     <string name="save">Save</string>
+    <string name="userIsAwareQuestion">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="version">© DJ Experience - Version %1$s. (Click here to view the copyright disclaimer.)</string>
 
     <!-- App Nav -->
@@ -68,6 +71,9 @@
     <!-- Settings -->
     <string name="deleteAccount">Delete account</string>
     <string name="clearCache">Delete cache</string>
+    <string name="userIsAwareToDeleteAccQuestion">Are you sure you want to delete your account?</string>
+    <string name="userIsAwareToDeleteAccDescription">You will loose all your data.</string>
+    <string name="wisechoice">Wise choice!</string>
     <!-- Copyright -->
     <string name="copyright">© Copyright - DJ Experience\n\nWe don\'t recollect copyrighted music of its artists, we only show a short piece as a demo and we link references to their content. Only public information is used.\n\nAll rights reserved,\ncreator of DJ Experience.</string>
 

@@ -1,5 +1,6 @@
 package com.feryaeldev.djexperience.ui.view.activities
 
+import android.app.AlertDialog
 import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
@@ -30,7 +31,19 @@ class SettingsActivity : BaseActivity() {
             onBackPressed()
         }
         findViewById<AppCompatButton>(R.id.settings_deleteAccount).setOnClickListener {
-            deleteAccount()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(getString(R.string.userIsAwareToDeleteAccQuestion))
+            builder.setMessage(getString(R.string.userIsAwareToDeleteAccDescription))
+            builder.setPositiveButton(getString(R.string.yes)) { dialogInterface, _ ->
+                deleteAccount()
+                dialogInterface.dismiss()
+            }
+            builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                showMessageLong(getString(R.string.wisechoice))
+                dialog.cancel()
+            }
+            val alert = builder.create()
+            alert.show()
         }
         findViewById<AppCompatButton>(R.id.settings_clearCache).setOnClickListener {
             try {
