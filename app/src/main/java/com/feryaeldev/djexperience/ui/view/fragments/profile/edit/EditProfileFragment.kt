@@ -14,7 +14,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -25,6 +28,7 @@ import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.data.model.enum.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
+import com.feryaeldev.djexperience.util.checkPermissions
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.ktx.auth
@@ -340,7 +344,7 @@ class EditProfileFragment : BaseFragment() {
 
         // Save user profile picture
         image.setOnClickListener {
-            chooseImageUploadMethod()
+            chooseImageUploadMethod(it)
         }
 
         // Save
@@ -423,8 +427,8 @@ class EditProfileFragment : BaseFragment() {
         */
     }
 
-    private fun chooseImageUploadMethod() {
-        val alertBuilder = AlertDialog.Builder(view?.context)
+    private fun chooseImageUploadMethod(view: View) {
+        val alertBuilder = AlertDialog.Builder(view.context)
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.alert_dialog_chooseuploadphotomethod, null)
         alertBuilder.setCancelable(false)
@@ -433,13 +437,24 @@ class EditProfileFragment : BaseFragment() {
 
         dialogView.findViewById<ImageView>(R.id.cameraMethod).setOnClickListener {
             alertDialog.dismiss()
-            if (checkPermissions()) {
+            if (checkPermissions(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA
+                    ), requestMultiplePermissionLauncher, view.context
+                )
+            ) {
                 takePictureFromCamera()
             }
         }
         dialogView.findViewById<ImageView>(R.id.galleryMethod).setOnClickListener {
             alertDialog.dismiss()
-            if (checkPermissions()) {
+            if (checkPermissions(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), requestMultiplePermissionLauncher, view.context
+                )
+            ) {
                 takePictureFromGallery()
             }
         }
@@ -459,6 +474,7 @@ class EditProfileFragment : BaseFragment() {
         // With crop library: galleryCropResultLauncher.launch(intentPick)
     }
 
+    /*
     private fun checkPermissions(): Boolean {
         requestMultiplePermissionLauncher.launch(
             arrayOf(
@@ -474,7 +490,7 @@ class EditProfileFragment : BaseFragment() {
             false
         }
     }
-
+     */
 
     private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
         val matrix = Matrix()

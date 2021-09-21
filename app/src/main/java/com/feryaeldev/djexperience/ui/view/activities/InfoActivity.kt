@@ -2,6 +2,7 @@ package com.feryaeldev.djexperience.ui.view.activities
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,22 +10,22 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import com.feryaeldev.djexperience.BuildConfig
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.ui.base.BaseActivity
-import com.feryaeldev.djexperience.util.saveImageToInternalStorage
+import com.feryaeldev.djexperience.util.authorInstagram
+import com.feryaeldev.djexperience.util.authorYoutube
+import com.feryaeldev.djexperience.util.checkPermissions
+import com.feryaeldev.djexperience.util.djExperienceWebsite
 import com.google.firebase.messaging.FirebaseMessaging
 
 class InfoActivity : BaseActivity() {
 
-    private var counterPermissions = 0
     private val requestMultiplePermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
             resultsMap.forEach {
                 Log.d("launcher", "Permission: ${it.key}, granted: ${it.value}")
-                if (it.value == true) {
-                    counterPermissions++
-                }
             }
         }
 
@@ -41,8 +42,9 @@ class InfoActivity : BaseActivity() {
             startActivity(intentURL)
         }
         infoImage.setOnLongClickListener {
-            if (checkPermissions()) {
-                saveImageToInternalStorage(applicationContext, R.drawable.launcher_icon)
+            if (checkPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),requestMultiplePermissionLauncher,applicationContext)) {
+                //saveImageToInternalStorage(applicationContext, R.drawable.launcher_icon)
+                Log.d("save", "trying to save pic")
             } else {
                 showMessageLong(getString(R.string.noPermissionsError))
             }
@@ -50,18 +52,18 @@ class InfoActivity : BaseActivity() {
         }
         findViewById<ImageView>(R.id.info_yt).setOnClickListener {
             val intentURL = Intent(Intent.ACTION_VIEW)
-            intentURL.data = Uri.parse("https://www.youtube.com/channel/UCDYgeJeEqB9tMCE0EqcXE3Q")
+            intentURL.data = Uri.parse(authorYoutube)
             startActivity(intentURL)
         }
         findViewById<ImageView>(R.id.info_instagram).setOnClickListener {
             val intentURL = Intent(Intent.ACTION_VIEW)
-            intentURL.data = Uri.parse("https://www.instagram.com/feryaeljustice")
+            intentURL.data = Uri.parse(authorInstagram)
             startActivity(intentURL)
         }
         findViewById<RelativeLayout>(R.id.info_bottomInfo).setOnClickListener {
             val intentURL = Intent(Intent.ACTION_VIEW)
             intentURL.data =
-                Uri.parse("https://feryaeljustice.notion.site/DJ-Experience-d4d4928723af4250a258ac638d7f09a0")
+                Uri.parse(djExperienceWebsite)
             startActivity(intentURL)
         }
         val versionAndCopyright = findViewById<TextView>(R.id.info_bottomInfo_version)
@@ -69,22 +71,6 @@ class InfoActivity : BaseActivity() {
             getString(R.string.version, BuildConfig.VERSION_NAME)
         versionAndCopyright.setOnClickListener {
             startActivity(Intent(applicationContext, CopyrightActivity::class.java))
-        }
-    }
-
-    private fun checkPermissions(): Boolean {
-        requestMultiplePermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        )
-        return if (counterPermissions == 2) {
-            counterPermissions = 0
-            true
-        } else {
-            counterPermissions = 0
-            false
         }
     }
 
