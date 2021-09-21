@@ -53,11 +53,12 @@ class SplashActivity : BaseActivity() {
 
         firebaseRemoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                /*
                 showMessageShort(
                     "Author message: ${
                         FirebaseRemoteConfig.getInstance().getString("authorMessage")
                     }"
-                )
+                )*/
                 settings.setAuthorMessage(
                     FirebaseRemoteConfig.getInstance().getString("authorMessage")
                 )
