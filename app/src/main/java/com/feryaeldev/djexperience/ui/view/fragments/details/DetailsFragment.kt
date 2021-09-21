@@ -95,8 +95,8 @@ class DetailsFragment : BaseFragment() {
             if (document != null) {
                 val user: User? = document.toObject(User::class.java)
                 var found = false
-                user?.following?.forEach checkFollow@ {
-                    if(it == userOrArtistID){
+                user?.following?.forEach checkFollow@{
+                    if (it == userOrArtistID) {
                         addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
                         addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
                         addRemoveToProfileText.text =
@@ -105,7 +105,7 @@ class DetailsFragment : BaseFragment() {
                         return@checkFollow
                     }
                 }
-                if(!found){
+                if (!found) {
                     addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
                     addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
                     addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
@@ -212,8 +212,12 @@ class DetailsFragment : BaseFragment() {
             downloadUrl = it.toString()
         }
         image.setOnLongClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl))
-            startActivity(browserIntent)
+            try {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl))
+                startActivity(browserIntent)
+            } catch (e: Error) {
+                Log.d("error", e.toString())
+            }
             true
         }
 
@@ -222,7 +226,7 @@ class DetailsFragment : BaseFragment() {
             authenticatedUserDbRef.get().addOnSuccessListener { document ->
                 if (document != null) {
                     // ONLY FOLLOW ARTISTS check
-                    if(userOrArtist.category==Category.Artist.name){
+                    if (userOrArtist.category == Category.Artist.name) {
                         val user: User? = document.toObject(User::class.java)
                         // Push or substract artist
                         if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
@@ -242,13 +246,14 @@ class DetailsFragment : BaseFragment() {
                             user?.following = tempList
                             addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
                             addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                            addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
+                            addRemoveToProfileText.text =
+                                view.context.resources.getString(R.string.add)
                         }
                         // Update
                         if (user != null) {
                             db.collection("users").document(authenticatedUserID).set(user)
                         }
-                    }else{
+                    } else {
                         showMessageShort("You cant use this function to follow a User.")
                     }
                 }
@@ -270,27 +275,31 @@ class DetailsFragment : BaseFragment() {
         return view
     }
 
-    private fun showOrNotShowFollowFunction(addRemoveToProfile: FloatingActionButton, addRemoveToProfileText: TextView) {
+    private fun showOrNotShowFollowFunction(
+        addRemoveToProfile: FloatingActionButton,
+        addRemoveToProfileText: TextView
+    ) {
         //userOrArtist.category?.let { showMessageShort(it) }
-        if(userOrArtist.category == Category.User.name){
+        if (userOrArtist.category == Category.User.name) {
             addRemoveToProfile.visibility = View.GONE
             addRemoveToProfileText.visibility = View.GONE
-        }else{
+        } else {
             addRemoveToProfile.visibility = View.VISIBLE
             addRemoveToProfileText.visibility = View.VISIBLE
         }
     }
 
     private fun initMedia() {
-        val demoSongRef =
-            Firebase.storage.reference.child("songs/demo/${userOrArtist.username?.lowercase()}.mp3")
-        val tempFile = File.createTempFile("temp_$userOrArtist", ".mp3")
-        tempFile.deleteOnExit()
-        // Download track
-        demoSongRef.getFile(tempFile).addOnSuccessListener {
-            Log.d("download", "success")
-            // Configure media player
-            try {
+        try {
+            val demoSongRef =
+                Firebase.storage.reference.child("songs/demo/${userOrArtist.username?.lowercase()}.mp3")
+            val tempFile = File.createTempFile("temp_${userOrArtist.id}", ".mp3")
+            tempFile.deleteOnExit()
+            // Download track
+            demoSongRef.getFile(tempFile).addOnSuccessListener {
+                Log.d("download", "success")
+                // Configure media player
+
                 val fis = FileInputStream(tempFile)
                 mediaPlayer.setDataSource(fis.fd)
                 mediaPlayer.prepareAsync()
@@ -321,13 +330,14 @@ class DetailsFragment : BaseFragment() {
                     // Autoplay
                     startMediaPlayer()
                 }
-            } catch (e: Error) {
-                showMessageShort("Error: $e")
+            }.addOnFailureListener {
                 mediaLayout.visibility = View.GONE
             }
-        }.addOnFailureListener {
+        } catch (e: Error) {
+            showMessageShort("Error: $e")
             mediaLayout.visibility = View.GONE
         }
+
 
         // Play pause button
         playPauseBtn.setOnClickListener {
