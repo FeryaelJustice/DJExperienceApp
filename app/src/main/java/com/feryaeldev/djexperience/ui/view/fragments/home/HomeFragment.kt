@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +16,8 @@ import com.feryaeldev.djexperience.data.provider.services.newsapi.NewsApi
 import com.feryaeldev.djexperience.data.provider.services.newsapi.NewsApiService
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.NewsRecyclerViewAdapter
-import com.feryaeldev.djexperience.util.HttpResponseStatus
+import com.feryaeldev.djexperience.data.model.enums.HttpResponseStatus
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

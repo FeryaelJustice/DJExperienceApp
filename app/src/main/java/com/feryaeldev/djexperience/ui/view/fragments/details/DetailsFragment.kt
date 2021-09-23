@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
-import com.feryaeldev.djexperience.data.model.enum.Category
+import com.feryaeldev.djexperience.data.model.enums.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth

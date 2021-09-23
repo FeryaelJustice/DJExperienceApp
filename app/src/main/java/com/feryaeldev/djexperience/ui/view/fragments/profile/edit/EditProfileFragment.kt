@@ -20,15 +20,17 @@ import android.widget.ImageView
 import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
-import com.feryaeldev.djexperience.data.model.enum.Category
+import com.feryaeldev.djexperience.data.model.enums.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.util.asMap
 import com.feryaeldev.djexperience.util.checkPermissions
+import com.feryaeldev.djexperience.util.countryIsValid
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.ktx.auth
@@ -36,7 +38,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
+import java.util.*
 
 class EditProfileFragment : BaseFragment() {
 
@@ -44,6 +50,8 @@ class EditProfileFragment : BaseFragment() {
     private lateinit var progressCircle: FragmentContainerView
     private lateinit var profileDataLayout: LinearLayoutCompat
     private var selectedCategory = ""
+    private val categories = Category.values()
+    private var autoCompleteTextViewInputType = 0
 
     private lateinit var uri: Uri
 
@@ -87,16 +95,48 @@ class EditProfileFragment : BaseFragment() {
         val image: ImageView = view.findViewById(R.id.editprofile_photo)
         val name: TextInputEditText = view.findViewById(R.id.editprofile_name)
         val surnames: TextInputEditText = view.findViewById(R.id.editprofile_surnames)
-        val country: TextInputEditText = view.findViewById(R.id.editprofile_country)
+        val country: AppCompatAutoCompleteTextView =
+            view.findViewById(R.id.editprofile_country)
         val age: TextInputEditText = view.findViewById(R.id.editprofile_age)
         val website: TextInputEditText = view.findViewById(R.id.editprofile_website)
-        val categorySpinner: Spinner = view.findViewById(R.id.editprofile_category_sp)
+        val categoryField: Spinner = view.findViewById(R.id.editprofile_category_sp)
 
-        val userListTypes = resources.getStringArray(R.array.user_categories)
+        autoCompleteTextViewInputType = country.inputType // Save input type
+
+        // Country AutoCompleteTextView
+        //disableAutoCompleteTextTextView(country)
+
+        // Get countries
+        val countryList = arrayListOf<String>()
+        CoroutineScope(Dispatchers.IO).launch {
+            val locales = Locale.getAvailableLocales()
+            locales.forEach {
+                countryList.add(it.displayName)
+            }
+            countryList.sort()
+            activity?.runOnUiThread {
+                val autoCompleteTextViewCountryAdapter =
+                    ArrayAdapter(
+                        view.context,
+                        android.R.layout.simple_dropdown_item_1line,
+                        countryList
+                    )
+                autoCompleteTextViewCountryAdapter.setNotifyOnChange(true)
+                country.setAdapter(autoCompleteTextViewCountryAdapter)
+            }
+        }
+
+        // User type Category Spinner
+
+        //val userListTypes = resources.getStringArray(R.array.user_categories)
+        val userListTypes = arrayListOf<String>()
+        categories.forEach {
+            userListTypes.add(it.name)
+        }
         val adapter =
-            ArrayAdapter(view.context, android.R.layout.simple_spinner_item, userListTypes)
-        categorySpinner.adapter = adapter
-        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            ArrayAdapter(view.context, android.R.layout.simple_spinner_dropdown_item, userListTypes)
+        categoryField.adapter = adapter
+        categoryField.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -119,6 +159,167 @@ class EditProfileFragment : BaseFragment() {
         val artistDocRef = userOrArtistID?.let { db.collection("artists").document(it) }
         val profilePicRef =
             Firebase.storage.reference.child("profile_images/$userOrArtistID.jpg")
+
+        // Search for the user or artist
+        userDocRef?.get()?.addOnSuccessListener { document ->
+            if (document != null) {
+                if (document.data?.size != null) {
+                    // Get current user to edit
+                    user = User(
+                        document.data?.get("id").toString(),
+                        document.data?.get("name").toString(),
+                        document.data?.get("surnames").toString(),
+                        document.data?.get("username").toString(),
+                        document.data?.get("email").toString(),
+                        document.data?.get("country").toString(),
+                        document.data?.get("category").toString(),
+                        document.data?.get("age").toString().toLongOrNull(),
+                        document.data?.get("website").toString(),
+                        document.data?.get("following") as ArrayList<String>?
+                    )
+
+                    name.setText(user.name)
+                    surnames.setText(user.surnames)
+                    country.setText(user.country)
+                    age.setText(user.age.toString())
+                    website.setText(user.website)
+                    selectedCategory = user.category.toString()
+                    if (user.category == Category.User.name) {
+                        categoryField.setSelection(0)
+                    } else {
+                        categoryField.setSelection(1)
+                    }
+
+                    progressCircle.visibility = View.GONE
+                    profileDataLayout.visibility = View.VISIBLE
+                } else {
+                    Log.d("error", "User no such document")
+
+                    artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
+                        if (documentArtist != null) {
+                            // Get current artist to edit
+                            user = User(
+                                documentArtist.data?.get("id").toString(),
+                                documentArtist.data?.get("name").toString(),
+                                documentArtist.data?.get("surnames").toString(),
+                                documentArtist.data?.get("username").toString(),
+                                documentArtist.data?.get("email").toString(),
+                                documentArtist.data?.get("country").toString(),
+                                documentArtist.data?.get("category").toString(),
+                                documentArtist.data?.get("age").toString().toLongOrNull(),
+                                documentArtist.data?.get("website").toString(),
+                                documentArtist.data?.get("following") as ArrayList<String>?
+                            )
+
+                            name.setText(user.name)
+                            surnames.setText(user.surnames)
+                            country.setText(user.country)
+                            age.setText(user.age.toString())
+                            website.setText(user.website)
+                            selectedCategory = user.category.toString()
+                            if (user.category == Category.User.name) {
+                                categoryField.setSelection(0)
+                            } else {
+                                categoryField.setSelection(1)
+                            }
+
+                            progressCircle.visibility = View.GONE
+                            profileDataLayout.visibility = View.VISIBLE
+                        } else {
+                            Log.d("error", "Artist no such document")
+                        }
+                    }?.addOnFailureListener { exceptionArtist ->
+                        Log.d("error", "Artist get failed with ", exceptionArtist)
+                    }
+                }
+            } else {
+                Log.d("error", "User no such document")
+
+                artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
+                    if (documentArtist != null) {
+                        // Get current artist to edit
+                        user = User(
+                            documentArtist.data?.get("id").toString(),
+                            documentArtist.data?.get("name").toString(),
+                            documentArtist.data?.get("surnames").toString(),
+                            documentArtist.data?.get("username").toString(),
+                            documentArtist.data?.get("email").toString(),
+                            documentArtist.data?.get("country").toString(),
+                            documentArtist.data?.get("category").toString(),
+                            documentArtist.data?.get("age").toString().toLongOrNull(),
+                            documentArtist.data?.get("website").toString(),
+                            documentArtist.data?.get("following") as ArrayList<String>?
+                        )
+
+                        name.setText(user.name)
+                        surnames.setText(user.surnames)
+                        country.setText(user.country)
+                        age.setText(user.age.toString())
+                        website.setText(user.website)
+                        selectedCategory = user.category.toString()
+                        if (user.category == Category.User.name) {
+                            categoryField.setSelection(0)
+                        } else {
+                            categoryField.setSelection(1)
+                        }
+
+                        progressCircle.visibility = View.GONE
+                        profileDataLayout.visibility = View.VISIBLE
+                    } else {
+                        Log.d("error", "Artist no such document")
+                    }
+                }?.addOnFailureListener { exceptionArtist ->
+                    Log.d("error", "Artist get failed with ", exceptionArtist)
+                }
+            }
+        }?.addOnFailureListener { exception ->
+            Log.d("error", "User get failed with ", exception)
+
+            artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
+                if (documentArtist != null) {
+                    // Get current artist to edit
+                    user = User(
+                        documentArtist.data?.get("id").toString(),
+                        documentArtist.data?.get("name").toString(),
+                        documentArtist.data?.get("surnames").toString(),
+                        documentArtist.data?.get("username").toString(),
+                        documentArtist.data?.get("email").toString(),
+                        documentArtist.data?.get("country").toString(),
+                        documentArtist.data?.get("category").toString(),
+                        documentArtist.data?.get("age").toString().toLongOrNull(),
+                        documentArtist.data?.get("website").toString(),
+                        documentArtist.data?.get("following") as ArrayList<String>?
+                    )
+
+                    name.setText(user.name)
+                    surnames.setText(user.surnames)
+                    country.setText(user.country)
+                    age.setText(user.age.toString())
+                    website.setText(user.website)
+                    selectedCategory = user.category.toString()
+                    if (user.category == Category.User.name) {
+                        categoryField.setSelection(0)
+                    } else {
+                        categoryField.setSelection(1)
+                    }
+
+                    progressCircle.visibility = View.GONE
+                    profileDataLayout.visibility = View.VISIBLE
+                } else {
+                    Log.d("error", "Artist no such document")
+                }
+            }?.addOnFailureListener { exceptionArtist ->
+                Log.d("error", "Artist get failed with ", exceptionArtist)
+            }
+        }
+
+        // Get profile picture
+        val tempFile = File.createTempFile("tempImage", "jpg")
+        profilePicRef.getFile(tempFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
+            image.setImageBitmap(bitmap)
+        }
+        tempFile.delete()
 
         // LAUNCHERS
         // Don't put result launcher register for activity result inside listeners cause fragment is not created (throws error)
@@ -180,168 +381,7 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
 
-        // Search for the user or artist
-        userDocRef?.get()?.addOnSuccessListener { document ->
-            if (document != null) {
-                if (document.data?.size != null) {
-                    // Get current user to edit
-                    user = User(
-                        document.data?.get("id").toString(),
-                        document.data?.get("name").toString(),
-                        document.data?.get("surnames").toString(),
-                        document.data?.get("username").toString(),
-                        document.data?.get("email").toString(),
-                        document.data?.get("country").toString(),
-                        document.data?.get("category").toString(),
-                        document.data?.get("age").toString().toLongOrNull(),
-                        document.data?.get("website").toString(),
-                        document.data?.get("following") as ArrayList<String>?
-                    )
-
-                    name.setText(user.name)
-                    surnames.setText(user.surnames)
-                    country.setText(user.country)
-                    age.setText(user.age.toString())
-                    website.setText(user.website)
-                    selectedCategory = user.category.toString()
-                    if (user.category == Category.User.name) {
-                        categorySpinner.setSelection(0)
-                    } else {
-                        categorySpinner.setSelection(1)
-                    }
-
-                    progressCircle.visibility = View.GONE
-                    profileDataLayout.visibility = View.VISIBLE
-                } else {
-                    Log.d("error", "User no such document")
-
-                    artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
-                        if (documentArtist != null) {
-                            // Get current artist to edit
-                            user = User(
-                                documentArtist.data?.get("id").toString(),
-                                documentArtist.data?.get("name").toString(),
-                                documentArtist.data?.get("surnames").toString(),
-                                documentArtist.data?.get("username").toString(),
-                                documentArtist.data?.get("email").toString(),
-                                documentArtist.data?.get("country").toString(),
-                                documentArtist.data?.get("category").toString(),
-                                documentArtist.data?.get("age").toString().toLongOrNull(),
-                                documentArtist.data?.get("website").toString(),
-                                documentArtist.data?.get("following") as ArrayList<String>?
-                            )
-
-                            name.setText(user.name)
-                            surnames.setText(user.surnames)
-                            country.setText(user.country)
-                            age.setText(user.age.toString())
-                            website.setText(user.website)
-                            selectedCategory = user.category.toString()
-                            if (user.category == Category.User.name) {
-                                categorySpinner.setSelection(0)
-                            } else {
-                                categorySpinner.setSelection(1)
-                            }
-
-                            progressCircle.visibility = View.GONE
-                            profileDataLayout.visibility = View.VISIBLE
-                        } else {
-                            Log.d("error", "Artist no such document")
-                        }
-                    }?.addOnFailureListener { exceptionArtist ->
-                        Log.d("error", "Artist get failed with ", exceptionArtist)
-                    }
-                }
-            } else {
-                Log.d("error", "User no such document")
-
-                artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
-                    if (documentArtist != null) {
-                        // Get current artist to edit
-                        user = User(
-                            documentArtist.data?.get("id").toString(),
-                            documentArtist.data?.get("name").toString(),
-                            documentArtist.data?.get("surnames").toString(),
-                            documentArtist.data?.get("username").toString(),
-                            documentArtist.data?.get("email").toString(),
-                            documentArtist.data?.get("country").toString(),
-                            documentArtist.data?.get("category").toString(),
-                            documentArtist.data?.get("age").toString().toLongOrNull(),
-                            documentArtist.data?.get("website").toString(),
-                            documentArtist.data?.get("following") as ArrayList<String>?
-                        )
-
-                        name.setText(user.name)
-                        surnames.setText(user.surnames)
-                        country.setText(user.country)
-                        age.setText(user.age.toString())
-                        website.setText(user.website)
-                        selectedCategory = user.category.toString()
-                        if (user.category == Category.User.name) {
-                            categorySpinner.setSelection(0)
-                        } else {
-                            categorySpinner.setSelection(1)
-                        }
-
-                        progressCircle.visibility = View.GONE
-                        profileDataLayout.visibility = View.VISIBLE
-                    } else {
-                        Log.d("error", "Artist no such document")
-                    }
-                }?.addOnFailureListener { exceptionArtist ->
-                    Log.d("error", "Artist get failed with ", exceptionArtist)
-                }
-            }
-        }?.addOnFailureListener { exception ->
-            Log.d("error", "User get failed with ", exception)
-
-            artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
-                if (documentArtist != null) {
-                    // Get current artist to edit
-                    user = User(
-                        documentArtist.data?.get("id").toString(),
-                        documentArtist.data?.get("name").toString(),
-                        documentArtist.data?.get("surnames").toString(),
-                        documentArtist.data?.get("username").toString(),
-                        documentArtist.data?.get("email").toString(),
-                        documentArtist.data?.get("country").toString(),
-                        documentArtist.data?.get("category").toString(),
-                        documentArtist.data?.get("age").toString().toLongOrNull(),
-                        documentArtist.data?.get("website").toString(),
-                        documentArtist.data?.get("following") as ArrayList<String>?
-                    )
-
-                    name.setText(user.name)
-                    surnames.setText(user.surnames)
-                    country.setText(user.country)
-                    age.setText(user.age.toString())
-                    website.setText(user.website)
-                    selectedCategory = user.category.toString()
-                    if (user.category == Category.User.name) {
-                        categorySpinner.setSelection(0)
-                    } else {
-                        categorySpinner.setSelection(1)
-                    }
-
-                    progressCircle.visibility = View.GONE
-                    profileDataLayout.visibility = View.VISIBLE
-                } else {
-                    Log.d("error", "Artist no such document")
-                }
-            }?.addOnFailureListener { exceptionArtist ->
-                Log.d("error", "Artist get failed with ", exceptionArtist)
-            }
-        }
-
-        // Get profile picture
-        val tempFile = File.createTempFile("tempImage", "jpg")
-        profilePicRef.getFile(tempFile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
-            image.setImageBitmap(bitmap)
-        }
-        tempFile.delete()
-
-
+        // SAVE
         // Save user profile picture
         image.setOnClickListener {
             chooseImageUploadMethod(it)
@@ -351,40 +391,45 @@ class EditProfileFragment : BaseFragment() {
         view.findViewById<MaterialButton>(R.id.editprofile_saveBtn).setOnClickListener {
             if (name.text.toString().isNotBlank() && surnames.text.toString()
                     .isNotBlank() && country.text.toString().isNotBlank() && age.text.toString()
-                    .isNotBlank() && website.text.toString().isNotBlank()
+                    .isNotBlank() && website.text.toString()
+                    .isNotBlank() && selectedCategory.isNotBlank()
             ) {
-                user.name = name.text.toString()
-                user.surnames = surnames.text.toString()
-                user.country = country.text.toString()
-                user.category = selectedCategory
-                user.age = age.text.toString().toLongOrNull()
-                user.website = website.text.toString()
-                Log.d("user", user.toString())
+                if (countryIsValid(country.text.toString())) {
+                    user.name = name.text.toString()
+                    user.surnames = surnames.text.toString()
+                    user.country = country.text.toString()
+                    user.category = selectedCategory
+                    user.age = age.text.toString().toLongOrNull()
+                    user.website = website.text.toString()
+                    Log.d("user", user.toString())
 
-                when (selectedCategory) {
-                    Category.User.name -> {
-                        userDocRef?.set(user.asMap())
-                            ?.addOnSuccessListener {
-                                showMessageLong("User updated!")
-                                findNavController().popBackStack()
-                            }?.addOnFailureListener {
-                                showMessageShort("Failed!")
-                            }
-                        artistDocRef?.delete()
+                    when (selectedCategory) {
+                        Category.User.name -> {
+                            userDocRef?.set(user.asMap())
+                                ?.addOnSuccessListener {
+                                    showMessageLong("User updated!")
+                                    findNavController().popBackStack()
+                                }?.addOnFailureListener {
+                                    showMessageShort("Failed!")
+                                }
+                            artistDocRef?.delete()
+                        }
+                        Category.Artist.name -> {
+                            artistDocRef?.set(user.asMap())
+                                ?.addOnSuccessListener {
+                                    showMessageLong("Artist updated!")
+                                    findNavController().popBackStack()
+                                }?.addOnFailureListener {
+                                    showMessageShort("Failed!")
+                                }
+                            userDocRef?.delete()
+                        }
+                        else -> {
+                            Log.d("error", "nosaved")
+                        }
                     }
-                    Category.Artist.name -> {
-                        artistDocRef?.set(user.asMap())
-                            ?.addOnSuccessListener {
-                                showMessageLong("Artist updated!")
-                                findNavController().popBackStack()
-                            }?.addOnFailureListener {
-                                showMessageShort("Failed!")
-                            }
-                        userDocRef?.delete()
-                    }
-                    else -> {
-                        Log.d("error", "nosaved")
-                    }
+                }else{
+                    showMessageLong("Invalid country! Select it from the list!")
                 }
             } else {
                 showMessageLong("At least one of the fields is empty!")
@@ -398,6 +443,20 @@ class EditProfileFragment : BaseFragment() {
 
         return view
     }
+
+    /*
+    private fun disableAutoCompleteTextTextView(autoCompleteTextView: AppCompatAutoCompleteTextView) {
+        // Disable editable and keyboard
+        autoCompleteTextView.inputType = 0
+        autoCompleteTextView.keyListener = null
+    }
+
+    private fun enableAutoCompleteTextTextView(autoCompleteTextView: AppCompatAutoCompleteTextView) {
+        // Enable editable and keyboard
+        autoCompleteTextView.inputType = autoCompleteTextViewInputType // saved input type
+        autoCompleteTextView.keyListener = TextKeyListener.getInstance()
+    }*/
+
 
     private fun checkImageOrientation(url: Uri) {
         // Check image orientation before upload to server

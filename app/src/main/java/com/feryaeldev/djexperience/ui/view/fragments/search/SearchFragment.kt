@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
-import com.feryaeldev.djexperience.data.model.enum.Category
+import com.feryaeldev.djexperience.data.model.enums.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.UsersOrArtistsRecyclerViewAdapter
 import com.google.firebase.auth.ktx.auth

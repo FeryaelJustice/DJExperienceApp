@@ -16,10 +16,10 @@
             android:layout_width="@dimen/image_size_small"
             android:layout_height="@dimen/image_size_small"
             android:layout_gravity="start|top"
-            android:padding="@dimen/text_separation_small"
-            android:translationZ="1dp"
             android:contentDescription="@string/defaultImageDescription"
-            android:src="@drawable/ic_baseline_close_24" />
+            android:padding="@dimen/text_separation_small"
+            android:src="@drawable/ic_baseline_close_24"
+            android:translationZ="1dp" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/editprofile_fragmentProgressBar"
@@ -50,12 +50,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/email"
                 app:counterEnabled="true"
                 app:counterMaxLength="30"
                 app:endIconMode="clear_text"
                 app:errorContentDescription="@string/defaultImageDescription"
                 app:errorEnabled="true"
-                app:hintEnabled="false"
+                app:hintEnabled="true"
                 app:startIconContentDescription="@string/defaultImageDescription"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -63,7 +64,6 @@
                     android:id="@+id/createArtist_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,13 +72,14 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                android:hint="@string/username"
                 android:inputType="textFilter"
                 app:counterEnabled="true"
                 app:counterMaxLength="30"
                 app:endIconMode="clear_text"
                 app:errorContentDescription="@string/defaultImageDescription"
                 app:errorEnabled="true"
-                app:hintEnabled="false"
+                app:hintEnabled="true"
                 app:startIconContentDescription="@string/defaultImageDescription"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -87,7 +88,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
-                    android:hint="@string/username"
                     android:inputType="textFilter" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,12 +95,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/name"
                 app:counterEnabled="true"
                 app:counterMaxLength="30"
                 app:endIconMode="clear_text"
                 app:errorContentDescription="@string/defaultImageDescription"
                 app:errorEnabled="true"
-                app:hintEnabled="false"
+                app:hintEnabled="true"
                 app:startIconContentDescription="@string/defaultImageDescription"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -108,7 +109,6 @@
                     android:id="@+id/createArtist_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,12 +116,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/surnames"
                 app:counterEnabled="true"
                 app:counterMaxLength="30"
                 app:endIconMode="clear_text"
                 app:errorContentDescription="@string/defaultImageDescription"
                 app:errorEnabled="true"
-                app:hintEnabled="false"
+                app:hintEnabled="true"
                 app:startIconContentDescription="@string/defaultImageDescription"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -129,7 +130,6 @@
                     android:id="@+id/createArtist_surnames"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/surnames"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -137,33 +137,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="30"
-                app:endIconMode="clear_text"
-                app:errorContentDescription="@string/defaultImageDescription"
-                app:errorEnabled="true"
-                app:hintEnabled="false"
-                app:startIconContentDescription="@string/defaultImageDescription"
-                app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/createArtist_country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/country"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:hint="@string/age"
                 app:counterEnabled="true"
                 app:counterMaxLength="4"
                 app:endIconMode="clear_text"
                 app:errorContentDescription="@string/defaultImageDescription"
                 app:errorEnabled="true"
-                app:hintEnabled="false"
+                app:hintEnabled="true"
                 app:startIconContentDescription="@string/defaultImageDescription"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -171,7 +151,6 @@
                     android:id="@+id/createArtist_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/age"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -179,12 +158,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/website"
                 app:counterEnabled="true"
                 app:counterMaxLength="120"
                 app:endIconMode="clear_text"
                 app:errorContentDescription="@string/defaultImageDescription"
                 app:errorEnabled="true"
-                app:hintEnabled="false"
+                app:hintEnabled="true"
                 app:startIconContentDescription="@string/defaultImageDescription"
                 app:startIconDrawable="@drawable/ic_baseline_public_24">
 
@@ -192,8 +172,24 @@
                     android:id="@+id/createArtist_website"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/website"
                     android:inputType="textWebEditText" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/MyMaterialAutocompleteTextView"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/country"
+                app:hintEnabled="true"
+                app:startIconContentDescription="@string/defaultImageDescription"
+                app:startIconDrawable="@drawable/ic_baseline_public_24">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/createArtist_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

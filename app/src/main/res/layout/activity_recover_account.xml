@@ -27,12 +27,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/email"
             app:counterEnabled="true"
             app:counterMaxLength="40"
             app:endIconMode="clear_text"
             app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
-            app:hintEnabled="false"
+            app:hintEnabled="true"
             app:startIconContentDescription="@string/defaultImageDescription"
             app:startIconDrawable="@drawable/ic_baseline_email_24">
 
@@ -40,7 +41,6 @@
                 android:id="@+id/recover_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
