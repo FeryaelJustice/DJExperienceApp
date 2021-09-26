@@ -30,6 +30,23 @@
             app:queryHint="@string/searchSV_hint" />
     </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fragment_search_searchAllBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/color_accent"
+        android:contentDescription="@string/defaultImageDescription"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:text="@string/searchAll"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/color_secondary"
+        android:textSize="@dimen/search_text_searchAll"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/onBoarding_cornerSize" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_search_recyclerView"
         android:layout_width="match_parent"

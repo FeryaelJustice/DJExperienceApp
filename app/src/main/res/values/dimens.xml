@@ -26,5 +26,6 @@
     <dimen name="onBoarding_text_item_title">20sp</dimen>
     <dimen name="onBoarding_text_item_description">16sp</dimen>
     <dimen name="home_text_createArtist">20sp</dimen>
+    <dimen name="search_text_searchAll">14sp</dimen>
 
 </resources>

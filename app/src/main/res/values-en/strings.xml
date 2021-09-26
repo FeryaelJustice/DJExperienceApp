@@ -60,6 +60,7 @@
     <string name="search">Search</string>
     <string name="search_hint">¡Make a search to find your favourite artists!\n(Click on search icon)</string>
     <string name="searchSV_hint">EXACT name!</string>
+    <string name="searchAll">See all artists and users</string>
     <!-- Home -->
     <string name="news">News</string>
     <string name="author"><b>Author:</b> %1$s</string>

@@ -1,12 +1,17 @@
 package com.feryaeldev.djexperience.ui.view.fragments.search
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +20,7 @@ import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.data.model.enums.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.feryaeldev.djexperience.ui.common.UsersOrArtistsRecyclerViewAdapter
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -23,11 +29,13 @@ class SearchFragment : BaseFragment() {
 
     private lateinit var mainView: View
     private lateinit var search: SearchView
+    private lateinit var searchAllBtn: MaterialButton
     private lateinit var mRecyclerView: RecyclerView
     private var userOrArtistsList: MutableList<User> = arrayListOf()
     private var initRecyclerView = false
     private lateinit var progressCircle: FragmentContainerView
     private var categoryFilterText = Category.Artist.name
+    private var hasSearchedAll = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +45,12 @@ class SearchFragment : BaseFragment() {
         mainView = view
 
         // Code here
+        // Init views and recyclerview
         progressCircle = view.findViewById(R.id.search_fragmentProgressBar)
-
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(view.context)
 
+        // Category spinner listener
         val categoryFilter: Spinner = view.findViewById(R.id.fragment_search_spinnerSearch)
         val userListTypes = resources.getStringArray(R.array.user_categories)
         val adapter =
@@ -62,12 +71,14 @@ class SearchFragment : BaseFragment() {
             }
         }
 
+        // Default search
         search("", false, categoryFilterText) {
             val usersOrArtistsAdapter = UsersOrArtistsRecyclerViewAdapter(userOrArtistsList)
             mRecyclerView.adapter = usersOrArtistsAdapter
             Log.d("search", "searched")
         }
 
+        // Search
         search = view.findViewById(R.id.fragment_search_searchView)
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -75,6 +86,9 @@ class SearchFragment : BaseFragment() {
                     progressCircle.visibility = View.VISIBLE
                     // Search and show rv if not blank and not rv init
                     search(query, true, categoryFilterText) {
+                        // Change search all button style
+                        toggleSearchAllButton(view.context, true)
+                        // Searched logic
                         Log.d("search", "searched")
                         if (!initRecyclerView) {
                             showRecyclerView(view, true)
@@ -101,7 +115,46 @@ class SearchFragment : BaseFragment() {
                 return false
             }
         })
+
+        // Search all btn
+        searchAllBtn = view.findViewById(R.id.fragment_search_searchAllBtn)
+        searchAllBtn.setOnClickListener {
+            if (!hasSearchedAll) {
+                searchAll() {
+                    // Change search all button style
+                    toggleSearchAllButton(view.context, false)
+                    // Order by username
+                    userOrArtistsList.sortBy { it.username }
+                    mRecyclerView.adapter?.notifyDataSetChanged()
+                    // Searched logic
+                    Log.d("search", "searched")
+                    if (!initRecyclerView) {
+                        showRecyclerView(view, true)
+                    }
+                    progressCircle.visibility = View.GONE
+                }
+            }
+        }
         return view
+    }
+
+    private fun toggleSearchAllButton(context: Context, default: Boolean) {
+        // default if its true is the original color, if false set color background
+        if (!default) {
+            searchAllBtn.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.color_background
+                )
+            )
+        } else {
+            searchAllBtn.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.color_secondary
+                )
+            )
+        }
     }
 
     private fun showRecyclerView(view: View, show: Boolean) {
@@ -143,7 +196,7 @@ class SearchFragment : BaseFragment() {
                                     mRecyclerView.adapter?.notifyItemChanged(0)
                                 }
                             } else {
-                                Log.d("error","More than one or empty result in DB.")
+                                Log.d("error", "More than one or empty result in DB.")
                                 showMessageShort("Empty result in DB.")
                             }
                             completion()
@@ -162,7 +215,7 @@ class SearchFragment : BaseFragment() {
                                     mRecyclerView.adapter?.notifyItemChanged(0)
                                 }
                             } else {
-                                Log.d("error","More than one or empty result in DB.")
+                                Log.d("error", "More than one or empty result in DB.")
                                 showMessageShort("Empty result in DB.")
                             }
                             completion()
@@ -190,6 +243,55 @@ class SearchFragment : BaseFragment() {
         } catch (e: Error) {
             completion()
             Log.d("error", e.toString())
+        } finally {
+            hasSearchedAll = false
+        }
+    }
+
+    private fun searchAll(completion: () -> Unit) {
+        try {
+            userOrArtistsList.clear()
+            val db = Firebase.firestore
+            // Artists
+            db.collection("artists").get()
+                .addOnSuccessListener {
+                    for (document in it.documents) {
+                        if (document["id"].toString() != Firebase.auth.currentUser?.uid) {
+                            userOrArtistsList.add(
+                                User(document["id"].toString())
+                            )
+                            mRecyclerView.adapter?.notifyItemChanged(0)
+                        }
+                    }
+                    hasSearchedAll = true
+                    completion()
+                }.addOnFailureListener {
+                    Log.d("error", "Query failed")
+                    completion()
+                    hasSearchedAll = false
+                }
+            // Users
+            db.collection("users").get()
+                .addOnSuccessListener {
+                    for (document in it.documents) {
+                        if (document["id"].toString() != Firebase.auth.currentUser?.uid) {
+                            userOrArtistsList.add(
+                                User(document["id"].toString())
+                            )
+                            mRecyclerView.adapter?.notifyItemChanged(0)
+                        }
+                    }
+                    hasSearchedAll = true
+                    completion()
+                }.addOnFailureListener {
+                    Log.d("error", "Query failed")
+                    completion()
+                    hasSearchedAll = false
+                }
+        } catch (e: Error) {
+            Log.d("error", e.toString())
+            completion()
+            hasSearchedAll = false
         }
     }
 
