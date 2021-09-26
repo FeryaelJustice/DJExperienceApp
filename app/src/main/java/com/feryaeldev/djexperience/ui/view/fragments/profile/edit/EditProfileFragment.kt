@@ -185,9 +185,9 @@ class EditProfileFragment : BaseFragment() {
                     website.setText(user.website)
                     selectedCategory = user.category.toString()
                     if (user.category == Category.User.name) {
-                        categoryField.setSelection(0)
-                    } else {
                         categoryField.setSelection(1)
+                    } else {
+                        categoryField.setSelection(0)
                     }
 
                     progressCircle.visibility = View.GONE
@@ -218,9 +218,9 @@ class EditProfileFragment : BaseFragment() {
                             website.setText(user.website)
                             selectedCategory = user.category.toString()
                             if (user.category == Category.User.name) {
-                                categoryField.setSelection(0)
-                            } else {
                                 categoryField.setSelection(1)
+                            } else {
+                                categoryField.setSelection(0)
                             }
 
                             progressCircle.visibility = View.GONE
@@ -258,9 +258,9 @@ class EditProfileFragment : BaseFragment() {
                         website.setText(user.website)
                         selectedCategory = user.category.toString()
                         if (user.category == Category.User.name) {
-                            categoryField.setSelection(0)
-                        } else {
                             categoryField.setSelection(1)
+                        } else {
+                            categoryField.setSelection(0)
                         }
 
                         progressCircle.visibility = View.GONE
@@ -298,9 +298,9 @@ class EditProfileFragment : BaseFragment() {
                     website.setText(user.website)
                     selectedCategory = user.category.toString()
                     if (user.category == Category.User.name) {
-                        categoryField.setSelection(0)
-                    } else {
                         categoryField.setSelection(1)
+                    } else {
+                        categoryField.setSelection(0)
                     }
 
                     progressCircle.visibility = View.GONE

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -65,7 +64,27 @@ class ProfileFragment : BaseFragment() {
         userDocRef?.get()?.addOnSuccessListener { document ->
             if (document != null) {
                 if (document.data?.size != null) {
-                    user = document.toObject(User::class.java)
+                    try {
+                        user = document.toObject(User::class.java)
+                    } catch (e: Exception) {
+                        Log.d("error", e.toString())
+                        try {
+                            user = User(
+                                document["id"].toString(),
+                                document["name"].toString(),
+                                document["surnames"].toString(),
+                                document["username"].toString(),
+                                document["email"].toString(),
+                                document["country"].toString(),
+                                document["category"].toString(),
+                                document["age"].toString().toLong(),
+                                document["website"].toString(),
+                                document["following"] as ArrayList<String>
+                            )
+                        } catch (e2: Error) {
+                            Log.d("error", e2.toString())
+                        }
+                    }
                     username.text = user?.username
                     category.text = user?.category
                     country.text = user?.country
@@ -77,7 +96,7 @@ class ProfileFragment : BaseFragment() {
                         artistsList.add(User(id))
                     }
 
-                    Log.d("list",artistsList.toString())
+                    Log.d("list", artistsList.toString())
                     mAdapter = UsersOrArtistsRecyclerViewAdapter(artistsList)
                     mRecyclerView.adapter = mAdapter
 

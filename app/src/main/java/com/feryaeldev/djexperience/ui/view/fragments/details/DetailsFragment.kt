@@ -93,22 +93,26 @@ class DetailsFragment : BaseFragment() {
         // Get if following
         authenticatedUserDbRef.get().addOnSuccessListener { document ->
             if (document != null) {
-                val user: User? = document.toObject(User::class.java)
-                var found = false
-                user?.following?.forEach checkFollow@{
-                    if (it == userOrArtistID) {
-                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
-                        addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
-                        addRemoveToProfileText.text =
-                            view.context.resources.getString(R.string.sustract)
-                        found = true
-                        return@checkFollow
+                try {
+                    val user: User? = document.toObject(User::class.java)
+                    var found = false
+                    user?.following?.forEach checkFollow@{
+                        if (it == userOrArtistID) {
+                            addRemoveToProfile.setImageResource(R.drawable.ic_baseline_remove_24)
+                            addRemoveToProfile.tag = R.drawable.ic_baseline_remove_24
+                            addRemoveToProfileText.text =
+                                view.context.resources.getString(R.string.sustract)
+                            found = true
+                            return@checkFollow
+                        }
                     }
-                }
-                if (!found) {
-                    addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
-                    addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
-                    addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
+                    if (!found) {
+                        addRemoveToProfile.setImageResource(R.drawable.ic_baseline_add_24)
+                        addRemoveToProfile.tag = R.drawable.ic_baseline_add_24
+                        addRemoveToProfileText.text = view.context.resources.getString(R.string.add)
+                    }
+                } catch (e: Exception) {
+                    Log.d("error", e.toString())
                 }
             }
         }
