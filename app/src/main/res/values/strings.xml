@@ -24,6 +24,7 @@
     <string name="userIsAwareQuestion">¿Estás seguro?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="onlyVersion">© DJ Experience - Versión %1$s</string>
     <string name="version">© DJ Experience - Versión %1$s (Haz click aquí para ver el descargo de responsabilidad de derechos de autor).</string>
 
     <!-- App Nav -->

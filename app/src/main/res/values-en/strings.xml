@@ -21,6 +21,7 @@
     <string name="userIsAwareQuestion">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="onlyVersion">© DJ Experience - Version %1$s</string>
     <string name="version">© DJ Experience - Version %1$s. (Click here to view the copyright disclaimer.)</string>
 
     <!-- App Nav -->

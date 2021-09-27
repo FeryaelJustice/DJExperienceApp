@@ -24,6 +24,7 @@ import com.feryaeldev.djexperience.ui.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.File
@@ -94,7 +95,7 @@ class DetailsFragment : BaseFragment() {
         authenticatedUserDbRef.get().addOnSuccessListener { document ->
             if (document != null) {
                 try {
-                    val user: User? = document.toObject(User::class.java)
+                    val user: User? = document.toObject<User>()
                     var found = false
                     user?.following?.forEach checkFollow@{
                         if (it == userOrArtistID) {
@@ -231,7 +232,7 @@ class DetailsFragment : BaseFragment() {
                 if (document != null) {
                     // ONLY FOLLOW ARTISTS check
                     if (userOrArtist.category == Category.Artist.name) {
-                        val user: User? = document.toObject(User::class.java)
+                        val user: User? = document.toObject<User>()
                         // Push or substract artist
                         if (addRemoveToProfile.tag == R.drawable.ic_baseline_add_24) {
                             userOrArtist.id?.let { it1 -> user?.following?.add(it1) }

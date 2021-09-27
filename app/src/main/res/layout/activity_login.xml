@@ -10,22 +10,24 @@
     android:paddingEnd="40dp"
     tools:context=".ui.view.activities.LoginActivity">
 
-    <ImageView
-        android:layout_width="@dimen/image_size_big"
-        android:layout_height="@dimen/image_size_big"
-        android:layout_gravity="center"
-        android:contentDescription="@string/defaultImageDescription"
-        android:src="@mipmap/ic_launcher" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/defaultImageDescription"
+            android:src="@mipmap/ic_launcher" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="@string/email"
             app:counterEnabled="true"
             app:counterMaxLength="40"
@@ -87,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/text_separation_small"
             android:text="@string/signUpInfo"
             android:textColor="@color/black" />
 
@@ -94,8 +97,16 @@
             android:id="@+id/forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/text_separation_small"
             android:text="@string/forgot_password"
             android:textColor="@color/black" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/signup_appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/text_size_medium"
+        android:text="@string/onlyVersion" />
 </LinearLayout>

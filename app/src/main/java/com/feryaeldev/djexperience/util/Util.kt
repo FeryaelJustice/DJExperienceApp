@@ -19,12 +19,6 @@ const val djExperienceWebsite =
 const val authorYoutube = "https://www.youtube.com/channel/UCDYgeJeEqB9tMCE0EqcXE3Q"
 const val authorInstagram = "https://www.instagram.com/feryaeljustice"
 
-// Object to Map
-inline fun <reified T : Any> T.asMap(): Map<String, Any?> {
-    val props = T::class.memberProperties.associateBy { it.name }
-    return props.keys.associateWith { props[it]?.get(this) }
-}
-
 fun checkPermissions(
     permissions: Array<String>,
     launcher: ActivityResultLauncher<Array<String>>,

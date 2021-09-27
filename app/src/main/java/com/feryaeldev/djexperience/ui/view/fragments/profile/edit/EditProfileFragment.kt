@@ -28,7 +28,6 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.data.model.enums.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
-import com.feryaeldev.djexperience.util.asMap
 import com.feryaeldev.djexperience.util.checkPermissions
 import com.feryaeldev.djexperience.util.countryIsValid
 import com.google.android.material.button.MaterialButton
@@ -405,7 +404,7 @@ class EditProfileFragment : BaseFragment() {
 
                     when (selectedCategory) {
                         Category.User.name -> {
-                            userDocRef?.set(user.asMap())
+                            userDocRef?.set(user)
                                 ?.addOnSuccessListener {
                                     showMessageLong("User updated!")
                                     findNavController().popBackStack()
@@ -415,7 +414,7 @@ class EditProfileFragment : BaseFragment() {
                             artistDocRef?.delete()
                         }
                         Category.Artist.name -> {
-                            artistDocRef?.set(user.asMap())
+                            artistDocRef?.set(user)
                                 ?.addOnSuccessListener {
                                     showMessageLong("Artist updated!")
                                     findNavController().popBackStack()

@@ -21,6 +21,7 @@ import com.feryaeldev.djexperience.ui.common.UsersOrArtistsRecyclerViewAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.File
@@ -31,7 +32,7 @@ class ProfileFragment : BaseFragment() {
     lateinit var mAdapter: UsersOrArtistsRecyclerViewAdapter
 
     private lateinit var progressCircle: FragmentContainerView
-    private var user: User? = null
+    private var user: User? = User()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +66,7 @@ class ProfileFragment : BaseFragment() {
             if (document != null) {
                 if (document.data?.size != null) {
                     try {
-                        user = document.toObject(User::class.java)
+                        user = document.toObject<User>()
                     } catch (e: Exception) {
                         Log.d("error", e.toString())
                         try {
@@ -108,7 +109,7 @@ class ProfileFragment : BaseFragment() {
 
                     artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
                         if (documentArtist != null) {
-                            user = documentArtist.toObject(User::class.java)
+                            user = documentArtist.toObject<User>()
                             username.text = user?.username
                             category.text = user?.category
                             country.text = user?.country
@@ -129,7 +130,7 @@ class ProfileFragment : BaseFragment() {
 
                 artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
                     if (documentArtist != null) {
-                        user = documentArtist.toObject(User::class.java)
+                        user = documentArtist.toObject<User>()
                         username.text = user?.username
                         category.text = user?.category
                         country.text = user?.country
@@ -150,7 +151,7 @@ class ProfileFragment : BaseFragment() {
 
             artistDocRef?.get()?.addOnSuccessListener { documentArtist ->
                 if (documentArtist != null) {
-                    user = documentArtist.toObject(User::class.java)
+                    user = documentArtist.toObject<User>()
                     username.text = user?.username
                     category.text = user?.category
                     country.text = user?.country

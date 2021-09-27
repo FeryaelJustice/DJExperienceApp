@@ -18,7 +18,6 @@ import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.model.domain.User
 import com.feryaeldev.djexperience.data.model.enums.Category
 import com.feryaeldev.djexperience.ui.base.BaseFragment
-import com.feryaeldev.djexperience.util.asMap
 import com.feryaeldev.djexperience.util.countryIsValid
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -116,7 +115,7 @@ class CreateArtistFragment : BaseFragment() {
                     storageRef.child("profile_images/${user.id}.jpg").putFile(uri)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                artistsDocRef.document(user.id!!).set(user.asMap())
+                                artistsDocRef.document(user.id!!).set(user)
                                     .addOnSuccessListener {
                                         showMessageLong("Artist created!")
                                         findNavController().popBackStack()
