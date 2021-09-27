@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/icon_background.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/indicator_active_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/media_btn_background.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/drawable/splash_screen.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/activity_contact.xml" value="0.17314814814814813" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/activity_copyright.xml" value="0.22" />
@@ -21,6 +22,7 @@
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/fragment_home.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/fragment_search.xml" value="0.15" />
+        <entry key="..\:/Users/nano9/AndroidStudioProjects/DJ Experience/app/src/main/res/layout/search_item.xml" value="0.25" />
       </map>
     </option>
   </component>

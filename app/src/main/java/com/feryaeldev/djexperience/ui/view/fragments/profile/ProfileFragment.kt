@@ -34,6 +34,7 @@ class ProfileFragment : BaseFragment() {
     private lateinit var progressCircle: FragmentContainerView
     private var user: User? = User()
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -42,8 +42,8 @@ class UsersOrArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
     override fun getItemCount(): Int = users.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val artistUsername: TextView = view.findViewById(R.id.searchitem_username)
-        private val artistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
+        private val userOrArtistUsername: TextView = view.findViewById(R.id.searchitem_username)
+        private val userOrArtistImage: CircleImageView = view.findViewById(R.id.searchitem_image)
 
         fun render(user: User) {
             val db = Firebase.firestore
@@ -53,7 +53,7 @@ class UsersOrArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
             val tempFile = File.createTempFile("tempImage", "jpg")
             profilePicRef.getFile(tempFile).addOnSuccessListener {
                 val bitmap = BitmapFactory.decodeFile(tempFile.absolutePath)
-                artistImage.setImageBitmap(bitmap)
+                userOrArtistImage.setImageBitmap(bitmap)
             }
             tempFile.delete()
 
@@ -61,14 +61,14 @@ class UsersOrArtistsRecyclerViewAdapter(private val users: MutableList<User>) :
                 db.collection("artists").document(id).get()
                     .addOnSuccessListener { documentSnap ->
                         // Although it doesnt find anything, it doesnt go to On Failure Listener, we have to check a field if its not null
-                        val usernameRes = documentSnap.data?.get("username").toString()
                         if (documentSnap.data?.get("id") != null) {
-                            artistUsername.text = usernameRes
+                            val usernameRes = documentSnap.data?.get("username").toString()
+                            userOrArtistUsername.text = usernameRes
                         } else {
                             db.collection("users").document(id).get()
                                 .addOnSuccessListener { docSnap ->
                                     val usernameUserRes = docSnap.data?.get("username").toString()
-                                    artistUsername.text = usernameUserRes
+                                    userOrArtistUsername.text = usernameUserRes
                                 }
                         }
                     }

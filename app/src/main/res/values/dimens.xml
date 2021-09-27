@@ -9,7 +9,8 @@
 
     <!-- Common -->
     <dimen name="text_size_small">8sp</dimen>
-    <dimen name="text_size_presmall">13sp</dimen>
+    <dimen name="text_size_semismall">10sp</dimen>
+    <dimen name="text_size_presmall">12sp</dimen>
     <dimen name="text_size_standard">14sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_big">18sp</dimen>
