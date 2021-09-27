@@ -327,7 +327,7 @@ class EditProfileFragment : BaseFragment() {
                 if (result.resultCode == Activity.RESULT_OK) {
                     uri = result.data?.data!!
                     uri.let { url ->
-                        checkImageOrientation(url)
+                        //checkImageOrientation(url)
                         profilePicRef.putFile(url).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Picasso.get().load(url).into(image)
@@ -427,7 +427,7 @@ class EditProfileFragment : BaseFragment() {
                             Log.d("error", "nosaved")
                         }
                     }
-                }else{
+                } else {
                     showMessageLong("Invalid country! Select it from the list!")
                 }
             } else {
@@ -454,36 +454,33 @@ class EditProfileFragment : BaseFragment() {
         // Enable editable and keyboard
         autoCompleteTextView.inputType = autoCompleteTextViewInputType // saved input type
         autoCompleteTextView.keyListener = TextKeyListener.getInstance()
-    }*/
-
-
-    private fun checkImageOrientation(url: Uri) {
-        // Check image orientation before upload to server
-        /*
-        val convertedBitmap = rotateImageIfRequired(url)
-        convertedBitmap?.compress(
-            Bitmap.CompressFormat.JPEG,
-            1100,
-            ByteArrayOutputStream()
-        )
-        val finalUri = convertedBitmap?.let { convBitmap ->
-            getImageUriFromBitmap(
-                view.context,
-                convBitmap
-            )
-        }
-        finalUri?.let { finalUrl ->
-            profilePicRef.putFile(finalUrl).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Picasso.get().load(finalUrl).into(image)
-                    showMessageLong("Image uploaded successfully!")
-                } else {
-                    showMessageLong("Error on uploading image...")
-                }
-            }
-        }
-        */
     }
+
+      private fun checkImageOrientation(url: Uri) {
+          // Check image orientation before upload to server
+          val convertedBitmap = rotateImageIfRequired(url)
+          convertedBitmap?.compress(
+              Bitmap.CompressFormat.JPEG,
+              1100,
+              ByteArrayOutputStream()
+          )
+          val finalUri = convertedBitmap?.let { convBitmap ->
+              getImageUriFromBitmap(
+                  view.context,
+                  convBitmap
+              )
+          }
+          finalUri?.let { finalUrl ->
+              profilePicRef.putFile(finalUrl).addOnCompleteListener {
+                  if (it.isSuccessful) {
+                      Picasso.get().load(finalUrl).into(image)
+                      showMessageLong("Image uploaded successfully!")
+                  } else {
+                      showMessageLong("Error on uploading image...")
+                  }
+              }
+          }
+    } */
 
     private fun chooseImageUploadMethod(view: View) {
         val alertBuilder = AlertDialog.Builder(view.context)
