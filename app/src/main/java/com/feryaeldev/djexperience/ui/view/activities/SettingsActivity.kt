@@ -9,10 +9,10 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatButton
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.provider.settings.Settings
 import com.feryaeldev.djexperience.ui.base.BaseActivity
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -30,7 +30,10 @@ class SettingsActivity : BaseActivity() {
         findViewById<ImageView>(R.id.settings_close).setOnClickListener {
             onBackPressed()
         }
-        findViewById<AppCompatButton>(R.id.settings_deleteAccount).setOnClickListener {
+        findViewById<MaterialButton>(R.id.settings_contact).setOnClickListener {
+            startActivity(Intent(applicationContext, ContactActivity::class.java))
+        }
+        findViewById<MaterialButton>(R.id.settings_deleteAccount).setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.userIsAwareToDeleteAccQuestion))
             builder.setMessage(getString(R.string.userIsAwareToDeleteAccDescription))
@@ -45,7 +48,7 @@ class SettingsActivity : BaseActivity() {
             val alert = builder.create()
             alert.show()
         }
-        findViewById<AppCompatButton>(R.id.settings_clearCache).setOnClickListener {
+        findViewById<MaterialButton>(R.id.settings_clearCache).setOnClickListener {
             try {
                 deleteCache()
                 showMessageLong("Cache deleted!")

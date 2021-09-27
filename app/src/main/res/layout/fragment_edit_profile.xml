@@ -51,6 +51,7 @@
             app:endIconMode="clear_text"
             app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
+            app:errorIconDrawable="@drawable/ic_baseline_error_24"
             app:hintEnabled="true"
             app:startIconContentDescription="@string/defaultImageDescription"
             app:startIconDrawable="@drawable/ic_baseline_person_24">
@@ -71,6 +72,7 @@
             app:counterMaxLength="50"
             app:endIconMode="clear_text"
             app:errorContentDescription="@string/defaultImageDescription"
+            app:errorIconDrawable="@drawable/ic_baseline_error_24"
             app:errorEnabled="true"
             app:hintEnabled="true"
             app:startIconContentDescription="@string/defaultImageDescription"
@@ -92,6 +94,7 @@
             app:counterMaxLength="4"
             app:endIconMode="clear_text"
             app:errorContentDescription="@string/defaultImageDescription"
+            app:errorIconDrawable="@drawable/ic_baseline_error_24"
             app:errorEnabled="true"
             app:hintEnabled="true"
             app:startIconContentDescription="@string/defaultImageDescription"
@@ -114,6 +117,7 @@
             app:endIconMode="clear_text"
             app:errorContentDescription="@string/defaultImageDescription"
             app:errorEnabled="true"
+            app:errorIconDrawable="@drawable/ic_baseline_error_24"
             app:hintEnabled="true"
             app:startIconContentDescription="@string/defaultImageDescription"
             app:startIconDrawable="@drawable/ic_baseline_public_24">

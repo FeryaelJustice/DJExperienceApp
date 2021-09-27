@@ -132,7 +132,7 @@ class CreateArtistFragment : BaseFragment() {
                     showMessageLong("Invalid country! Select it from the list!")
                 }
             } else {
-                showMessageLong("At least one of the fields is empty!")
+                showMessageLong(view.context.getString(R.string.someEmptyFieldsError))
             }
         }
 

@@ -4,30 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingStart="40dp"
-    android:paddingEnd="40dp"
-    tools:context=".ui.view.activities.RecoverAccountActivity">
-
+    android:padding="@dimen/image_size_small"
+    tools:context=".ui.view.activities.ContactActivity">
 
     <ImageView
         android:layout_width="@dimen/image_size_medium"
         android:layout_height="@dimen/image_size_medium"
         android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/text_size_medium"
         android:contentDescription="@string/defaultImageDescription"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email"
+            android:layout_marginBottom="@dimen/text_size_medium"
+            android:hint="@string/subject"
             app:counterEnabled="true"
             app:counterMaxLength="40"
             app:endIconMode="clear_text"
@@ -36,31 +35,49 @@
             app:errorIconDrawable="@drawable/ic_baseline_error_24"
             app:hintEnabled="true"
             app:startIconContentDescription="@string/defaultImageDescription"
-            app:startIconDrawable="@drawable/ic_baseline_email_24">
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/recover_email"
+                android:id="@+id/contact_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="@dimen/text_size_medium"
+            android:hint="@string/contact_content"
+            app:endIconMode="clear_text"
+            app:hintEnabled="true"
+            app:startIconContentDescription="@string/defaultImageDescription"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contact_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:inputType="text|textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/recover_btn"
+            android:id="@+id/contact_btn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:backgroundTint="@color/color_secondary"
             android:contentDescription="@string/defaultImageDescription"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:text="@string/send_email"
+            android:text="@string/contact"
             android:textAllCaps="true"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
             app:cornerRadius="@dimen/onBoarding_cornerSize" />
+
     </LinearLayout>
 </LinearLayout>

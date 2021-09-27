@@ -71,11 +71,14 @@
     <!-- Profile details -->
     <string name="artist_demo">Demo found! %1$s demo:</string>
     <!-- Settings -->
+    <string name="contact">Contact</string>
     <string name="deleteAccount">Delete account</string>
     <string name="clearCache">Delete cache</string>
     <string name="userIsAwareToDeleteAccQuestion">Are you sure you want to delete your account?</string>
     <string name="userIsAwareToDeleteAccDescription">You will loose all your data.</string>
     <string name="wisechoice">Wise choice!</string>
+    <!-- Contact -->
+    <string name="contact_content">Content of the informative message, or of complaint, or of feedback…</string>
     <!-- Copyright -->
     <string name="copyright">© Copyright - DJ Experience\n\nWe don\'t recollect copyrighted music of its artists, we only show a short piece as a demo and we link references to their content. Only public information is used.\n\nAll rights reserved,\ncreator of DJ Experience.</string>
 
@@ -83,4 +86,6 @@
     <string name="signInError">Error on trying to sign in</string>
     <string name="signUpError">Error on register: %1$s</string>
     <string name="noPermissionsError">You don\'t have permissions.</string>
+    <string name="subject">Subject</string>
+    <string name="inputNotValidError">¡Input not valid!</string>
 </resources>

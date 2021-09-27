@@ -37,7 +37,7 @@ class LoginActivity : BaseActivity() {
             val emailEditText = findViewById<TextInputEditText>(R.id.login_email)
             val passwordEditText = findViewById<TextInputEditText>(R.id.login_password)
 
-            if (!emailEditText.text.isNullOrBlank() && !passwordEditText.text.isNullOrBlank()) {
+            if (emailEditText.text.toString().isNotBlank() && passwordEditText.text.toString().isNotBlank()) {
                 Firebase.auth.signInWithEmailAndPassword(
                     emailEditText.text.toString(),
                     passwordEditText.text.toString()
@@ -57,7 +57,7 @@ class LoginActivity : BaseActivity() {
                     }
                 }
             } else {
-                showMessageLong(getString(R.string.signInError))
+                showMessageLong(getString(R.string.someEmptyFieldsError))
             }
         }
         findViewById<TextView>(R.id.signup_txt).setOnClickListener {

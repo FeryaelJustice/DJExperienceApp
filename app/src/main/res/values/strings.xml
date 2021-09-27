@@ -74,11 +74,14 @@
     <!-- Profile details -->
     <string name="artist_demo">¡Demo encontrada! %1$s demo:</string>
     <!-- Settings -->
+    <string name="contact">Contacto</string>
     <string name="deleteAccount">Eliminar cuenta</string>
     <string name="clearCache">Eliminar la caché</string>
     <string name="userIsAwareToDeleteAccQuestion">¿Estás seguro de que quieres eliminar tu cuenta?</string>
     <string name="userIsAwareToDeleteAccDescription">Perderás todos tus datos.</string>
     <string name="wisechoice">¡Sabia decisión!</string>
+    <!-- Contact -->
+    <string name="contact_content">Contenido del mensaje informativo, de queja, o de retroalimentación…</string>
     <!-- Copyright -->
     <string name="copyright">© Copyright - DJ Experience\n\nNo recopilamos música con derechos de autor de sus artistas, sólo ponemos un trozo corto como demostración y vinculamos referencias a su contenido. Sólo se utiliza información pública.\n\nTodos los derechos reservados,\ncreador de DJ Experience.</string>
 
@@ -86,4 +89,6 @@
     <string name="signInError">Error al intentar iniciar sesión</string>
     <string name="signUpError">Error al registrarse: %1$s</string>
     <string name="noPermissionsError">You don\'t have permissions.</string>
+    <string name="subject">Asunto</string>
+    <string name="inputNotValidError">¡Campo no valido!</string>
 </resources>

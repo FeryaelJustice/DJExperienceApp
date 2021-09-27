@@ -18,6 +18,7 @@ const val djExperienceWebsite =
     "https://feryaeljustice.notion.site/DJ-Experience-d4d4928723af4250a258ac638d7f09a0"
 const val authorYoutube = "https://www.youtube.com/channel/UCDYgeJeEqB9tMCE0EqcXE3Q"
 const val authorInstagram = "https://www.instagram.com/feryaeljustice"
+const val authorMail = "feryaeldev@gmail.com"
 
 fun checkPermissions(
     permissions: Array<String>,
