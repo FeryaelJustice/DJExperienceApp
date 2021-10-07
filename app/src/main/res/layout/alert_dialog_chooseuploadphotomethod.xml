@@ -7,12 +7,14 @@
         android:id="@+id/cameraMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/defaultImageDescription"
         android:src="@android:drawable/ic_menu_camera" />
 
     <ImageView
         android:id="@+id/galleryMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/defaultImageDescription"
         android:src="@android:drawable/ic_menu_gallery" />
 
 </LinearLayout>

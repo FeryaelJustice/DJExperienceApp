@@ -10,6 +10,7 @@
         android:id="@+id/copyright_close"
         android:layout_width="@dimen/image_size_small"
         android:layout_height="@dimen/image_size_small"
+        android:contentDescription="@string/defaultImageDescription"
         android:padding="@dimen/text_separation_small"
         android:src="@drawable/ic_baseline_close_24"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,6 +23,7 @@
     <ImageView
         android:layout_width="@dimen/image_size_smallbig"
         android:layout_height="@dimen/image_size_smallbig"
+        android:contentDescription="@string/defaultImageDescription"
         android:src="@drawable/launcher_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,13 +39,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/copyright"
             android:textSize="@dimen/text_size_medium"
-            android:theme="@style/InfoTextView"
-            android:text="@string/copyright"/>
+            android:theme="@style/InfoTextView" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

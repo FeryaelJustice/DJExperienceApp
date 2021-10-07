@@ -24,8 +24,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment() {
 
-    lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: NewsRecyclerViewAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAdapter: NewsRecyclerViewAdapter
     private lateinit var progressCircle: FragmentContainerView
 
     private var newsList: MutableList<New> = arrayListOf()

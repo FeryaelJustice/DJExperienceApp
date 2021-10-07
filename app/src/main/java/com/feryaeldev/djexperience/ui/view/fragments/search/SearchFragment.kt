@@ -120,7 +120,7 @@ class SearchFragment : BaseFragment() {
         searchAllBtn = view.findViewById(R.id.fragment_search_searchAllBtn)
         searchAllBtn.setOnClickListener {
             if (!hasSearchedAll) {
-                searchAll() {
+                searchAll {
                     // Change search all button style
                     toggleSearchAllButton(view.context, false)
                     // Order by username

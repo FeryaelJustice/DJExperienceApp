@@ -9,7 +9,7 @@ import android.util.Log
 
 class MediaService : Service() {
 
-    lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onBind(p0: Intent?): IBinder? {
         Log.d("service", "MediaService bind")

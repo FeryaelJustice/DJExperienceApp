@@ -19,9 +19,9 @@ class MainActivity : BaseActivity() {
 
     //lateinit var mAdView: AdView
 
-    lateinit var bottomNavigationView: BottomNavigationView
-    lateinit var navHostFragment: NavHostFragment
-    lateinit var navController: NavController
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         // FRAGMENTS BOTTOM NAV AND NAVIGATION COMPONENT
-        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNavigationView = findViewById(R.id.bottomNav)
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController

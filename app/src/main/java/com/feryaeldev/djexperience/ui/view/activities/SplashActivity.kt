@@ -11,8 +11,8 @@ import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 
 class SplashActivity : BaseActivity() {
 
-    lateinit var firebaseMessaging: FirebaseMessaging
-    lateinit var firebaseRemoteConfig: FirebaseRemoteConfig
+    private lateinit var firebaseMessaging: FirebaseMessaging
+    private lateinit var firebaseRemoteConfig: FirebaseRemoteConfig
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

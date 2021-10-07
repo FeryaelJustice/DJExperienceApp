@@ -28,8 +28,8 @@ import java.io.File
 
 class ProfileFragment : BaseFragment() {
 
-    lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: UsersOrArtistsRecyclerViewAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAdapter: UsersOrArtistsRecyclerViewAdapter
 
     private lateinit var progressCircle: FragmentContainerView
     private var user: User? = User()

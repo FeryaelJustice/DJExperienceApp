@@ -10,12 +10,14 @@ class Settings(context: Context) {
     private val preferences: SharedPreferences =
         context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE)
 
+    /*
     fun clearSharedPrefs(){
         with(preferences.edit()){
             clear()
             commit()
         }
     }
+     */
 
     fun isFirstOpen(): Boolean = preferences.getBoolean("firstOpen", true)
     fun setFirstOpen(firstOpen: Boolean) {
@@ -35,7 +37,7 @@ class Settings(context: Context) {
     }
 
     // Remote Config Firebase
-    fun getAuthorMessage(): String? = preferences.getString("authorMessage", "")
+    //fun getAuthorMessage(): String? = preferences.getString("authorMessage", "")
     fun setAuthorMessage(authorMessage: String) {
         with(preferences.edit()) {
             putString("authorMessage", authorMessage)
@@ -60,8 +62,10 @@ class Settings(context: Context) {
         }
     }
 
+    /*
     fun clearUserInSharedPrefs() {
         setUserEmail("")
         setUserPassword("")
     }
+     */
 }

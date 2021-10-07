@@ -13,6 +13,7 @@ class DJExperienceApp : Application() {
         Firebase.initialize(applicationContext)
     }
 
+    /*
     // Called by the system when the device configuration changes while your component is running.
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -23,4 +24,5 @@ class DJExperienceApp : Application() {
     override fun onLowMemory() {
         super.onLowMemory()
     }
+    */
 }

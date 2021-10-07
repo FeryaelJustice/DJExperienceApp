@@ -2,16 +2,9 @@ package com.feryaeldev.djexperience.util
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import java.io.File
-import java.io.FileOutputStream
 import java.util.*
-import kotlin.reflect.full.memberProperties
 
 // GLOBAL VALUES
 const val djExperienceWebsite =
@@ -40,6 +33,7 @@ fun checkPermissions(
     return counterPermissions == permissionsLength
 }
 
+/*
 fun checkPermission(
     permission: String,
     launcher: ActivityResultLauncher<Any>,
@@ -76,6 +70,7 @@ fun saveImageToInternalStorage(applicationContext: Context, drawableId: Int) {
         }
     }
 }
+*/
 
 // Check if country has the correct format (Locale available locales list format).
 fun countryIsValid(country: String): Boolean {

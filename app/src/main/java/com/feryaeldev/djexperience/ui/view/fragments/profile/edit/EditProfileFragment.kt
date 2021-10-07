@@ -547,11 +547,13 @@ class EditProfileFragment : BaseFragment() {
     }
      */
 
+    /*
     private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
         val matrix = Matrix()
         matrix.postRotate(degree.toFloat())
         return Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
     }
+     */
 
     /*
     private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {

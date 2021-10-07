@@ -150,6 +150,7 @@ class CreateArtistFragment : BaseFragment() {
     }
 
 
+    /*
     private fun disableAutoCompleteTextTextView(autoCompleteTextView: AppCompatAutoCompleteTextView) {
         // Disable editable and keyboard
         autoCompleteTextView.inputType = 0
@@ -161,4 +162,5 @@ class CreateArtistFragment : BaseFragment() {
         autoCompleteTextView.inputType = autoCompleteTextViewInputType // saved input type
         autoCompleteTextView.keyListener = TextKeyListener.getInstance()
     }
+     */
 }

@@ -147,6 +147,7 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    /*
     private fun isDarkModeOn(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
@@ -168,6 +169,7 @@ class SettingsActivity : BaseActivity() {
             uiManager.nightMode = UiModeManager.MODE_NIGHT_NO
         }
     }
+     */
 
     private fun reloadApp(intent: Intent) {
         finish()
