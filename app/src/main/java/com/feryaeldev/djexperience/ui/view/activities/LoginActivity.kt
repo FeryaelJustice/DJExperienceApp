@@ -3,6 +3,7 @@ package com.feryaeldev.djexperience.ui.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import com.feryaeldev.djexperience.BuildConfig
 import com.feryaeldev.djexperience.R
 import com.feryaeldev.djexperience.data.provider.settings.Settings
 import com.feryaeldev.djexperience.ui.base.BaseActivity
@@ -67,6 +68,13 @@ class LoginActivity : BaseActivity() {
         findViewById<TextView>(R.id.forgot_password).setOnClickListener {
             startActivity(Intent(applicationContext, RecoverAccountActivity::class.java))
             overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
+        }
+
+        val version = findViewById<TextView>(R.id.signup_appVersion)
+        version.text =
+            getString(R.string.onlyVersion, BuildConfig.VERSION_NAME)
+        version.setOnClickListener {
+            startActivity(Intent(applicationContext, CopyrightActivity::class.java))
         }
     }
 

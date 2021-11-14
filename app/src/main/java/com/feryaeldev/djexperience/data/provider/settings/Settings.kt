@@ -27,7 +27,7 @@ class Settings(context: Context) {
         }
     }
 
-    // Notificacion Firebase Service token
+    // Notification Firebase Service token
     fun getFirebaseToken(): String? = preferences.getString("firebaseNotificationToken", "")
     fun setFirebaseToken(token: String) {
         with(preferences.edit()) {
@@ -37,7 +37,7 @@ class Settings(context: Context) {
     }
 
     // Remote Config Firebase
-    //fun getAuthorMessage(): String? = preferences.getString("authorMessage", "")
+    // fun getAuthorMessage(): String? = preferences.getString("authorMessage", "")
     fun setAuthorMessage(authorMessage: String) {
         with(preferences.edit()) {
             putString("authorMessage", authorMessage)
