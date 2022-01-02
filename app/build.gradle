@@ -14,8 +14,8 @@ android {
         applicationId "com.feryaeldev.djexperience"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 4
-        versionName "2.2"
+        versionCode 5
+        versionName "2.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
