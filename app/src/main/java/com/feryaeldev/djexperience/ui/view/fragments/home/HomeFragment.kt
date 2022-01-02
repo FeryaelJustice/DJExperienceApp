@@ -121,7 +121,9 @@ class HomeFragment : BaseFragment() {
                     showMessageShort("Error on http call:${e.message}")
                 }
             } finally {
-
+                activity?.runOnUiThread {
+                    showMessageShort("Call to API completed.")
+                }
             }
         }
     }
