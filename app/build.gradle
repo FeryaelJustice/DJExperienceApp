@@ -14,8 +14,8 @@ android {
         applicationId "com.feryaeldev.djexperience"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 5
-        versionName "2.3"
+        versionCode 6
+        versionName "2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,7 +75,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf-ktx:20.0.4'
 
     // Ads
-    implementation 'com.google.android.gms:play-services-ads:20.5.0'
+    // implementation 'com.google.android.gms:play-services-ads:20.5.0'
 
     // Google Gson
     implementation 'com.google.code.gson:gson:2.8.8'
