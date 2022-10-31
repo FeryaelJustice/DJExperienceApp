@@ -72,6 +72,7 @@ class InfoActivity : BaseActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_down_reverse, R.anim.slide_up_reverse)
