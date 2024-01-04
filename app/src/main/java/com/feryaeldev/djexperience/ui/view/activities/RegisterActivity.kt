@@ -64,7 +64,7 @@ class RegisterActivity : BaseActivity() {
                                         // Convert drawable to file (default photo)
                                         val bitmap = BitmapFactory.decodeResource(
                                             resources,
-                                            R.drawable.launcher_icon_jpg
+                                            R.drawable.launcher_icon
                                         )
                                         val dir = File(
                                             applicationContext.externalCacheDir!!.absolutePath,
