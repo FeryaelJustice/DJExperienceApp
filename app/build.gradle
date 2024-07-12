@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx:21.0.0'
     implementation 'com.google.firebase:firebase-messaging-ktx:24.0.0'
     implementation 'com.google.firebase:firebase-config-ktx:22.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:19.0.2'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:19.0.3'
     implementation  'com.google.firebase:firebase-perf-ktx:21.0.1'
 
     // Ads
